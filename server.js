@@ -100,9 +100,31 @@ app.post('/api/register', (req, res) => {
   });
 });
 
-// 🔑 صفحة تسجيل الدخول (مؤقتاً)
+// 🔑 صفحة تسجيل الدخول
 app.get('/login', (req, res) => {
-  res.send('<h1>صفحة تسجيل الدخول - قريباً</h1><a href="/">العودة للرئيسية</a>');
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// ✅ استقبال بيانات تسجيل الدخول
+app.post('/api/login', (req, res) => {
+  // استقبال البيانات من النموذج
+  const { identifier, password, remember } = req.body;
+  
+  console.log('🔐 محاولة تسجيل دخول:');
+  console.log('المعرف (بريد أو اسم مستخدم):', identifier);
+  console.log('تذكرني:', remember);
+  
+  // هنا لاحقاً سنتحقق من قاعدة البيانات
+  // الآن فقط نرسل رسالة نجاح للاختبار
+  
+  res.json({
+    success: true,
+    message: 'تم تسجيل الدخول بنجاح! 🎉',
+    user: {
+      fullname: 'مستخدم تجريبي',
+      email: identifier
+    }
+  });
 });
 
 // 🚀 تشغيل السيرفر
