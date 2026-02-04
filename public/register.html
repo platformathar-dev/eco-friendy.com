@@ -6,19 +6,8 @@
     <title>إنشاء حساب - Eco Friendly Store</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --earth-green: #2d5016;
-            --forest-dark: #1a3409;
-            --leaf-bright: #7cb342;
-            --sage-soft: #a8c090;
-            --cream: #faf8f3;
-            --clay: #d4a574;
-            --moss: #5a6c3f;
-            --bark: #4a3f35;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -27,405 +16,209 @@
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, var(--cream) 0%, #e8f5e1 100%);
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* خلفية زخرفية عضوية */
-        body::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(124, 179, 66, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(45, 80, 22, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(168, 192, 144, 0.2) 0%, transparent 40%);
-            animation: float 20s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(5deg); }
-            66% { transform: translate(-20px, 20px) rotate(-5deg); }
+            padding: 30px 20px;
         }
 
         .container {
-            position: relative;
-            max-width: 480px;
+            max-width: 500px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 50px 40px;
-            box-shadow: 
-                0 20px 60px rgba(45, 80, 22, 0.15),
-                0 0 0 1px rgba(124, 179, 66, 0.1);
-            animation: slideUp 0.6s ease-out;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* شعار نباتي */
         .logo {
             text-align: center;
             margin-bottom: 30px;
-            animation: fadeIn 0.8s ease-out 0.2s both;
         }
 
         .logo-icon {
-            font-size: 60px;
+            font-size: 50px;
             margin-bottom: 10px;
-            display: inline-block;
-            animation: grow 0.6s ease-out 0.4s both;
-        }
-
-        @keyframes grow {
-            from {
-                transform: scale(0);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .logo h1 {
-            font-family: 'Almarai', sans-serif;
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--earth-green);
+            font-size: 26px;
+            font-weight: 700;
+            color: #2e7d32;
             margin-bottom: 5px;
-            letter-spacing: -0.5px;
         }
 
         .logo p {
-            color: var(--moss);
+            color: #66bb6a;
             font-size: 14px;
-            font-weight: 400;
         }
 
         .form-title {
             text-align: center;
-            margin-bottom: 35px;
-            animation: fadeIn 0.8s ease-out 0.3s both;
+            margin-bottom: 30px;
         }
 
         .form-title h2 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            color: var(--forest-dark);
-            margin-bottom: 8px;
+            color: #1b5e20;
+            margin-bottom: 5px;
         }
 
         .form-title p {
-            color: var(--moss);
-            font-size: 15px;
+            color: #757575;
+            font-size: 14px;
         }
 
         .form-group {
-            margin-bottom: 25px;
-            animation: slideRight 0.6s ease-out both;
-        }
-
-        .form-group:nth-child(1) { animation-delay: 0.4s; }
-        .form-group:nth-child(2) { animation-delay: 0.5s; }
-        .form-group:nth-child(3) { animation-delay: 0.6s; }
-        .form-group:nth-child(4) { animation-delay: 0.7s; }
-
-        @keyframes slideRight {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            color: var(--earth-green);
+            margin-bottom: 6px;
+            color: #2e7d32;
             font-weight: 600;
             font-size: 14px;
         }
 
-        .input-wrapper {
-            position: relative;
+        label .required {
+            color: #d32f2f;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #e0e8d5;
-            border-radius: 15px;
-            font-size: 16px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
             font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s ease;
-            background: white;
-            color: var(--forest-dark);
+            transition: border-color 0.3s;
+            background: #fafafa;
         }
 
-        input:focus {
+        input:focus,
+        select:focus {
             outline: none;
-            border-color: var(--leaf-bright);
-            background: #f9fdf7;
-            box-shadow: 0 0 0 4px rgba(124, 179, 66, 0.1);
-            transform: translateY(-2px);
+            border-color: #66bb6a;
+            background: white;
         }
 
         input::placeholder {
-            color: #a8b89a;
+            color: #9e9e9e;
         }
 
-        .input-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 20px;
-            color: var(--moss);
-            pointer-events: none;
-            transition: all 0.3s ease;
+        .error-message {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
         }
 
-        input:focus + .input-icon {
-            color: var(--leaf-bright);
-            transform: translateY(-50%) scale(1.1);
+        .error-message.show {
+            display: block;
         }
 
-        .password-toggle {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            color: var(--moss);
-            padding: 5px;
-            transition: color 0.3s ease;
+        input.error,
+        select.error {
+            border-color: #d32f2f;
         }
 
-        .password-toggle:hover {
-            color: var(--leaf-bright);
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .form-group {
+            flex: 1;
         }
 
         .checkbox-group {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
-            animation: fadeIn 0.8s ease-out 0.8s both;
+            margin-bottom: 25px;
         }
 
         .checkbox-group input[type="checkbox"] {
             width: auto;
             margin-left: 10px;
             cursor: pointer;
-            accent-color: var(--leaf-bright);
-            transform: scale(1.2);
         }
 
         .checkbox-group label {
             margin: 0;
             font-size: 14px;
             font-weight: 400;
-            color: var(--moss);
+            color: #616161;
             cursor: pointer;
         }
 
         .checkbox-group a {
-            color: var(--leaf-bright);
+            color: #66bb6a;
             text-decoration: none;
             font-weight: 600;
-            transition: color 0.3s ease;
         }
 
         .checkbox-group a:hover {
-            color: var(--earth-green);
             text-decoration: underline;
         }
 
         .submit-btn {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, var(--leaf-bright) 0%, var(--earth-green) 100%);
+            padding: 15px;
+            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 18px;
+            border-radius: 8px;
+            font-size: 17px;
             font-weight: 700;
             font-family: 'Tajawal', sans-serif;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 20px rgba(124, 179, 66, 0.3);
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 0.8s ease-out 0.9s both;
-        }
-
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .submit-btn:hover::before {
-            width: 300px;
-            height: 300px;
+            transition: all 0.3s;
         }
 
         .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(124, 179, 66, 0.4);
+            background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
         }
 
-        .submit-btn:active {
-            transform: translateY(-1px);
-        }
-
-        .divider {
-            text-align: center;
-            margin: 30px 0;
-            position: relative;
-            animation: fadeIn 0.8s ease-out 1s both;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 40%;
-            height: 1px;
-            background: linear-gradient(to right, transparent, #d0ddc4, transparent);
-        }
-
-        .divider::before { right: 55%; }
-        .divider::after { left: 55%; }
-
-        .divider span {
-            background: white;
-            padding: 0 15px;
-            color: var(--moss);
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .social-login {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            animation: fadeIn 0.8s ease-out 1.1s both;
-        }
-
-        .social-btn {
-            flex: 1;
-            padding: 14px;
-            border: 2px solid #e0e8d5;
-            border-radius: 12px;
-            background: white;
-            cursor: pointer;
-            font-size: 24px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-btn:hover {
-            border-color: var(--leaf-bright);
-            background: #f9fdf7;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(124, 179, 66, 0.2);
+        .submit-btn:disabled {
+            background: #bdbdbd;
+            cursor: not-allowed;
         }
 
         .login-link {
             text-align: center;
-            color: var(--moss);
-            font-size: 15px;
-            animation: fadeIn 0.8s ease-out 1.2s both;
+            color: #757575;
+            font-size: 14px;
+            margin-top: 20px;
         }
 
         .login-link a {
-            color: var(--leaf-bright);
+            color: #66bb6a;
             text-decoration: none;
             font-weight: 700;
-            transition: color 0.3s ease;
         }
 
         .login-link a:hover {
-            color: var(--earth-green);
             text-decoration: underline;
-        }
-
-        /* زخرفة نباتية */
-        .leaf-decoration {
-            position: absolute;
-            font-size: 80px;
-            opacity: 0.08;
-            pointer-events: none;
-            animation: rotate 30s linear infinite;
-        }
-
-        .leaf-decoration.leaf-1 {
-            top: -20px;
-            right: -20px;
-            animation-direction: reverse;
-        }
-
-        .leaf-decoration.leaf-2 {
-            bottom: -30px;
-            left: -30px;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         /* Responsive */
         @media (max-width: 480px) {
             .container {
-                padding: 40px 30px;
+                padding: 30px 25px;
+            }
+
+            .row {
+                flex-direction: column;
+                gap: 0;
             }
 
             .logo h1 {
-                font-size: 24px;
+                font-size: 22px;
             }
 
             .form-title h2 {
@@ -436,10 +229,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- زخارف نباتية -->
-        <div class="leaf-decoration leaf-1">🌿</div>
-        <div class="leaf-decoration leaf-2">🍃</div>
-
         <!-- الشعار -->
         <div class="logo">
             <div class="logo-icon">🌱</div>
@@ -449,44 +238,102 @@
 
         <!-- عنوان النموذج -->
         <div class="form-title">
-            <h2>انضم إلى عائلتنا الخضراء</h2>
-            <p>ابدأ رحلتك نحو حياة مستدامة</p>
+            <h2>إنشاء حساب جديد</h2>
+            <p>املأ البيانات التالية للتسجيل</p>
         </div>
 
         <!-- نموذج التسجيل -->
         <form id="registerForm">
+            <!-- الاسم الكامل -->
             <div class="form-group">
-                <label for="fullname">الاسم الكامل</label>
-                <div class="input-wrapper">
-                    <input type="text" id="fullname" name="fullname" placeholder="أدخل اسمك الكامل" required>
-                    <span class="input-icon">👤</span>
+                <label for="fullname">الاسم الكامل <span class="required">*</span></label>
+                <input type="text" id="fullname" name="fullname" placeholder="أدخل اسمك الكامل" required>
+                <span class="error-message" id="fullname-error">الرجاء إدخال اسمك الكامل</span>
+            </div>
+
+            <!-- اسم المستخدم -->
+            <div class="form-group">
+                <label for="username">اسم المستخدم <span class="required">*</span></label>
+                <input type="text" id="username" name="username" placeholder="اختر اسم مستخدم فريد" required>
+                <span class="error-message" id="username-error">اسم المستخدم يجب أن يكون 3 أحرف على الأقل</span>
+            </div>
+
+            <!-- البريد الإلكتروني -->
+            <div class="form-group">
+                <label for="email">البريد الإلكتروني <span class="required">*</span></label>
+                <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                <span class="error-message" id="email-error">الرجاء إدخال بريد إلكتروني صحيح</span>
+            </div>
+
+            <!-- رقم الهاتف -->
+            <div class="form-group">
+                <label for="phone">رقم الهاتف <span class="required">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="07XXXXXXXX" required>
+                <span class="error-message" id="phone-error">الرجاء إدخال رقم هاتف صحيح (10 أرقام)</span>
+            </div>
+
+            <!-- تاريخ الميلاد والجنس -->
+            <div class="row">
+                <div class="form-group">
+                    <label for="birthdate">تاريخ الميلاد <span class="required">*</span></label>
+                    <input type="date" id="birthdate" name="birthdate" required>
+                    <span class="error-message" id="birthdate-error">الرجاء اختيار تاريخ الميلاد</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">الجنس <span class="required">*</span></label>
+                    <select id="gender" name="gender" required>
+                        <option value="">اختر...</option>
+                        <option value="male">ذكر</option>
+                        <option value="female">أنثى</option>
+                    </select>
+                    <span class="error-message" id="gender-error">الرجاء اختيار الجنس</span>
                 </div>
             </div>
 
+            <!-- الدولة -->
             <div class="form-group">
-                <label for="email">البريد الإلكتروني</label>
-                <div class="input-wrapper">
-                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
-                    <span class="input-icon">✉️</span>
-                </div>
+                <label for="country">الدولة <span class="required">*</span></label>
+                <select id="country" name="country" required>
+                    <option value="">اختر الدولة...</option>
+                    <option value="JO">الأردن</option>
+                    <option value="SA">السعودية</option>
+                    <option value="AE">الإمارات</option>
+                    <option value="EG">مصر</option>
+                    <option value="IQ">العراق</option>
+                    <option value="SY">سوريا</option>
+                    <option value="LB">لبنان</option>
+                    <option value="PS">فلسطين</option>
+                    <option value="YE">اليمن</option>
+                    <option value="KW">الكويت</option>
+                    <option value="QA">قطر</option>
+                    <option value="BH">البحرين</option>
+                    <option value="OM">عمان</option>
+                    <option value="MA">المغرب</option>
+                    <option value="DZ">الجزائر</option>
+                    <option value="TN">تونس</option>
+                    <option value="LY">ليبيا</option>
+                    <option value="SD">السودان</option>
+                    <option value="other">أخرى</option>
+                </select>
+                <span class="error-message" id="country-error">الرجاء اختيار الدولة</span>
             </div>
 
+            <!-- كلمة المرور -->
             <div class="form-group">
-                <label for="phone">رقم الهاتف</label>
-                <div class="input-wrapper">
-                    <input type="tel" id="phone" name="phone" placeholder="+962 7X XXX XXXX" required>
-                    <span class="input-icon">📱</span>
-                </div>
+                <label for="password">كلمة المرور <span class="required">*</span></label>
+                <input type="password" id="password" name="password" placeholder="أدخل كلمة مرور قوية (8 أحرف على الأقل)" required>
+                <span class="error-message" id="password-error">كلمة المرور يجب أن تكون 8 أحرف على الأقل</span>
             </div>
 
+            <!-- تأكيد كلمة المرور -->
             <div class="form-group">
-                <label for="password">كلمة المرور</label>
-                <div class="input-wrapper">
-                    <input type="password" id="password" name="password" placeholder="أدخل كلمة مرور قوية" required>
-                    <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
-                </div>
+                <label for="confirm-password">تأكيد كلمة المرور <span class="required">*</span></label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="أعد إدخال كلمة المرور" required>
+                <span class="error-message" id="confirm-password-error">كلمة المرور غير متطابقة</span>
             </div>
 
+            <!-- الموافقة على الشروط -->
             <div class="checkbox-group">
                 <input type="checkbox" id="terms" name="terms" required>
                 <label for="terms">
@@ -494,120 +341,227 @@
                 </label>
             </div>
 
-            <button type="submit" class="submit-btn">إنشاء حساب 🌱</button>
+            <!-- زر التسجيل -->
+            <button type="submit" class="submit-btn">إنشاء حساب</button>
         </form>
-
-        <!-- فاصل -->
-        <div class="divider">
-            <span>أو سجل باستخدام</span>
-        </div>
-
-        <!-- تسجيل عبر وسائل التواصل -->
-        <div class="social-login">
-            <button class="social-btn" onclick="socialLogin('google')">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                </svg>
-            </button>
-            <button class="social-btn" onclick="socialLogin('facebook')">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#1877F2">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-            </button>
-            <button class="social-btn" onclick="socialLogin('apple')">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                </svg>
-            </button>
-        </div>
 
         <!-- رابط تسجيل الدخول -->
         <div class="login-link">
-            لديك حساب بالفعل؟ <a href="login.html">سجل دخولك</a>
+            لديك حساب بالفعل؟ <a href="/login">سجل دخولك</a>
         </div>
     </div>
 
     <script>
-        // Toggle password visibility
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleBtn = document.querySelector('.password-toggle');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleBtn.textContent = '🙈';
-            } else {
-                passwordInput.type = 'password';
-                toggleBtn.textContent = '👁️';
-            }
+        const form = document.getElementById('registerForm');
+        
+        // التحقق من صحة البريد الإلكتروني
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
         }
 
-        // Handle form submission
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            
-            // تغيير نص الزر أثناء الإرسال
-            submitBtn.textContent = '⏳ جارِ إنشاء الحساب...';
-            submitBtn.disabled = true;
-            
-            const formData = {
-                fullname: document.getElementById('fullname').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                password: document.getElementById('password').value
-            };
+        // التحقق من رقم الهاتف (10 أرقام)
+        function validatePhone(phone) {
+            const re = /^07\d{8}$/;
+            return re.test(phone);
+        }
 
-            try {
-                // إرسال البيانات إلى السيرفر
-                const response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
+        // عرض رسالة خطأ
+        function showError(inputId, errorId, message) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            input.classList.add('error');
+            error.textContent = message;
+            error.classList.add('show');
+        }
 
-                const data = await response.json();
+        // إخفاء رسالة الخطأ
+        function hideError(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            input.classList.remove('error');
+            error.classList.remove('show');
+        }
 
-                if (data.success) {
-                    alert('🎉 ' + data.message + '\n\nمرحباً بك ' + data.user.fullname);
-                    // الانتقال للصفحة الرئيسية
-                    window.location.href = '/';
-                } else {
-                    alert('❌ حدث خطأ: ' + (data.message || 'حاول مرة أخرى'));
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }
-            } catch (error) {
-                console.error('خطأ:', error);
-                alert('❌ حدث خطأ في الاتصال. تأكد من تشغيل السيرفر!');
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+        // التحقق من الحقول عند الكتابة
+        document.getElementById('fullname').addEventListener('input', function() {
+            if (this.value.trim().length >= 3) {
+                hideError('fullname', 'fullname-error');
             }
         });
 
-        // Social login
-        function socialLogin(provider) {
-            console.log('تسجيل الدخول عبر:', provider);
-            alert('جارِ الاتصال بـ ' + provider.toUpperCase() + '...');
-            // هنا يمكنك إضافة كود OAuth للتسجيل عبر وسائل التواصل
-        }
+        document.getElementById('username').addEventListener('input', function() {
+            if (this.value.trim().length >= 3) {
+                hideError('username', 'username-error');
+            }
+        });
 
-        // Phone number formatting
-        document.getElementById('phone').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.startsWith('962')) {
-                value = value.substring(3);
+        document.getElementById('email').addEventListener('input', function() {
+            if (validateEmail(this.value)) {
+                hideError('email', 'email-error');
             }
-            if (value.startsWith('0')) {
-                value = value.substring(1);
+        });
+
+        document.getElementById('phone').addEventListener('input', function() {
+            // تنسيق تلقائي للرقم
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 10) {
+                value = value.substring(0, 10);
             }
-            if (value.length > 0) {
-                e.target.value = '+962 ' + value.substring(0, 9);
+            this.value = value;
+
+            if (validatePhone(value)) {
+                hideError('phone', 'phone-error');
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            if (this.value.length >= 8) {
+                hideError('password', 'password-error');
+            }
+        });
+
+        document.getElementById('confirm-password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            if (this.value === password) {
+                hideError('confirm-password', 'confirm-password-error');
+            }
+        });
+
+        // معالجة إرسال النموذج
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+
+            // التحقق من الاسم الكامل
+            const fullname = document.getElementById('fullname').value.trim();
+            if (fullname.length < 3) {
+                showError('fullname', 'fullname-error', 'الرجاء إدخال اسمك الكامل (3 أحرف على الأقل)');
+                isValid = false;
+            } else {
+                hideError('fullname', 'fullname-error');
+            }
+
+            // التحقق من اسم المستخدم
+            const username = document.getElementById('username').value.trim();
+            if (username.length < 3) {
+                showError('username', 'username-error', 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
+                isValid = false;
+            } else {
+                hideError('username', 'username-error');
+            }
+
+            // التحقق من البريد الإلكتروني
+            const email = document.getElementById('email').value;
+            if (!validateEmail(email)) {
+                showError('email', 'email-error', 'الرجاء إدخال بريد إلكتروني صحيح');
+                isValid = false;
+            } else {
+                hideError('email', 'email-error');
+            }
+
+            // التحقق من رقم الهاتف
+            const phone = document.getElementById('phone').value;
+            if (!validatePhone(phone)) {
+                showError('phone', 'phone-error', 'الرجاء إدخال رقم هاتف صحيح (يبدأ بـ 07 ويتكون من 10 أرقام)');
+                isValid = false;
+            } else {
+                hideError('phone', 'phone-error');
+            }
+
+            // التحقق من تاريخ الميلاد
+            const birthdate = document.getElementById('birthdate').value;
+            if (!birthdate) {
+                showError('birthdate', 'birthdate-error', 'الرجاء اختيار تاريخ الميلاد');
+                isValid = false;
+            } else {
+                hideError('birthdate', 'birthdate-error');
+            }
+
+            // التحقق من الجنس
+            const gender = document.getElementById('gender').value;
+            if (!gender) {
+                showError('gender', 'gender-error', 'الرجاء اختيار الجنس');
+                isValid = false;
+            } else {
+                hideError('gender', 'gender-error');
+            }
+
+            // التحقق من الدولة
+            const country = document.getElementById('country').value;
+            if (!country) {
+                showError('country', 'country-error', 'الرجاء اختيار الدولة');
+                isValid = false;
+            } else {
+                hideError('country', 'country-error');
+            }
+
+            // التحقق من كلمة المرور
+            const password = document.getElementById('password').value;
+            if (password.length < 8) {
+                showError('password', 'password-error', 'كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+                isValid = false;
+            } else {
+                hideError('password', 'password-error');
+            }
+
+            // التحقق من تطابق كلمة المرور
+            const confirmPassword = document.getElementById('confirm-password').value;
+            if (password !== confirmPassword) {
+                showError('confirm-password', 'confirm-password-error', 'كلمة المرور غير متطابقة');
+                isValid = false;
+            } else {
+                hideError('confirm-password', 'confirm-password-error');
+            }
+
+            // التحقق من الموافقة على الشروط
+            const terms = document.getElementById('terms').checked;
+            if (!terms) {
+                alert('يجب الموافقة على الشروط والأحكام');
+                isValid = false;
+            }
+
+            // إذا كانت كل البيانات صحيحة
+            if (isValid) {
+                const submitBtn = document.querySelector('.submit-btn');
+                submitBtn.textContent = 'جارِ إنشاء الحساب...';
+                submitBtn.disabled = true;
+
+                const formData = {
+                    fullname,
+                    username,
+                    email,
+                    phone,
+                    birthdate,
+                    gender,
+                    country,
+                    password
+                };
+
+                try {
+                    const response = await fetch('/api/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('🎉 تم إنشاء حسابك بنجاح!\n\nمرحباً بك ' + data.user.fullname);
+                        window.location.href = '/';
+                    } else {
+                        alert('❌ حدث خطأ: ' + (data.message || 'حاول مرة أخرى'));
+                        submitBtn.textContent = 'إنشاء حساب';
+                        submitBtn.disabled = false;
+                    }
+                } catch (error) {
+                    console.error('خطأ:', error);
+                    alert('❌ حدث خطأ في الاتصال. حاول مرة أخرى!');
+                    submitBtn.textContent = 'إنشاء حساب';
+                    submitBtn.disabled = false;
+                }
             }
         });
     </script>
