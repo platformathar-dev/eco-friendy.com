@@ -3,10 +3,10 @@ const path = require('path');
 const app = express();
 
 // ⚙️ الإعدادات الأساسية
-app.use(express.json()); // لقراءة JSON من الطلبات
-app.use(express.urlencoded({ extended: true })); // لقراءة البيانات من النماذج
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// 📁 تحديد مجلد الملفات العامة (HTML, CSS, JS, Images)
+// 📁 تحديد مجلد الملفات العامة
 app.use(express.static('public'));
 
 // 🏠 الصفحة الرئيسية
@@ -78,22 +78,20 @@ app.get('/register', (req, res) => {
 
 // ✅ استقبال بيانات التسجيل
 app.post('/api/register', (req, res) => {
-  // استقبال البيانات من النموذج
-  const { fullname, email, phone, password } = req.body;
+  const { fullname, username, email, phone, birthdate, gender, country, password } = req.body;
   
   console.log('📥 تم استقبال بيانات تسجيل جديدة:');
   console.log('الاسم:', fullname);
+  console.log('اسم المستخدم:', username);
   console.log('البريد:', email);
   console.log('الهاتف:', phone);
-  
-  // هنا لاحقاً سنحفظ البيانات في قاعدة البيانات
-  // الآن فقط نرسل رسالة نجاح
   
   res.json({
     success: true,
     message: 'تم إنشاء الحساب بنجاح! 🎉',
     user: {
       fullname,
+      username,
       email,
       phone
     }
@@ -107,15 +105,11 @@ app.get('/login', (req, res) => {
 
 // ✅ استقبال بيانات تسجيل الدخول
 app.post('/api/login', (req, res) => {
-  // استقبال البيانات من النموذج
   const { identifier, password, remember } = req.body;
   
   console.log('🔐 محاولة تسجيل دخول:');
-  console.log('المعرف (بريد أو اسم مستخدم):', identifier);
+  console.log('المعرف:', identifier);
   console.log('تذكرني:', remember);
-  
-  // هنا لاحقاً سنتحقق من قاعدة البيانات
-  // الآن فقط نرسل رسالة نجاح للاختبار
   
   res.json({
     success: true,
@@ -133,3 +127,28 @@ app.listen(PORT, () => {
   console.log('✅ السيرفر يعمل على المنفذ: ' + PORT);
   console.log('🌐 افتح المتصفح على: http://localhost:' + PORT);
 });
+```
+
+6. **اضغط "Commit changes"**
+
+---
+
+### الخطوة 2️⃣: إعادة النشر في Hostinger
+
+1. **اذهب إلى لوحة تحكم Hostinger**
+
+2. **ابحث عن قسم:**
+   - "Website" أو "الموقع"
+   - ثم "Git" أو "GitHub"
+
+3. **اضغط زر "Redeploy"** أو **"إعادة النشر"** أو **"Pull Changes"**
+
+4. **انتظر 2-3 دقائق**
+
+---
+
+### الخطوة 3️⃣: اختبر مرة أخرى
+
+افتح في المتصفح:
+```
+https://darkorange-pigeon-799805.hostingersite.com/login
