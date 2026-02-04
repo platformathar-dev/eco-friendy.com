@@ -1,0 +1,23 @@
+{
+  "name": "eco-friendy",
+  "version": "1.0.0",
+  "description": "Eco Friendly Store - A sustainable e-commerce platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "eco-friendly",
+    "sustainable",
+    "store"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
