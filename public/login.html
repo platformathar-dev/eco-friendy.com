@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - Eco Friendly Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 450px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #66bb6a;
+            font-size: 14px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-title h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 5px;
+        }
+
+        .form-title p {
+            color: #757575;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #2e7d32;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        label .required {
+            color: #d32f2f;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Tajawal', sans-serif;
+            transition: border-color 0.3s;
+            background: #fafafa;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #66bb6a;
+            background: white;
+        }
+
+        input::placeholder {
+            color: #9e9e9e;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        input.error {
+            border-color: #d32f2f;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        .remember-me label {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 400;
+            color: #616161;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #66bb6a;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+        }
+
+        .submit-btn:disabled {
+            background: #bdbdbd;
+            cursor: not-allowed;
+        }
+
+        .register-link {
+            text-align: center;
+            color: #757575;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .register-link a {
+            color: #66bb6a;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-home a {
+            color: #757575;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-home a:hover {
+            color: #66bb6a;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 25px;
+            }
+
+            .logo h1 {
+                font-size: 22px;
+            }
+
+            .form-title h2 {
+                font-size: 20px;
+            }
+
+            .remember-forgot {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- الشعار -->
+        <div class="logo">
+            <div class="logo-icon">🌱</div>
+            <h1>Eco Friendly Store</h1>
+            <p>تسوق بمسؤولية، احمِ كوكبنا</p>
+        </div>
+
+        <!-- عنوان النموذج -->
+        <div class="form-title">
+            <h2>تسجيل الدخول</h2>
+            <p>أدخل بياناتك للوصول إلى حسابك</p>
+        </div>
+
+        <!-- نموذج تسجيل الدخول -->
+        <form id="loginForm">
+            <!-- البريد الإلكتروني أو اسم المستخدم -->
+            <div class="form-group">
+                <label for="identifier">البريد الإلكتروني أو اسم المستخدم <span class="required">*</span></label>
+                <input type="text" id="identifier" name="identifier" placeholder="أدخل بريدك أو اسم المستخدم" required>
+                <span class="error-message" id="identifier-error">الرجاء إدخال البريد الإلكتروني أو اسم المستخدم</span>
+            </div>
+
+            <!-- كلمة المرور -->
+            <div class="form-group">
+                <label for="password">كلمة المرور <span class="required">*</span></label>
+                <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required>
+                <span class="error-message" id="password-error">الرجاء إدخال كلمة المرور</span>
+            </div>
+
+            <!-- تذكرني ونسيت كلمة المرور -->
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">تذكرني</label>
+                </div>
+                <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
+            </div>
+
+            <!-- زر تسجيل الدخول -->
+            <button type="submit" class="submit-btn">تسجيل الدخول</button>
+        </form>
+
+        <!-- رابط التسجيل -->
+        <div class="register-link">
+            ليس لديك حساب؟ <a href="/register">إنشاء حساب جديد</a>
+        </div>
+
+        <!-- العودة للصفحة الرئيسية -->
+        <div class="back-home">
+            <a href="/">← العودة للصفحة الرئيسية</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+
+        // عرض رسالة خطأ
+        function showError(inputId, errorId, message) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            input.classList.add('error');
+            error.textContent = message;
+            error.classList.add('show');
+        }
+
+        // إخفاء رسالة الخطأ
+        function hideError(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            input.classList.remove('error');
+            error.classList.remove('show');
+        }
+
+        // التحقق من الحقول عند الكتابة
+        document.getElementById('identifier').addEventListener('input', function() {
+            if (this.value.trim().length > 0) {
+                hideError('identifier', 'identifier-error');
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            if (this.value.length > 0) {
+                hideError('password', 'password-error');
+            }
+        });
+
+        // معالجة إرسال النموذج
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+
+            // التحقق من البريد/اسم المستخدم
+            const identifier = document.getElementById('identifier').value.trim();
+            if (identifier.length === 0) {
+                showError('identifier', 'identifier-error', 'الرجاء إدخال البريد الإلكتروني أو اسم المستخدم');
+                isValid = false;
+            } else {
+                hideError('identifier', 'identifier-error');
+            }
+
+            // التحقق من كلمة المرور
+            const password = document.getElementById('password').value;
+            if (password.length === 0) {
+                showError('password', 'password-error', 'الرجاء إدخال كلمة المرور');
+                isValid = false;
+            } else {
+                hideError('password', 'password-error');
+            }
+
+            // إذا كانت كل البيانات صحيحة
+            if (isValid) {
+                const submitBtn = document.querySelector('.submit-btn');
+                const remember = document.getElementById('remember').checked;
+                
+                submitBtn.textContent = 'جارِ تسجيل الدخول...';
+                submitBtn.disabled = true;
+
+                const loginData = {
+                    identifier,
+                    password,
+                    remember
+                };
+
+                try {
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(loginData)
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('✅ تم تسجيل الدخول بنجاح!\n\nمرحباً بك ' + data.user.fullname);
+                        window.location.href = '/';
+                    } else {
+                        alert('❌ ' + (data.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة'));
+                        submitBtn.textContent = 'تسجيل الدخول';
+                        submitBtn.disabled = false;
+                    }
+                } catch (error) {
+                    console.error('خطأ:', error);
+                    alert('❌ حدث خطأ في الاتصال. حاول مرة أخرى!');
+                    submitBtn.textContent = 'تسجيل الدخول';
+                    submitBtn.disabled = false;
+                }
+            }
+        });
+
+        // معالجة "نسيت كلمة المرور"
+        document.querySelector('.forgot-password').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('🔐 ستتلقى رسالة على بريدك الإلكتروني لإعادة تعيين كلمة المرور.\n\n(هذه الميزة قيد التطوير)');
+        });
+    </script>
+</body>
+</html>
