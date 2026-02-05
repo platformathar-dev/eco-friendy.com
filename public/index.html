@@ -45,6 +45,11 @@
             color: white;
             padding: 10px 0;
             font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .top-bar.scrolled {
+            display: none;
         }
 
         .top-bar .container {
@@ -85,6 +90,28 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            padding: 5px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .main-header.scrolled .header-content {
+            padding: 10px 20px;
+        }
+
+        .main-header.scrolled .logo img {
+            height: 35px;
+        }
+
+        .main-header.scrolled .search-bar {
+            max-width: 350px;
+        }
+
+        .main-header.scrolled .header-icon {
+            font-size: 20px;
         }
 
         .header-content {
@@ -94,8 +121,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
+            gap: 20px;
+            transition: all 0.3s ease;
         }
 
         .logo {
@@ -103,12 +130,13 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
+            flex-shrink: 0;
         }
 
         .logo img {
             height: 40px;
             width: auto;
-            transition: transform 0.3s;
+            transition: all 0.3s;
         }
 
         .logo:hover img {
@@ -119,7 +147,8 @@
             flex: 1;
             max-width: 500px;
             position: relative;
-            min-width: 250px;
+            min-width: 200px;
+            transition: all 0.3s ease;
         }
 
         .search-bar input {
@@ -158,7 +187,7 @@
 
         .header-actions {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
         }
 
@@ -225,6 +254,136 @@
         .btn-register:hover {
             background: var(--secondary-color);
             border-color: var(--secondary-color);
+        }
+
+        /* ============ MOBILE MENU ============ */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        [dir="ltr"] .mobile-nav {
+            right: auto;
+            left: -100%;
+        }
+
+        [dir="ltr"] .mobile-nav.active {
+            left: 0;
+        }
+
+        .mobile-nav-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .mobile-nav-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-nav-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-menu a:hover {
+            background: var(--bg-light);
+            color: var(--primary-color);
+            padding-right: 30px;
+        }
+
+        [dir="ltr"] .mobile-nav-menu a:hover {
+            padding-right: 20px;
+            padding-left: 30px;
+        }
+
+        .mobile-nav-menu i {
+            font-size: 20px;
+            width: 25px;
+            text-align: center;
+        }
+
+        .mobile-nav-footer {
+            padding: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .mobile-user-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mobile-user-buttons a {
+            text-align: center;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
         }
 
         /* ============ NAV MENU ============ */
@@ -847,6 +1006,29 @@
         }
 
         /* ============ RESPONSIVE ============ */
+        @media (max-width: 992px) {
+            .user-menu {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-nav,
+            .overlay {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .header-actions {
+                gap: 10px;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 32px;
@@ -861,21 +1043,29 @@
             }
 
             .header-content {
-                flex-direction: column;
+                gap: 10px;
             }
 
             .search-bar {
                 width: 100%;
                 max-width: 100%;
+                order: 3;
+                flex-basis: 100%;
             }
 
-            .nav-menu ul {
-                gap: 20px;
+            .main-header.scrolled .search-bar {
+                max-width: 100%;
             }
 
             .top-bar .container {
                 flex-direction: column;
                 text-align: center;
+            }
+
+            .top-bar-left,
+            .top-bar-right {
+                width: 100%;
+                justify-content: center;
             }
 
             /* منتجين جنب بعض على الموبايل */
@@ -922,6 +1112,14 @@
             .category-name {
                 font-size: 13px;
             }
+
+            .header-icon {
+                font-size: 22px;
+            }
+
+            .logo img {
+                height: 35px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -936,12 +1134,61 @@
             .categories-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
+
+            .header-content {
+                padding: 15px;
+            }
+
+            .logo img {
+                height: 30px;
+            }
+
+            .header-icon {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- ============ OVERLAY ============ -->
+    <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
+
+    <!-- ============ MOBILE NAV ============ -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <div class="logo">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='162' height='40' viewBox='0 0 121.5 30'%3E%3Cpath fill='%23ffffff' d='M 26.121094 9.402344 C 25.761719 8.84375 25.183594 9.101562 23.21875 8.535156 C 22.683594 8.378906 22.070312 8.253906 21.679688 7.832031 C 21.339844 7.464844 21.175781 6.933594 20.941406 6.519531 C 20.199219 5.199219 17.625 4.746094 17.625 4.746094 C 17.625 4.746094 17.363281 6.578125 17.363281 6.578125 C 17.261719 7.289062 16.753906 8.726562 16.015625 9.050781 C 16.261719 8.421875 16.597656 7.875 16.660156 7.175781 C 16.660156 7.167969 16.863281 4.925781 17.308594 3.886719 C 18.238281 1.703125 14.6875 2.882812 13.902344 3.320312 C 12.960938 3.847656 11.703125 5.023438 12.816406 6.09375 C 13.097656 6.363281 13.851562 6.945312 14.273438 6.835938 C 13.46875 7.046875 12.164062 6.800781 11.875 5.910156 C 11.902344 5.996094 10.871094 7.027344 10.761719 7.171875 C 10.410156 7.636719 10.089844 8.128906 9.8125 8.640625 C 9.566406 9.09375 9.300781 9.582031 9.140625 10.074219 C 8.953125 10.632812 8.921875 11.226562 8.550781 11.714844 C 8.175781 12.207031 7.8125 12.695312 7.5 13.230469 C 6.226562 15.414062 5.636719 17.695312 6.265625 20.179688 C 6.679688 21.820312 7.511719 23.355469 8.6875 24.578125 C 9.257812 25.167969 9.902344 25.660156 10.597656 26.089844 C 10.984375 26.328125 11.398438 26.5 11.828125 26.648438 C 12.1875 26.773438 12.726562 26.824219 13.046875 27.03125 C 9.605469 24.78125 6.847656 21.277344 7.683594 16.96875 C 8.28125 13.886719 9.855469 12.613281 9.855469 12.613281 C 9.734375 12.710938 9.84375 13.691406 9.859375 13.859375 C 9.910156 14.320312 10.082031 14.980469 10.5 15.242188 C 10.300781 14.40625 10.089844 13.578125 10.25 12.71875 C 10.410156 11.847656 10.832031 11.039062 11.328125 10.316406 C 11.890625 9.492188 12.730469 8.921875 13.484375 9.917969 C 13.59375 10.066406 14.195312 11.398438 14.230469 11.398438 C 14.640625 11.394531 15.136719 11.707031 15.539062 11.582031 C 16.203125 11.378906 16.769531 10.464844 17.347656 10.074219 C 17.59375 9.910156 17.894531 9.816406 17.683594 10.265625 C 17.441406 10.796875 16.957031 11.3125 16.769531 11.847656 C 16.636719 12.214844 16.785156 12.15625 17.148438 12.355469 C 17.425781 12.507812 17.691406 12.671875 17.929688 12.882812 C 18.699219 13.554688 18.613281 15.277344 19.59375 15.664062 C 19.480469 14.707031 19.875 13.707031 20.824219 13.359375 C 22.269531 12.828125 23.765625 13.695312 24.949219 12.363281 C 25.46875 11.777344 25.457031 11.097656 25.800781 10.441406 C 25.945312 10.164062 26.332031 9.738281 26.121094 9.402344 Z M 19.679688 8.773438 C 19.378906 8.773438 19.136719 8.445312 19.136719 8.042969 C 19.136719 7.636719 19.378906 7.308594 19.679688 7.308594 C 19.976562 7.308594 20.21875 7.636719 20.21875 8.042969 C 20.21875 8.445312 19.976562 8.773438 19.679688 8.773438 Z'/%3E%3C/svg%3E" alt="Eco Friendy">
+            </div>
+            <button class="mobile-nav-close" onclick="closeMobileMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <ul class="mobile-nav-menu">
+            <li><a href="/" onclick="closeMobileMenu()"><i class="fas fa-home"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></a></li>
+            <li><a href="#products" onclick="closeMobileMenu()"><i class="fas fa-shopping-bag"></i> <span data-ar="المنتجات" data-en="Products">المنتجات</span></a></li>
+            <li><a href="/about" onclick="closeMobileMenu()"><i class="fas fa-info-circle"></i> <span data-ar="من نحن" data-en="About Us">من نحن</span></a></li>
+            <li><a href="/contact" onclick="closeMobileMenu()"><i class="fas fa-envelope"></i> <span data-ar="اتصل بنا" data-en="Contact">اتصل بنا</span></a></li>
+            <li><a href="/cart" onclick="closeMobileMenu()"><i class="fas fa-shopping-cart"></i> <span data-ar="السلة" data-en="Cart">السلة</span></a></li>
+            <li><a href="#" onclick="closeMobileMenu()"><i class="fas fa-heart"></i> <span data-ar="المفضلة" data-en="Wishlist">المفضلة</span></a></li>
+        </ul>
+
+        <div class="mobile-nav-footer">
+            <div class="mobile-user-buttons">
+                <a href="/login" class="btn-login" data-ar="دخول" data-en="Login">دخول</a>
+                <a href="/register" class="btn-register" data-ar="تسجيل" data-en="Sign Up">تسجيل</a>
+            </div>
+            <div class="language-switcher">
+                <button class="lang-btn" onclick="toggleLanguage()" style="border-color: var(--primary-color); color: var(--primary-color);">
+                    <i class="fas fa-globe"></i>
+                    <span id="lang-text-mobile">English</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- ============ TOP BAR ============ -->
-    <div class="top-bar">
+    <div class="top-bar" id="topBar">
         <div class="container">
             <div class="top-bar-left">
                 <a href="mailto:info@eco-friendly.com">
@@ -969,10 +1216,14 @@
     </div>
 
     <!-- ============ MAIN HEADER ============ -->
-    <header class="main-header">
+    <header class="main-header" id="mainHeader">
         <div class="header-content">
+            <button class="mobile-menu-btn" onclick="openMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+
             <a href="/" class="logo">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='162' height='40' viewBox='0 0 121.5 30'%3E%3Cpath fill='%23f39200' d='M 26.121094 9.402344 C 25.761719 8.84375 25.183594 9.101562 23.21875 8.535156 C 22.683594 8.378906 22.070312 8.253906 21.679688 7.832031 C 21.339844 7.464844 21.175781 6.933594 20.941406 6.519531 C 20.199219 5.199219 17.625 4.746094 17.625 4.746094 C 17.625 4.746094 17.363281 6.578125 17.363281 6.578125 C 17.261719 7.289062 16.753906 8.726562 16.015625 9.050781 C 16.261719 8.421875 16.597656 7.875 16.660156 7.175781 C 16.660156 7.167969 16.863281 4.925781 17.308594 3.886719 C 18.238281 1.703125 14.6875 2.882812 13.902344 3.320312 C 12.960938 3.847656 11.703125 5.023438 12.816406 6.09375 C 13.097656 6.363281 13.851562 6.945312 14.273438 6.835938 C 13.46875 7.046875 12.164062 6.800781 11.875 5.910156 C 11.902344 5.996094 10.871094 7.027344 10.761719 7.171875 C 10.410156 7.636719 10.089844 8.128906 9.8125 8.640625 C 9.566406 9.09375 9.300781 9.582031 9.140625 10.074219 C 8.953125 10.632812 8.921875 11.226562 8.550781 11.714844 C 8.175781 12.207031 7.8125 12.695312 7.5 13.230469 C 6.226562 15.414062 5.636719 17.695312 6.265625 20.179688 C 6.679688 21.820312 7.511719 23.355469 8.6875 24.578125 C 9.257812 25.167969 9.902344 25.660156 10.597656 26.089844 C 10.984375 26.328125 11.398438 26.5 11.828125 26.648438 C 12.1875 26.773438 12.726562 26.824219 13.046875 27.03125 C 9.605469 24.78125 6.847656 21.277344 7.683594 16.96875 C 8.28125 13.886719 9.855469 12.613281 9.855469 12.613281 C 9.734375 12.710938 9.84375 13.691406 9.859375 13.859375 C 9.910156 14.320312 10.082031 14.980469 10.5 15.242188 C 10.300781 14.40625 10.089844 13.578125 10.25 12.71875 C 10.410156 11.847656 10.832031 11.039062 11.328125 10.316406 C 11.890625 9.492188 12.730469 8.921875 13.484375 9.917969 C 13.59375 10.066406 14.195312 11.398438 14.230469 11.398438 C 14.640625 11.394531 15.136719 11.707031 15.539062 11.582031 C 16.203125 11.378906 16.769531 10.464844 17.347656 10.074219 C 17.59375 9.910156 17.894531 9.816406 17.683594 10.265625 C 17.441406 10.796875 16.957031 11.3125 16.769531 11.847656 C 16.636719 12.214844 16.785156 12.15625 17.148438 12.355469 C 17.425781 12.507812 17.691406 12.671875 17.929688 12.882812 C 18.699219 13.554688 18.613281 15.277344 19.59375 15.664062 C 19.480469 14.707031 19.875 13.707031 20.824219 13.359375 C 22.269531 12.828125 23.765625 13.695312 24.949219 12.363281 C 25.46875 11.777344 25.457031 11.097656 25.800781 10.441406 C 25.945312 10.164062 26.332031 9.738281 26.121094 9.402344 Z M 19.679688 8.773438 C 19.378906 8.773438 19.136719 8.445312 19.136719 8.042969 C 19.136719 7.636719 19.378906 7.308594 19.679688 7.308594 C 19.976562 7.308594 20.21875 7.636719 20.21875 8.042969 C 20.21875 8.445312 19.976562 8.773438 19.679688 8.773438 Z'/%3E%3C/svg%3E" alt="Eco Friendy" style="height: 40px; width: auto;">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='162' height='40' viewBox='0 0 121.5 30'%3E%3Cpath fill='%23f39200' d='M 26.121094 9.402344 C 25.761719 8.84375 25.183594 9.101562 23.21875 8.535156 C 22.683594 8.378906 22.070312 8.253906 21.679688 7.832031 C 21.339844 7.464844 21.175781 6.933594 20.941406 6.519531 C 20.199219 5.199219 17.625 4.746094 17.625 4.746094 C 17.625 4.746094 17.363281 6.578125 17.363281 6.578125 C 17.261719 7.289062 16.753906 8.726562 16.015625 9.050781 C 16.261719 8.421875 16.597656 7.875 16.660156 7.175781 C 16.660156 7.167969 16.863281 4.925781 17.308594 3.886719 C 18.238281 1.703125 14.6875 2.882812 13.902344 3.320312 C 12.960938 3.847656 11.703125 5.023438 12.816406 6.09375 C 13.097656 6.363281 13.851562 6.945312 14.273438 6.835938 C 13.46875 7.046875 12.164062 6.800781 11.875 5.910156 C 11.902344 5.996094 10.871094 7.027344 10.761719 7.171875 C 10.410156 7.636719 10.089844 8.128906 9.8125 8.640625 C 9.566406 9.09375 9.300781 9.582031 9.140625 10.074219 C 8.953125 10.632812 8.921875 11.226562 8.550781 11.714844 C 8.175781 12.207031 7.8125 12.695312 7.5 13.230469 C 6.226562 15.414062 5.636719 17.695312 6.265625 20.179688 C 6.679688 21.820312 7.511719 23.355469 8.6875 24.578125 C 9.257812 25.167969 9.902344 25.660156 10.597656 26.089844 C 10.984375 26.328125 11.398438 26.5 11.828125 26.648438 C 12.1875 26.773438 12.726562 26.824219 13.046875 27.03125 C 9.605469 24.78125 6.847656 21.277344 7.683594 16.96875 C 8.28125 13.886719 9.855469 12.613281 9.855469 12.613281 C 9.734375 12.710938 9.84375 13.691406 9.859375 13.859375 C 9.910156 14.320312 10.082031 14.980469 10.5 15.242188 C 10.300781 14.40625 10.089844 13.578125 10.25 12.71875 C 10.410156 11.847656 10.832031 11.039062 11.328125 10.316406 C 11.890625 9.492188 12.730469 8.921875 13.484375 9.917969 C 13.59375 10.066406 14.195312 11.398438 14.230469 11.398438 C 14.640625 11.394531 15.136719 11.707031 15.539062 11.582031 C 16.203125 11.378906 16.769531 10.464844 17.347656 10.074219 C 17.59375 9.910156 17.894531 9.816406 17.683594 10.265625 C 17.441406 10.796875 16.957031 11.3125 16.769531 11.847656 C 16.636719 12.214844 16.785156 12.15625 17.148438 12.355469 C 17.425781 12.507812 17.691406 12.671875 17.929688 12.882812 C 18.699219 13.554688 18.613281 15.277344 19.59375 15.664062 C 19.480469 14.707031 19.875 13.707031 20.824219 13.359375 C 22.269531 12.828125 23.765625 13.695312 24.949219 12.363281 C 25.46875 11.777344 25.457031 11.097656 25.800781 10.441406 C 25.945312 10.164062 26.332031 9.738281 26.121094 9.402344 Z M 19.679688 8.773438 C 19.378906 8.773438 19.136719 8.445312 19.136719 8.042969 C 19.136719 7.636719 19.378906 7.308594 19.679688 7.308594 C 19.976562 7.308594 20.21875 7.636719 20.21875 8.042969 C 20.21875 8.445312 19.976562 8.773438 19.679688 8.773438 Z'/%3E%3C/svg%3E" alt="Eco Friendy">
             </a>
 
             <div class="search-bar">
@@ -1184,6 +1435,37 @@
 
     <!-- ============ JAVASCRIPT ============ -->
     <script>
+        // ============ MOBILE MENU ============
+        function openMobileMenu() {
+            document.getElementById('mobileNav').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileNav').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ============ SCROLL HEADER ============
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const topBar = document.getElementById('topBar');
+            const mainHeader = document.getElementById('mainHeader');
+
+            if (currentScroll > 100) {
+                mainHeader.classList.add('scrolled');
+                topBar.classList.add('scrolled');
+            } else {
+                mainHeader.classList.remove('scrolled');
+                topBar.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        });
+
         // ============ LANGUAGE SWITCHER ============
         let currentLang = 'ar'; // اللغة الافتراضية
 
@@ -1196,6 +1478,7 @@
             
             // تحديث نص زر اللغة
             document.getElementById('lang-text').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+            document.getElementById('lang-text-mobile').textContent = currentLang === 'ar' ? 'English' : 'العربية';
             
             // تحديث جميع العناصر التي لها خاصية data-ar و data-en
             const elements = document.querySelectorAll('[data-ar][data-en]');
