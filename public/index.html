@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eco Friendly Store - متجرك البيئي الصديق للكوكب 🌱</title>
+    <title>Eco Friendy Store - متجر مستلزمات الحيوانات الأليفة 🐾</title>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,14 +19,14 @@
         }
 
         :root {
-            --primary-color: #10b981;
-            --secondary-color: #059669;
-            --dark-green: #064e3b;
-            --light-green: #d1fae5;
-            --accent-color: #f59e0b;
+            --primary-color: #f39200;
+            --secondary-color: #e68500;
+            --dark-orange: #c77400;
+            --light-orange: #fff3e6;
+            --accent-color: #ff6b35;
             --text-dark: #1f2937;
             --text-light: #6b7280;
-            --bg-light: #f9fafb;
+            --bg-light: #fffbf7;
             --white: #ffffff;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -102,14 +102,17 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--primary-color);
             text-decoration: none;
         }
 
-        .logo i {
-            font-size: 36px;
+        .logo img {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
         }
 
         .search-bar {
@@ -226,7 +229,7 @@
 
         /* ============ NAV MENU ============ */
         .nav-menu {
-            background: var(--dark-green);
+            background: var(--dark-orange);
             padding: 15px 0;
         }
 
@@ -253,13 +256,13 @@
         }
 
         .nav-menu a:hover {
-            color: var(--light-green);
+            color: var(--light-orange);
             transform: translateY(-2px);
         }
 
         /* ============ HERO SECTION ============ */
         .hero {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.95)),
+            background: linear-gradient(135deg, rgba(243, 146, 0, 0.95), rgba(230, 133, 0, 0.95)),
                         url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1600') center/cover;
             color: white;
             padding: 80px 20px;
@@ -334,7 +337,7 @@
             text-align: center;
             font-size: 36px;
             font-weight: 900;
-            color: var(--dark-green);
+            color: var(--dark-orange);
             margin-bottom: 50px;
         }
 
@@ -366,7 +369,7 @@
         .feature-card h3 {
             font-size: 22px;
             margin-bottom: 10px;
-            color: var(--dark-green);
+            color: var(--dark-orange);
         }
 
         .feature-card p {
@@ -417,6 +420,132 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
+        }
+
+        /* ============ CATEGORIES SECTION ============ */
+        .categories-section {
+            padding: 60px 20px;
+            background: white;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.2);
+        }
+
+        .category-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark-orange);
+            margin-bottom: 5px;
+        }
+
+        .category-count {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        /* ============ RELATED PRODUCTS SLIDER ============ */
+        .related-section {
+            padding: 60px 20px;
+            background: var(--bg-light);
+        }
+
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+
+        .products-slider {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+
+        .products-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slider-product {
+            min-width: 280px;
+            flex-shrink: 0;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--primary-color);
+            transition: all 0.3s;
+        }
+
+        .slider-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-btn.prev {
+            right: 10px;
+        }
+
+        .slider-btn.next {
+            left: 10px;
+        }
+
+        [dir="ltr"] .slider-btn.prev {
+            right: auto;
+            left: 10px;
+        }
+
+        [dir="ltr"] .slider-btn.next {
+            left: auto;
+            right: 10px;
         }
 
         .product-card {
@@ -485,7 +614,7 @@
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 10px;
-            color: var(--dark-green);
+            color: var(--dark-orange);
             min-height: 50px;
         }
 
@@ -558,7 +687,7 @@
 
         /* ============ FOOTER ============ */
         .footer {
-            background: var(--dark-green);
+            background: var(--dark-orange);
             color: white;
             padding: 60px 20px 20px;
         }
@@ -575,7 +704,7 @@
         .footer-section h3 {
             font-size: 20px;
             margin-bottom: 20px;
-            color: var(--light-green);
+            color: var(--light-orange);
         }
 
         .footer-section p,
@@ -618,6 +747,77 @@
         .social-icon:hover {
             background: var(--primary-color);
             transform: scale(1.1);
+        }
+
+        /* ============ LANGUAGE SWITCHER ============ */
+        .language-switcher {
+            position: relative;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .lang-btn:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .lang-btn i {
+            font-size: 16px;
+        }
+
+        /* RTL/LTR Support */
+        [dir="ltr"] body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        [dir="ltr"] .header-content,
+        [dir="ltr"] .top-bar .container,
+        [dir="ltr"] .products-header,
+        [dir="ltr"] .footer-content {
+            flex-direction: row;
+        }
+
+        [dir="ltr"] .badge {
+            right: auto;
+            left: -8px;
+        }
+
+        [dir="ltr"] .search-bar button {
+            left: auto;
+            right: 5px;
+        }
+
+        [dir="ltr"] .search-bar input {
+            padding: 12px 20px 12px 50px;
+        }
+
+        [dir="ltr"] .product-badges {
+            right: auto;
+            left: 15px;
+        }
+
+        [dir="ltr"] .footer-section a:hover {
+            padding-right: 0;
+            padding-left: 10px;
+        }
+
+        [dir="ltr"] .footer-section i {
+            margin-left: 0;
+            margin-right: 10px;
         }
 
         .footer-bottom {
@@ -677,6 +877,65 @@
                 flex-direction: column;
                 text-align: center;
             }
+
+            /* منتجين جنب بعض على الموبايل */
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .product-card {
+                font-size: 14px;
+            }
+
+            .product-image {
+                height: 180px;
+            }
+
+            .product-name {
+                font-size: 14px;
+                min-height: 40px;
+            }
+
+            .current-price {
+                font-size: 18px;
+            }
+
+            .add-to-cart {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+
+            .category-card {
+                padding: 20px 10px;
+            }
+
+            .category-icon {
+                font-size: 36px;
+            }
+
+            .category-name {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .product-info {
+                padding: 15px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
 </head>
@@ -697,8 +956,14 @@
             <div class="top-bar-right">
                 <a href="#">
                     <i class="fas fa-map-marker-alt"></i>
-                    الأردن - عمان - أبو نصير
+                    <span data-ar="الأردن - عمان - أبو نصير" data-en="Jordan - Amman - Abu Nseir">الأردن - عمان - أبو نصير</span>
                 </a>
+                <div class="language-switcher">
+                    <button class="lang-btn" onclick="toggleLanguage()">
+                        <i class="fas fa-globe"></i>
+                        <span id="lang-text">English</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -707,27 +972,26 @@
     <header class="main-header">
         <div class="header-content">
             <a href="/" class="logo">
-                <i class="fas fa-leaf"></i>
-                <span>Eco Friendly</span>
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='162' height='40' viewBox='0 0 121.5 30'%3E%3Cpath fill='%23f39200' d='M 26.121094 9.402344 C 25.761719 8.84375 25.183594 9.101562 23.21875 8.535156 C 22.683594 8.378906 22.070312 8.253906 21.679688 7.832031 C 21.339844 7.464844 21.175781 6.933594 20.941406 6.519531 C 20.199219 5.199219 17.625 4.746094 17.625 4.746094 C 17.625 4.746094 17.363281 6.578125 17.363281 6.578125 C 17.261719 7.289062 16.753906 8.726562 16.015625 9.050781 C 16.261719 8.421875 16.597656 7.875 16.660156 7.175781 C 16.660156 7.167969 16.863281 4.925781 17.308594 3.886719 C 18.238281 1.703125 14.6875 2.882812 13.902344 3.320312 C 12.960938 3.847656 11.703125 5.023438 12.816406 6.09375 C 13.097656 6.363281 13.851562 6.945312 14.273438 6.835938 C 13.46875 7.046875 12.164062 6.800781 11.875 5.910156 C 11.902344 5.996094 10.871094 7.027344 10.761719 7.171875 C 10.410156 7.636719 10.089844 8.128906 9.8125 8.640625 C 9.566406 9.09375 9.300781 9.582031 9.140625 10.074219 C 8.953125 10.632812 8.921875 11.226562 8.550781 11.714844 C 8.175781 12.207031 7.8125 12.695312 7.5 13.230469 C 6.226562 15.414062 5.636719 17.695312 6.265625 20.179688 C 6.679688 21.820312 7.511719 23.355469 8.6875 24.578125 C 9.257812 25.167969 9.902344 25.660156 10.597656 26.089844 C 10.984375 26.328125 11.398438 26.5 11.828125 26.648438 C 12.1875 26.773438 12.726562 26.824219 13.046875 27.03125 C 9.605469 24.78125 6.847656 21.277344 7.683594 16.96875 C 8.28125 13.886719 9.855469 12.613281 9.855469 12.613281 C 9.734375 12.710938 9.84375 13.691406 9.859375 13.859375 C 9.910156 14.320312 10.082031 14.980469 10.5 15.242188 C 10.300781 14.40625 10.089844 13.578125 10.25 12.71875 C 10.410156 11.847656 10.832031 11.039062 11.328125 10.316406 C 11.890625 9.492188 12.730469 8.921875 13.484375 9.917969 C 13.59375 10.066406 14.195312 11.398438 14.230469 11.398438 C 14.640625 11.394531 15.136719 11.707031 15.539062 11.582031 C 16.203125 11.378906 16.769531 10.464844 17.347656 10.074219 C 17.59375 9.910156 17.894531 9.816406 17.683594 10.265625 C 17.441406 10.796875 16.957031 11.3125 16.769531 11.847656 C 16.636719 12.214844 16.785156 12.15625 17.148438 12.355469 C 17.425781 12.507812 17.691406 12.671875 17.929688 12.882812 C 18.699219 13.554688 18.613281 15.277344 19.59375 15.664062 C 19.480469 14.707031 19.875 13.707031 20.824219 13.359375 C 22.269531 12.828125 23.765625 13.695312 24.949219 12.363281 C 25.46875 11.777344 25.457031 11.097656 25.800781 10.441406 C 25.945312 10.164062 26.332031 9.738281 26.121094 9.402344 Z M 19.679688 8.773438 C 19.378906 8.773438 19.136719 8.445312 19.136719 8.042969 C 19.136719 7.636719 19.378906 7.308594 19.679688 7.308594 C 19.976562 7.308594 20.21875 7.636719 20.21875 8.042969 C 20.21875 8.445312 19.976562 8.773438 19.679688 8.773438 Z'/%3E%3C/svg%3E" alt="Eco Friendy" style="height: 40px; width: auto;">
             </a>
 
             <div class="search-bar">
-                <input type="text" placeholder="ابحث عن منتجات صديقة للبيئة...">
+                <input type="text" id="search-input" placeholder="ابحث عن منتجات صديقة للبيئة..." data-placeholder-ar="ابحث عن منتجات صديقة للبيئة..." data-placeholder-en="Search for eco-friendly products...">
                 <button><i class="fas fa-search"></i></button>
             </div>
 
             <div class="header-actions">
-                <div class="header-icon">
+                <div class="header-icon" title="المفضلة">
                     <i class="fas fa-heart"></i>
                     <span class="badge">3</span>
                 </div>
-                <div class="header-icon" onclick="window.location.href='/cart'">
+                <div class="header-icon" onclick="window.location.href='/cart'" title="السلة">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="badge" id="cart-count">0</span>
                 </div>
                 <div class="user-menu">
-                    <a href="/login" class="btn-login">دخول</a>
-                    <a href="/register" class="btn-register">تسجيل</a>
+                    <a href="/login" class="btn-login" data-ar="دخول" data-en="Login">دخول</a>
+                    <a href="/register" class="btn-register" data-ar="تسجيل" data-en="Sign Up">تسجيل</a>
                 </div>
             </div>
         </div>
@@ -736,26 +1000,65 @@
     <!-- ============ NAV MENU ============ -->
     <nav class="nav-menu">
         <ul>
-            <li><a href="/"><i class="fas fa-home"></i> الرئيسية</a></li>
-            <li><a href="#products"><i class="fas fa-shopping-bag"></i> المنتجات</a></li>
-            <li><a href="/about"><i class="fas fa-info-circle"></i> من نحن</a></li>
-            <li><a href="/contact"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+            <li><a href="/"><i class="fas fa-home"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></a></li>
+            <li><a href="#products"><i class="fas fa-shopping-bag"></i> <span data-ar="المنتجات" data-en="Products">المنتجات</span></a></li>
+            <li><a href="/about"><i class="fas fa-info-circle"></i> <span data-ar="من نحن" data-en="About Us">من نحن</span></a></li>
+            <li><a href="/contact"><i class="fas fa-envelope"></i> <span data-ar="اتصل بنا" data-en="Contact">اتصل بنا</span></a></li>
         </ul>
     </nav>
 
     <!-- ============ HERO SECTION ============ -->
     <section class="hero">
         <div class="hero-content">
-            <h1>🌱 مرحباً بك في Eco Friendly Store</h1>
-            <p>متجرك الأول للمنتجات الصديقة للبيئة في الأردن<br>نساعدك على العيش بطريقة أكثر استدامة وصحة</p>
+            <h1 data-ar="🐾 مرحباً بك في Eco Friendy Store" data-en="🐾 Welcome to Eco Friendy Store">🐾 مرحباً بك في Eco Friendy Store</h1>
+            <p data-ar="متجرك الأول لمستلزمات وأطعمة ورعاية الحيوانات الأليفة في الأردن<br>كل ما يحتاجه حيوانك الأليف في مكان واحد" data-en="Your first pet supplies, food and care store in Jordan<br>Everything your pet needs in one place">متجرك الأول لمستلزمات وأطعمة ورعاية الحيوانات الأليفة في الأردن<br>كل ما يحتاجه حيوانك الأليف في مكان واحد</p>
             <div class="hero-buttons">
-                <a href="#products" class="btn">تسوق الآن</a>
-                <a href="/about" class="btn btn-primary">اعرف المزيد</a>
+                <a href="#products" class="btn" data-ar="تسوق الآن" data-en="Shop Now">تسوق الآن</a>
+                <a href="/about" class="btn btn-primary" data-ar="اعرف المزيد" data-en="Learn More">اعرف المزيد</a>
             </div>
         </div>
     </section>
 
-    <!-- ============ FEATURES ============ -->
+    <!-- ============ CATEGORIES SECTION ============ -->
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="section-title" data-ar="تسوق حسب الفئة" data-en="Shop by Category">تسوق حسب الفئة</h2>
+            <div class="categories-grid">
+                <div class="category-card" onclick="filterByCategory('كلاب', 'Dogs')">
+                    <div class="category-icon">🐕</div>
+                    <div class="category-name" data-ar="كلاب" data-en="Dogs">كلاب</div>
+                    <div class="category-count" data-ar="45 منتج" data-en="45 products">45 منتج</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('قطط', 'Cats')">
+                    <div class="category-icon">🐈</div>
+                    <div class="category-name" data-ar="قطط" data-en="Cats">قطط</div>
+                    <div class="category-count" data-ar="38 منتج" data-en="38 products">38 منتج</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('طيور', 'Birds')">
+                    <div class="category-icon">🦜</div>
+                    <div class="category-name" data-ar="طيور" data-en="Birds">طيور</div>
+                    <div class="category-count" data-ar="24 منتج" data-en="24 products">24 منتج</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('أسماك', 'Fish')">
+                    <div class="category-icon">🐠</div>
+                    <div class="category-name" data-ar="أسماك" data-en="Fish">أسماك</div>
+                    <div class="category-count" data-ar="32 منتج" data-en="32 products">32 منتج</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('أرانب', 'Rabbits')">
+                    <div class="category-icon">🐰</div>
+                    <div class="category-name" data-ar="أرانب" data-en="Rabbits">أرانب</div>
+                    <div class="category-count" data-ar="18 منتج" data-en="18 products">18 منتج</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('هامسترات', 'Hamsters')">
+                    <div class="category-icon">🐹</div>
+                    <div class="category-name" data-ar="هامسترات" data-en="Hamsters">هامسترات</div>
+                    <div class="category-count" data-ar="15 منتج" data-en="15 products">15 منتج</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FEATURES SECTION ============ -->
     <section class="features">
         <div class="container">
             <h2 class="section-title">لماذا تختار Eco Friendly Store؟</h2>
@@ -796,13 +1099,13 @@
     <section class="products-section" id="products">
         <div class="container">
             <div class="products-header">
-                <h2 class="section-title" style="margin-bottom: 0;">منتجاتنا المميزة</h2>
+                <h2 class="section-title" style="margin-bottom: 0;" data-ar="منتجاتنا المميزة" data-en="Our Featured Products">منتجاتنا المميزة</h2>
                 <div class="filter-buttons">
-                    <button class="filter-btn active" data-category="all">الكل</button>
-                    <button class="filter-btn" data-category="مستلزمات يومية">مستلزمات يومية</button>
-                    <button class="filter-btn" data-category="العناية الشخصية">عناية شخصية</button>
-                    <button class="filter-btn" data-category="مطبخ">مطبخ</button>
-                    <button class="filter-btn" data-category="حقائب">حقائب</button>
+                    <button class="filter-btn active" data-category="all"><span data-ar="الكل" data-en="All">الكل</span></button>
+                    <button class="filter-btn" data-category="كلاب"><span data-ar="كلاب" data-en="Dogs">كلاب</span></button>
+                    <button class="filter-btn" data-category="قطط"><span data-ar="قطط" data-en="Cats">قطط</span></button>
+                    <button class="filter-btn" data-category="طيور"><span data-ar="طيور" data-en="Birds">طيور</span></button>
+                    <button class="filter-btn" data-category="أسماك"><span data-ar="أسماك" data-en="Fish">أسماك</span></button>
                 </div>
             </div>
 
@@ -815,12 +1118,30 @@
         </div>
     </section>
 
+    <!-- ============ RELATED PRODUCTS SLIDER ============ -->
+    <section class="related-section">
+        <div class="container">
+            <h2 class="section-title" data-ar="منتجات قد تعجبك" data-en="You May Also Like">منتجات قد تعجبك</h2>
+            <div class="slider-container">
+                <button class="slider-btn prev" onclick="slideProducts('prev')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="slider-btn next" onclick="slideProducts('next')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="products-slider" id="related-slider">
+                    <!-- سيتم ملؤها من JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ============ FOOTER ============ -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>عن Eco Friendly Store</h3>
-                <p>نحن متجر متخصص في بيع المنتجات الصديقة للبيئة والقابلة لإعادة الاستخدام. نؤمن بأن كل خطوة صغيرة نحو الاستدامة تصنع فرقاً كبيراً لكوكبنا.</p>
+                <h3 data-ar="عن Eco Friendy Store" data-en="About Eco Friendy Store">عن Eco Friendy Store</h3>
+                <p data-ar="نحن متجر متخصص في مستلزمات وأطعمة ورعاية الحيوانات الأليفة. نوفر أفضل المنتجات لضمان سعادة وصحة حيوانك الأليف." data-en="We are a specialized store for pet supplies, food and care. We provide the best products to ensure your pet's happiness and health.">نحن متجر متخصص في مستلزمات وأطعمة ورعاية الحيوانات الأليفة. نوفر أفضل المنتجات لضمان سعادة وصحة حيوانك الأليف.</p>
                 <div class="social-links">
                     <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
@@ -857,12 +1178,63 @@
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2024 Eco Friendly Store. جميع الحقوق محفوظة. صنع بـ <i class="fas fa-heart" style="color: var(--accent-color);"></i> من أجل كوكب أفضل</p>
+            <p>&copy; 2024 Eco Friendy Store. جميع الحقوق محفوظة. صنع بـ <i class="fas fa-heart" style="color: var(--accent-color);"></i> من أجل كوكب أفضل</p>
         </div>
     </footer>
 
     <!-- ============ JAVASCRIPT ============ -->
     <script>
+        // ============ LANGUAGE SWITCHER ============
+        let currentLang = 'ar'; // اللغة الافتراضية
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            
+            // تغيير اتجاه الصفحة
+            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', currentLang);
+            
+            // تحديث نص زر اللغة
+            document.getElementById('lang-text').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+            
+            // تحديث جميع العناصر التي لها خاصية data-ar و data-en
+            const elements = document.querySelectorAll('[data-ar][data-en]');
+            elements.forEach(element => {
+                const text = currentLang === 'ar' ? element.getAttribute('data-ar') : element.getAttribute('data-en');
+                
+                if (element.tagName === 'INPUT') {
+                    element.placeholder = text;
+                } else if (element.tagName === 'A' || element.tagName === 'BUTTON') {
+                    element.textContent = text;
+                } else {
+                    element.innerHTML = text;
+                }
+            });
+            
+            // تحديث placeholder لحقل البحث
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.placeholder = currentLang === 'ar' 
+                    ? 'ابحث عن منتجات صديقة للبيئة...' 
+                    : 'Search for eco-friendly products...';
+            }
+            
+            // حفظ اللغة في localStorage
+            localStorage.setItem('preferred-language', currentLang);
+            
+            // إعادة تحميل المنتجات بالترجمة
+            loadProducts();
+        }
+
+        // تحميل اللغة المحفوظة عند بدء التشغيل
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language');
+            if (savedLang && savedLang !== currentLang) {
+                toggleLanguage();
+            }
+        });
+
+        // ============ PRODUCTS ============
         // جلب المنتجات من API
         async function loadProducts() {
             try {
@@ -889,37 +1261,46 @@
             
             const filteredProducts = filter === 'all' 
                 ? products 
-                : products.filter(p => p.category === filter);
+                : products.filter(p => p.category === filter || p.categoryEn === filter);
 
-            container.innerHTML = filteredProducts.map(product => `
+            container.innerHTML = filteredProducts.map(product => {
+                const productName = currentLang === 'ar' ? product.name : (product.nameEn || product.name);
+                const productCategory = currentLang === 'ar' ? product.category : (product.categoryEn || product.category);
+                const currencyText = currentLang === 'ar' ? 'دينار' : 'JOD';
+                const addToCartText = currentLang === 'ar' ? 'أضف للسلة' : 'Add to Cart';
+                const newBadge = currentLang === 'ar' ? 'جديد' : 'New';
+                const saleBadge = currentLang === 'ar' ? 'خصم' : 'Sale';
+                const ecoBadge = currentLang === 'ar' ? 'صديق للبيئة' : 'Eco-Friendly';
+                
+                return `
                 <div class="product-card" data-category="${product.category}">
                     <div class="product-badges">
-                        ${product.isNew ? '<span class="badge-new">جديد</span>' : ''}
-                        ${product.discount > 0 ? '<span class="badge-sale">خصم</span>' : ''}
-                        ${product.isEcoChoice ? '<span class="badge-eco">صديق للبيئة</span>' : ''}
+                        ${product.isNew ? `<span class="badge-new">${newBadge}</span>` : ''}
+                        ${product.discount > 0 ? `<span class="badge-sale">${saleBadge}</span>` : ''}
+                        ${product.isEcoChoice ? `<span class="badge-eco">${ecoBadge}</span>` : ''}
                     </div>
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <img src="${product.image}" alt="${productName}" class="product-image">
                     <div class="product-info">
-                        <div class="product-category">${product.category}</div>
-                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-category">${productCategory}</div>
+                        <h3 class="product-name">${productName}</h3>
                         <div class="product-rating">
                             <span class="stars">${getStars(product.rating)}</span>
                             <span class="reviews">(${product.reviews})</span>
                         </div>
                         <div class="product-price">
-                            <span class="current-price">${product.price.toFixed(2)} دينار</span>
+                            <span class="current-price">${product.price.toFixed(2)} ${currencyText}</span>
                             ${product.discount > 0 ? `
                                 <span class="original-price">${product.originalPrice.toFixed(2)}</span>
                                 <span class="discount-badge">-${product.discount}%</span>
                             ` : ''}
                         </div>
-                        <button class="add-to-cart" onclick="addToCart(${product.id}, '${product.name}')">
+                        <button class="add-to-cart" onclick="addToCart(${product.id}, '${productName}')">
                             <i class="fas fa-shopping-cart"></i>
-                            أضف للسلة
+                            ${addToCartText}
                         </button>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         // إنشاء النجوم
@@ -964,17 +1345,105 @@
                     cartCount.textContent = parseInt(cartCount.textContent) + 1;
                     
                     // رسالة نجاح
-                    alert(`✅ تم إضافة "${productName}" للسلة بنجاح!`);
+                    const successMessage = currentLang === 'ar' 
+                        ? `✅ تم إضافة "${productName}" للسلة بنجاح!`
+                        : `✅ "${productName}" added to cart successfully!`;
+                    alert(successMessage);
                 }
             } catch (error) {
                 console.error('خطأ في إضافة المنتج:', error);
-                alert('عذراً، حدث خطأ. يرجى المحاولة مرة أخرى');
+                const errorMessage = currentLang === 'ar' 
+                    ? 'عذراً، حدث خطأ. يرجى المحاولة مرة أخرى'
+                    : 'Sorry, an error occurred. Please try again';
+                alert(errorMessage);
+            }
+        }
+
+        // ============ CATEGORIES FILTER ============
+        function filterByCategory(categoryAr, categoryEn) {
+            const category = currentLang === 'ar' ? categoryAr : categoryEn;
+            
+            // تمرير للأسفل لقسم المنتجات
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+            
+            // تحديث الفلتر
+            setTimeout(async () => {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayProducts(data.products, categoryAr);
+                }
+            }, 500);
+        }
+
+        // ============ RELATED PRODUCTS SLIDER ============
+        async function loadRelatedProducts() {
+            try {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayRelatedProducts(data.products.slice(0, 8)); // أول 8 منتجات
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل المنتجات ذات الصلة:', error);
+            }
+        }
+
+        function displayRelatedProducts(products) {
+            const slider = document.getElementById('related-slider');
+            const currencyText = currentLang === 'ar' ? 'دينار' : 'JOD';
+            const addToCartText = currentLang === 'ar' ? 'أضف للسلة' : 'Add to Cart';
+            
+            slider.innerHTML = products.map(product => {
+                const productName = currentLang === 'ar' ? product.name : (product.nameEn || product.name);
+                const productCategory = currentLang === 'ar' ? product.category : (product.categoryEn || product.category);
+                
+                return `
+                <div class="product-card slider-product">
+                    <div class="product-badges">
+                        ${product.isNew ? `<span class="badge-new">${currentLang === 'ar' ? 'جديد' : 'New'}</span>` : ''}
+                        ${product.discount > 0 ? `<span class="badge-sale">${currentLang === 'ar' ? 'خصم' : 'Sale'}</span>` : ''}
+                    </div>
+                    <img src="${product.image}" alt="${productName}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-category">${productCategory}</div>
+                        <h3 class="product-name">${productName}</h3>
+                        <div class="product-rating">
+                            <span class="stars">${getStars(product.rating)}</span>
+                            <span class="reviews">(${product.reviews})</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">${product.price.toFixed(2)} ${currencyText}</span>
+                            ${product.discount > 0 ? `
+                                <span class="original-price">${product.originalPrice.toFixed(2)}</span>
+                            ` : ''}
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id}, '${productName}')">
+                            <i class="fas fa-shopping-cart"></i>
+                            ${addToCartText}
+                        </button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function slideProducts(direction) {
+            const slider = document.getElementById('related-slider');
+            const scrollAmount = 300;
+            
+            if (direction === 'next') {
+                slider.scrollLeft -= scrollAmount;
+            } else {
+                slider.scrollLeft += scrollAmount;
             }
         }
 
         // فلترة المنتجات
         document.addEventListener('DOMContentLoaded', () => {
             loadProducts();
+            loadRelatedProducts();
 
             // إضافة مستمع الأحداث لأزرار الفلتر
             const filterButtons = document.querySelectorAll('.filter-btn');
