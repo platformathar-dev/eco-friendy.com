@@ -16,7 +16,7 @@
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            background: linear-gradient(135deg, #fff3e6 0%, #ffe0b3 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -28,9 +28,9 @@
             max-width: 500px;
             width: 100%;
             background: white;
-            border-radius: 15px;
+            border-radius: 25px;
             padding: 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 50px rgba(243, 146, 0, 0.2);
         }
 
         .logo {
@@ -38,21 +38,10 @@
             margin-bottom: 30px;
         }
 
-        .logo-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-
-        .logo h1 {
-            font-size: 26px;
-            font-weight: 700;
-            color: #2e7d32;
-            margin-bottom: 5px;
-        }
-
         .logo p {
-            color: #66bb6a;
+            color: #ff9933;
             font-size: 14px;
+            margin-top: 10px;
         }
 
         .form-title {
@@ -63,7 +52,7 @@
         .form-title h2 {
             font-size: 22px;
             font-weight: 700;
-            color: #1b5e20;
+            color: #c77400;
             margin-bottom: 5px;
         }
 
@@ -79,7 +68,7 @@
         label {
             display: block;
             margin-bottom: 6px;
-            color: #2e7d32;
+            color: #f39200;
             font-weight: 600;
             font-size: 14px;
         }
@@ -92,19 +81,20 @@
         select {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border: 2px solid #ffe0b3;
+            border-radius: 12px;
             font-size: 15px;
             font-family: 'Tajawal', sans-serif;
-            transition: border-color 0.3s;
-            background: #fafafa;
+            transition: all 0.3s;
+            background: #fffbf7;
         }
 
         input:focus,
         select:focus {
             outline: none;
-            border-color: #66bb6a;
+            border-color: #f39200;
             background: white;
+            box-shadow: 0 0 0 3px rgba(243, 146, 0, 0.1);
         }
 
         input::placeholder {
@@ -157,7 +147,7 @@
         }
 
         .checkbox-group a {
-            color: #66bb6a;
+            color: #f39200;
             text-decoration: none;
             font-weight: 600;
         }
@@ -169,24 +159,28 @@
         .submit-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+            background: linear-gradient(135deg, #f39200 0%, #e68500 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 17px;
             font-weight: 700;
             font-family: 'Tajawal', sans-serif;
             cursor: pointer;
             transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(243, 146, 0, 0.3);
         }
 
         .submit-btn:hover {
-            background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+            background: linear-gradient(135deg, #e68500 0%, #c77400 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243, 146, 0, 0.4);
         }
 
         .submit-btn:disabled {
             background: #bdbdbd;
             cursor: not-allowed;
+            box-shadow: none;
         }
 
         .login-link {
@@ -197,7 +191,7 @@
         }
 
         .login-link a {
-            color: #66bb6a;
+            color: #f39200;
             text-decoration: none;
             font-weight: 700;
         }
@@ -210,6 +204,7 @@
         @media (max-width: 480px) {
             .container {
                 padding: 30px 25px;
+                border-radius: 20px;
             }
 
             .row {
@@ -231,8 +226,7 @@
     <div class="container">
         <!-- الشعار -->
         <div class="logo">
-            <div class="logo-icon">🌱</div>
-            <h1>Eco Friendly Store</h1>
+            <img src="Eco-friendy.svg" alt="Eco Friendy" style="width: 180px; height: auto; margin-bottom: 15px;">
             <p>تسوق بمسؤولية، احمِ كوكبنا</p>
         </div>
 
