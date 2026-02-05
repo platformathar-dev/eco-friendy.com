@@ -49,13 +49,6 @@
             gap: 10px;
         }
 
-        .top-bar-left {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
         .top-bar-item {
             display: flex;
             align-items: center;
@@ -67,6 +60,27 @@
 
         .top-bar-item:hover {
             opacity: 0.8;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: white;
+            color: var(--primary-color);
         }
 
         /* ============ MAIN HEADER ============ */
@@ -93,12 +107,7 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .logo img {
-            width: 45px;
-            height: auto;
+            gap: 5px;
         }
 
         .header-icons {
@@ -113,7 +122,6 @@
             font-size: 22px;
             cursor: pointer;
             transition: all 0.3s;
-            text-decoration: none;
         }
 
         .header-icon:hover {
@@ -324,7 +332,6 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             transition: all 0.3s;
             cursor: pointer;
-            text-decoration: none;
         }
 
         .category-card:active {
@@ -358,7 +365,6 @@
             border: 2px solid transparent;
             transition: all 0.3s;
             cursor: pointer;
-            text-decoration: none;
         }
 
         .sub-cat-card:active {
@@ -610,7 +616,6 @@
             font-size: 16px;
             color: white;
             transition: all 0.3s;
-            text-decoration: none;
         }
 
         .social-icon:hover {
@@ -749,18 +754,6 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        .loading-state {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-light);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-light);
-        }
     </style>
 </head>
 <body>
@@ -784,10 +777,9 @@
         
         <ul class="mobile-nav-menu">
             <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
-            <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
-            <li><a href="register.html"><i class="fas fa-user-plus"></i> إنشاء حساب</a></li>
-            <li><a href="#" onclick="filterByCategory('dogs'); closeMobileMenu(); return false;"><i class="fas fa-dog"></i> كلاب</a></li>
-            <li><a href="#" onclick="filterByCategory('cats'); closeMobileMenu(); return false;"><i class="fas fa-cat"></i> قطط</a></li>
+            <li><a href="products.html"><i class="fas fa-shopping-bag"></i> جميع المنتجات</a></li>
+            <li><a href="dogs.html"><i class="fas fa-dog"></i> كلاب</a></li>
+            <li><a href="cats.html"><i class="fas fa-cat"></i> قطط</a></li>
             <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a></li>
             <li><a href="wishlist.html"><i class="fas fa-heart"></i> المفضلة</a></li>
             <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
@@ -797,16 +789,18 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-        <div class="top-bar-left">
-            <a href="tel:962790083039" class="top-bar-item">
-                <i class="fas fa-phone"></i>
-                962790083039+
-            </a>
-            <a href="mailto:info@eco-friendy.com" class="top-bar-item">
-                <i class="fas fa-envelope"></i>
-                info@eco-friendy.com
-            </a>
-        </div>
+        <a href="tel:962790083039" class="top-bar-item">
+            <i class="fas fa-phone"></i>
+            962790083039+
+        </a>
+        <a href="mailto:info@eco-friendy.com" class="top-bar-item">
+            <i class="fas fa-envelope"></i>
+            info@eco-friendy.com
+        </a>
+        <button class="lang-btn" onclick="toggleLanguage()">
+            <i class="fas fa-globe"></i>
+            <span>English</span>
+        </button>
         <a href="#" class="top-bar-item">
             <i class="fas fa-map-marker-alt"></i>
             الأردن - عمان
@@ -817,14 +811,10 @@
     <header class="main-header">
         <div class="header-content">
             <a href="index.html" class="logo">
-                <img src="Eco-friendy.svg" alt="Eco Friendy" onerror="this.style.display='none'">
-                <span>Eco Friendy</span>
+                🐾 Eco Friendy
             </a>
             
             <div class="header-icons">
-                <a href="login.html" class="header-icon" title="تسجيل الدخول">
-                    <i class="fas fa-user"></i>
-                </a>
                 <a href="cart.html" class="header-icon">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="badge" id="cart-count">0</span>
@@ -854,7 +844,7 @@
         <p>متجرك الأول لمستلزمات وأطعمة ورعاية الحيوانات الأليفة في الأردن</p>
         <p>كل ما يحتاجه حيوانك الأليف في مكان واحد</p>
         <div class="hero-buttons">
-            <a href="#products" class="btn btn-white">تسوق الآن</a>
+            <a href="products.html" class="btn btn-white">تسوق الآن</a>
             <a href="about.html" class="btn btn-accent">اعرف المزيد</a>
         </div>
     </section>
@@ -864,13 +854,29 @@
         <h2 class="section-title">تسوق حسب الفئة</h2>
         <div class="categories-slider-container">
             <div class="categories-slider" id="categoriesSlider">
-                <a href="#" onclick="filterByCategory('dogs'); return false;" class="category-card">
+                <a href="dogs.html" class="category-card">
                     <div class="category-icon">🐕</div>
                     <div class="category-name">كلاب</div>
                 </a>
-                <a href="#" onclick="filterByCategory('cats'); return false;" class="category-card">
+                <a href="cats.html" class="category-card">
                     <div class="category-icon">🐈</div>
                     <div class="category-name">قطط</div>
+                </a>
+                <a href="products.html?category=birds" class="category-card">
+                    <div class="category-icon">🦜</div>
+                    <div class="category-name">طيور</div>
+                </a>
+                <a href="products.html?category=fish" class="category-card">
+                    <div class="category-icon">🐠</div>
+                    <div class="category-name">أسماك</div>
+                </a>
+                <a href="products.html?category=rabbits" class="category-card">
+                    <div class="category-icon">🐰</div>
+                    <div class="category-name">أرانب</div>
+                </a>
+                <a href="products.html?category=hamsters" class="category-card">
+                    <div class="category-icon">🐹</div>
+                    <div class="category-name">هامسترات</div>
                 </a>
             </div>
         </div>
@@ -882,15 +888,15 @@
         
         <h3 class="sub-cat-title">🐕 كلاب</h3>
         <div class="sub-cat-grid">
-            <a href="#" onclick="filterByCategory('dogs', 'accessories'); return false;" class="sub-cat-card">
+            <a href="dogs.html?type=accessories" class="sub-cat-card">
                 <div class="sub-cat-icon">👔</div>
                 <div class="sub-cat-name">إكسسوارات</div>
             </a>
-            <a href="#" onclick="filterByCategory('dogs', 'food'); return false;" class="sub-cat-card">
+            <a href="dogs.html?type=food" class="sub-cat-card">
                 <div class="sub-cat-icon">🍖</div>
                 <div class="sub-cat-name">طعام</div>
             </a>
-            <a href="#" onclick="filterByCategory('dogs', 'care'); return false;" class="sub-cat-card">
+            <a href="dogs.html?type=care" class="sub-cat-card">
                 <div class="sub-cat-icon">💊</div>
                 <div class="sub-cat-name">رعاية</div>
             </a>
@@ -898,15 +904,15 @@
 
         <h3 class="sub-cat-title">🐈 قطط</h3>
         <div class="sub-cat-grid">
-            <a href="#" onclick="filterByCategory('cats', 'accessories'); return false;" class="sub-cat-card">
+            <a href="cats.html?type=accessories" class="sub-cat-card">
                 <div class="sub-cat-icon">👔</div>
                 <div class="sub-cat-name">إكسسوارات</div>
             </a>
-            <a href="#" onclick="filterByCategory('cats', 'food'); return false;" class="sub-cat-card">
+            <a href="cats.html?type=food" class="sub-cat-card">
                 <div class="sub-cat-icon">🍖</div>
                 <div class="sub-cat-name">طعام</div>
             </a>
-            <a href="#" onclick="filterByCategory('cats', 'care'); return false;" class="sub-cat-card">
+            <a href="cats.html?type=care" class="sub-cat-card">
                 <div class="sub-cat-icon">💊</div>
                 <div class="sub-cat-name">رعاية</div>
             </a>
@@ -914,16 +920,13 @@
     </section>
 
     <!-- Latest Products -->
-    <section class="section" id="products">
+    <section class="section">
         <div class="section-header">
             <h2>منتجات أحدث ⭐</h2>
-            <a href="#" onclick="showAllProducts(); return false;" class="view-all">عرض الكل ←</a>
+            <a href="products.html?filter=new" class="view-all">عرض الكل ←</a>
         </div>
         <div class="products-grid" id="latestProducts">
-            <div class="loading-state">
-                <div class="loading" style="width: 50px; height: 50px; border-width: 4px; margin: 0 auto; border-color: var(--primary-color); border-top-color: var(--light-orange);"></div>
-                <p style="margin-top: 15px;">جاري تحميل المنتجات...</p>
-            </div>
+            <!-- Products will be loaded by JavaScript -->
         </div>
     </section>
 
@@ -931,13 +934,11 @@
     <section class="section bg-white">
         <div class="section-header">
             <h2>منتجات ذات صلة 🔥</h2>
-            <a href="#" onclick="showAllProducts(); return false;" class="view-all">عرض الكل ←</a>
+            <a href="products.html?filter=related" class="view-all">عرض الكل ←</a>
         </div>
         <div class="related-slider-container">
             <div class="related-slider" id="relatedSlider">
-                <div class="loading-state">
-                    <div class="loading" style="width: 40px; height: 40px; border-width: 3px; margin: 0 auto; border-color: var(--primary-color); border-top-color: var(--light-orange);"></div>
-                </div>
+                <!-- Products will be loaded by JavaScript -->
             </div>
         </div>
     </section>
@@ -948,8 +949,7 @@
             <div class="footer-section">
                 <h3>روابط سريعة</h3>
                 <a href="index.html">الرئيسية</a>
-                <a href="login.html">تسجيل الدخول</a>
-                <a href="register.html">إنشاء حساب</a>
+                <a href="products.html">المنتجات</a>
                 <a href="about.html">من نحن</a>
                 <a href="contact.html">اتصل بنا</a>
             </div>
@@ -991,234 +991,8 @@
         </div>
     </footer>
 
-    <script>
-        // المتغيرات العامة
-        let allProducts = [];
-        let currentFilter = 'all';
-
-        // تحميل المنتجات عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            loadProducts();
-            updateCartCount();
-            updateWishlistCount();
-        });
-
-        // جلب المنتجات من قاعدة البيانات
-        async function loadProducts() {
-            try {
-                const response = await fetch('/api/get-home-products.php');
-                const data = await response.json();
-
-                if (data.success) {
-                    allProducts = [...data.latestProducts, ...data.relatedProducts];
-                    displayLatestProducts(data.latestProducts);
-                    displayRelatedProducts(data.relatedProducts);
-                } else {
-                    showEmptyState('latestProducts');
-                    showEmptyState('relatedSlider');
-                }
-            } catch (error) {
-                console.error('خطأ في تحميل المنتجات:', error);
-                showEmptyState('latestProducts');
-                showEmptyState('relatedSlider');
-            }
-        }
-
-        // عرض أحدث المنتجات
-        function displayLatestProducts(products) {
-            const container = document.getElementById('latestProducts');
-            
-            if (!products || products.length === 0) {
-                showEmptyState('latestProducts');
-                return;
-            }
-
-            container.innerHTML = products.map(product => createProductCard(product)).join('');
-        }
-
-        // عرض المنتجات ذات الصلة
-        function displayRelatedProducts(products) {
-            const container = document.getElementById('relatedSlider');
-            
-            if (!products || products.length === 0) {
-                showEmptyState('relatedSlider');
-                return;
-            }
-
-            container.innerHTML = products.map(product => 
-                `<div class="related-card">${createProductCard(product)}</div>`
-            ).join('');
-        }
-
-        // إنشاء بطاقة منتج
-        function createProductCard(product) {
-            const imageUrl = product.image || 'https://via.placeholder.com/300x300?text=No+Image';
-            const price = parseFloat(product.price).toFixed(2);
-            
-            return `
-                <div class="product-card">
-                    <div class="product-badges">
-                        <span class="badge-eco">بيئي</span>
-                    </div>
-                    <img src="${imageUrl}" alt="${product.name}" class="product-image" 
-                         onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'">
-                    <div class="product-info">
-                        <div class="product-category">${product.category}</div>
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <span class="reviews">(4.5)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">${price} د.أ</span>
-                        </div>
-                        <button class="add-to-cart" onclick="addToCart(${product.id}, '${product.name}', ${product.price})">
-                            <i class="fas fa-shopping-cart"></i>
-                            أضف للسلة
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        // عرض حالة فارغة
-        function showEmptyState(containerId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-box-open" style="font-size: 48px; margin-bottom: 15px; color: var(--primary-color);"></i>
-                    <p>لا توجد منتجات حالياً</p>
-                    <p style="font-size: 12px; margin-top: 8px;">قم بإضافة منتجات من لوحة التحكم</p>
-                </div>
-            `;
-        }
-
-        // تصفية حسب الفئة
-        function filterByCategory(category, subCategory = null) {
-            currentFilter = category;
-            
-            let filtered = allProducts.filter(product => {
-                const productCategory = product.category.toLowerCase();
-                const categoryMatch = productCategory.includes(category.toLowerCase()) ||
-                                    productCategory.includes(category === 'dogs' ? 'كلاب' : 'قطط');
-                
-                if (subCategory) {
-                    return categoryMatch && productCategory.includes(subCategory);
-                }
-                return categoryMatch;
-            });
-
-            displayLatestProducts(filtered);
-            
-            // التمرير إلى قسم المنتجات
-            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-            
-            showNotification(`تم تصفية المنتجات: ${category === 'dogs' ? 'كلاب 🐕' : 'قطط 🐈'}`);
-        }
-
-        // عرض جميع المنتجات
-        function showAllProducts() {
-            currentFilter = 'all';
-            displayLatestProducts(allProducts);
-            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-            showNotification('عرض جميع المنتجات');
-        }
-
-        // البحث عن المنتجات
-        function searchProducts() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-            
-            if (!searchTerm) {
-                displayLatestProducts(allProducts);
-                return;
-            }
-
-            const filtered = allProducts.filter(product => 
-                product.name.toLowerCase().includes(searchTerm) ||
-                product.description.toLowerCase().includes(searchTerm) ||
-                product.category.toLowerCase().includes(searchTerm)
-            );
-
-            displayLatestProducts(filtered);
-            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-            showNotification(`نتائج البحث: ${filtered.length} منتج`);
-        }
-
-        // إضافة للسلة
-        function addToCart(productId, productName, productPrice) {
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            
-            const existingItem = cart.find(item => item.id === productId);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: productId,
-                    name: productName,
-                    price: productPrice,
-                    quantity: 1
-                });
-            }
-            
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            showNotification(`تمت إضافة "${productName}" إلى السلة بنجاح! 🛒`);
-        }
-
-        // تحديث عداد السلة
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart-count').textContent = count;
-        }
-
-        // تحديث عداد المفضلة
-        function updateWishlistCount() {
-            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-            document.getElementById('wishlist-count').textContent = wishlist.length;
-        }
-
-        // عرض الإشعارات
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            const notificationText = document.getElementById('notificationText');
-            
-            notificationText.textContent = message;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // فتح القائمة الجانبية
-        function openMobileMenu() {
-            document.getElementById('mobileNav').classList.add('active');
-            document.getElementById('overlay').classList.add('active');
-        }
-
-        // إغلاق القائمة الجانبية
-        function closeMobileMenu() {
-            document.getElementById('mobileNav').classList.remove('active');
-            document.getElementById('overlay').classList.remove('active');
-        }
-
-        // إغلاق القائمة عند الضغط على الخلفية
-        document.getElementById('overlay').addEventListener('click', closeMobileMenu);
-
-        // البحث عند الضغط على Enter
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchProducts();
-            }
-        });
-    </script>
+    <script src="js/products-data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
