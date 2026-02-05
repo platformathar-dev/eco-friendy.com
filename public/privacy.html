@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الخصوصية - Eco Friendy</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #f39200;
+            --secondary-color: #e68500;
+            --dark-orange: #c77400;
+            --light-orange: #fff3e6;
+            --accent-color: #ff6b35;
+            --success-color: #10b981;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #fffbf7;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 10px 15px;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-header {
+            background: white;
+            padding: 12px 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-icon {
+            position: relative;
+            color: var(--text-dark);
+            font-size: 22px;
+            text-decoration: none;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 15px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .privacy-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 15px;
+        }
+
+        .intro-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .intro-card .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .intro-card h2 {
+            color: var(--dark-orange);
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .intro-card p {
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .update-date {
+            background: var(--light-orange);
+            color: var(--dark-orange);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .privacy-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .privacy-section h2 {
+            color: var(--dark-orange);
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--light-orange);
+        }
+
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .privacy-section h3 {
+            color: var(--dark-orange);
+            font-size: 18px;
+            font-weight: 700;
+            margin: 20px 0 12px 0;
+        }
+
+        .privacy-section p {
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        .privacy-section ul {
+            margin: 12px 0 12px 25px;
+        }
+
+        .privacy-section li {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .privacy-section li strong {
+            color: var(--dark-orange);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e6, #ffe5cc);
+            border-right: 5px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: var(--accent-color);
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e6f7ff, #b3e0ff);
+            border-right: 5px solid #0ea5e9;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #0369a1;
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .contact-box h2 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .contact-btn {
+            background: white;
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .table-of-contents {
+            background: white;
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .table-of-contents h3 {
+            color: var(--dark-orange);
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 12px;
+        }
+
+        .toc-list a {
+            color: var(--text-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .toc-list a:hover {
+            background: var(--light-orange);
+            color: var(--primary-color);
+            padding-right: 20px;
+        }
+
+        .toc-number {
+            width: 30px;
+            height: 30px;
+            background: var(--light-orange);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 14px;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            z-index: 2000;
+            transition: right 0.3s;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .mobile-nav-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-nav-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 26px;
+            }
+
+            .intro-card .icon {
+                font-size: 50px;
+            }
+
+            .privacy-section h2 {
+                font-size: 18px;
+            }
+
+            .section-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <h3>🐾 Eco Friendy</h3>
+            <button class="mobile-nav-close" onclick="closeMobileMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <ul class="mobile-nav-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+            <li><a href="products.html"><i class="fas fa-shopping-bag"></i> جميع المنتجات</a></li>
+            <li><a href="dogs.html"><i class="fas fa-dog"></i> كلاب</a></li>
+            <li><a href="cats.html"><i class="fas fa-cat"></i> قطط</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a></li>
+            <li><a href="wishlist.html"><i class="fas fa-heart"></i> المفضلة</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</a></li>
+            <li><a href="shipping.html"><i class="fas fa-shipping-fast"></i> الشحن والتوصيل</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+        </ul>
+    </div>
+
+    <div class="top-bar">
+        <a href="tel:962790083039" class="top-bar-item">
+            <i class="fas fa-phone"></i> 962790083039+
+        </a>
+        <a href="mailto:info@eco-friendy.com" class="top-bar-item">
+            <i class="fas fa-envelope"></i> info@eco-friendy.com
+        </a>
+    </div>
+
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">🐾 Eco Friendy</a>
+            
+            <div class="header-icons">
+                <a href="cart.html" class="header-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </a>
+                <a href="wishlist.html" class="header-icon">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge" id="wishlist-count">0</span>
+                </a>
+                <button class="mobile-menu-btn" onclick="openMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h1>🔒 سياسة الخصوصية</h1>
+        <p>نحن نحترم خصوصيتك ونحمي بياناتك الشخصية</p>
+    </div>
+
+    <div class="privacy-container">
+        <div class="intro-card">
+            <div class="icon">🛡️</div>
+            <h2>التزامنا بحماية خصوصيتك</h2>
+            <p>
+                في Eco Friendy، نحن ملتزمون بحماية خصوصيتك وبياناتك الشخصية. 
+                توضح هذه السياسة كيفية جمع واستخدام وحماية معلوماتك عند استخدام موقعنا الإلكتروني.
+            </p>
+            <div class="update-date">
+                📅 آخر تحديث: فبراير 2026
+            </div>
+        </div>
+
+        <div class="table-of-contents">
+            <h3>📑 المحتويات</h3>
+            <ul class="toc-list">
+                <li>
+                    <a href="#section1">
+                        <span class="toc-number">1</span>
+                        المعلومات التي نجمعها
+                    </a>
+                </li>
+                <li>
+                    <a href="#section2">
+                        <span class="toc-number">2</span>
+                        كيفية استخدام المعلومات
+                    </a>
+                </li>
+                <li>
+                    <a href="#section3">
+                        <span class="toc-number">3</span>
+                        حماية البيانات
+                    </a>
+                </li>
+                <li>
+                    <a href="#section4">
+                        <span class="toc-number">4</span>
+                        مشاركة المعلومات
+                    </a>
+                </li>
+                <li>
+                    <a href="#section5">
+                        <span class="toc-number">5</span>
+                        حقوقك
+                    </a>
+                </li>
+                <li>
+                    <a href="#section6">
+                        <span class="toc-number">6</span>
+                        ملفات تعريف الارتباط
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="privacy-section" id="section1">
+            <h2>
+                <div class="section-icon">📋</div>
+                1. المعلومات التي نجمعها
+            </h2>
+            
+            <p>نقوم بجمع المعلومات التالية عند استخدامك لموقعنا:</p>
+            
+            <h3>معلومات شخصية</h3>
+            <ul>
+                <li><strong>الاسم الكامل:</strong> لتخصيص تجربتك ومعالجة طلباتك</li>
+                <li><strong>رقم الهاتف:</strong> للتواصل معك بخصوص طلباتك</li>
+                <li><strong>عنوان البريد الإلكتروني:</strong> لإرسال تأكيدات الطلبات والعروض</li>
+                <li><strong>عنوان التوصيل:</strong> لتسليم مشترياتك</li>
+            </ul>
+
+            <h3>معلومات الطلبات</h3>
+            <ul>
+                <li>تفاصيل المنتجات المشتراة</li>
+                <li>قيمة الطلبات وطرق الدفع</li>
+                <li>تاريخ ووقت الطلب</li>
+            </ul>
+
+            <h3>معلومات تقنية</h3>
+            <ul>
+                <li>عنوان IP الخاص بك</li>
+                <li>نوع المتصفح والجهاز</li>
+                <li>صفحات الموقع التي تزورها</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>
+                    <i class="fas fa-info-circle"></i>
+                    معلومة مهمة
+                </h4>
+                <p>نجمع فقط المعلومات الضرورية لتوفير خدماتنا بشكل أفضل. لا نجمع أي معلومات حساسة غير ضرورية.</p>
+            </div>
+        </div>
+
+        <div class="privacy-section" id="section2">
+            <h2>
+                <div class="section-icon">⚙️</div>
+                2. كيفية استخدام المعلومات
+            </h2>
+            
+            <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
+            
+            <ul>
+                <li><strong>معالجة الطلبات:</strong> لتنفيذ وتوصيل طلباتك بدقة</li>
+                <li><strong>التواصل معك:</strong> لإرسال تأكيدات الطلبات وتحديثات الشحن</li>
+                <li><strong>تحسين الخدمات:</strong> لتطوير وتحسين تجربة التسوق</li>
+                <li><strong>الدعم الفني:</strong> للرد على استفساراتك وحل المشاكل</li>
+                <li><strong>التسويق:</strong> لإرسال عروض وأخبار (يمكنك إلغاء الاشتراك في أي وقت)</li>
+                <li><strong>الأمان:</strong> لحماية موقعنا من الاحتيال والاستخدام غير المشروع</li>
+            </ul>
+
+            <div class="warning-box">
+                <h4>
+                    <i class="fas fa-exclamation-triangle"></i>
+                    تنبيه
+                </h4>
+                <p>لن نستخدم معلوماتك الشخصية لأغراض أخرى غير المذكورة أعلاه دون الحصول على موافقتك المسبقة.</p>
+            </div>
+        </div>
+
+        <div class="privacy-section" id="section3">
+            <h2>
+                <div class="section-icon">🔐</div>
+                3. حماية البيانات
+            </h2>
+            
+            <p>نتخذ الإجراءات الأمنية التالية لحماية معلوماتك:</p>
+            
+            <ul>
+                <li><strong>التشفير:</strong> جميع المعلومات الحساسة يتم تشفيرها</li>
+                <li><strong>الوصول المحدود:</strong> فقط الموظفون المصرح لهم يمكنهم الوصول لبياناتك</li>
+                <li><strong>التحديثات الأمنية:</strong> نقوم بتحديث أنظمتنا بانتظام</li>
+                <li><strong>النسخ الاحتياطي:</strong> نحتفظ بنسخ احتياطية آمنة من البيانات</li>
+                <li><strong>المراقبة:</strong> نراقب الأنظمة للكشف عن أي نشاط مشبوه</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>
+                    <i class="fas fa-shield-alt"></i>
+                    ضمان الأمان
+                </h4>
+                <p>نستخدم بروتوكولات الأمان القياسية في الصناعة لحماية معلوماتك. ومع ذلك، لا يمكن ضمان الأمان بنسبة 100% على الإنترنت.</p>
+            </div>
+        </div>
+
+        <div class="privacy-section" id="section4">
+            <h2>
+                <div class="section-icon">🤝</div>
+                4. مشاركة المعلومات
+            </h2>
+            
+            <p>قد نشارك معلوماتك مع الأطراف التالية فقط:</p>
+            
+            <h3>شركات الشحن</h3>
+            <p>نشارك معلومات التوصيل (الاسم، العنوان، رقم الهاتف) مع شركات الشحن لتوصيل طلباتك.</p>
+            
+            <h3>معالجات الدفع</h3>
+            <p>معلومات الدفع يتم معالجتها عبر بوابات دفع آمنة. نحن لا نحتفظ بتفاصيل بطاقتك الائتمانية.</p>
+            
+            <h3>الجهات القانونية</h3>
+            <p>قد نكشف عن معلوماتك إذا طُلب منا ذلك بموجب القانون أو لحماية حقوقنا.</p>
+
+            <div class="warning-box">
+                <h4>
+                    <i class="fas fa-ban"></i>
+                    لن نبيع معلوماتك
+                </h4>
+                <p>لن نبيع أو نؤجر أو نتاجر بمعلوماتك الشخصية لأطراف ثالثة لأغراض تسويقية.</p>
+            </div>
+        </div>
+
+        <div class="privacy-section" id="section5">
+            <h2>
+                <div class="section-icon">⚖️</div>
+                5. حقوقك
+            </h2>
+            
+            <p>لديك الحقوق التالية فيما يتعلق بمعلوماتك الشخصية:</p>
+            
+            <ul>
+                <li><strong>الوصول:</strong> يمكنك طلب نسخة من معلوماتك الشخصية</li>
+                <li><strong>التصحيح:</strong> يمكنك تحديث أو تصحيح معلوماتك</li>
+                <li><strong>الحذف:</strong> يمكنك طلب حذف معلوماتك (مع بعض الاستثناءات)</li>
+                <li><strong>الاعتراض:</strong> يمكنك الاعتراض على استخدام معين لمعلوماتك</li>
+                <li><strong>إلغاء الاشتراك:</strong> يمكنك إلغاء اشتراكك من الرسائل التسويقية</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>
+                    <i class="fas fa-envelope"></i>
+                    كيفية ممارسة حقوقك
+                </h4>
+                <p>للاستفسار عن بياناتك أو ممارسة أي من حقوقك، يرجى التواصل معنا عبر: info@eco-friendy.com أو 962790083039+</p>
+            </div>
+        </div>
+
+        <div class="privacy-section" id="section6">
+            <h2>
+                <div class="section-icon">🍪</div>
+                6. ملفات تعريف الارتباط (Cookies)
+            </h2>
+            
+            <p>نستخدم ملفات تعريف الارتباط لتحسين تجربتك على موقعنا:</p>
+            
+            <h3>ملفات ضرورية</h3>
+            <p>ضرورية لتشغيل الموقع (مثل سلة التسوق وتسجيل الدخول)</p>
+            
+            <h3>ملفات الأداء</h3>
+            <p>تساعدنا على فهم كيفية استخدام الزوار للموقع</p>
+            
+            <h3>ملفات وظيفية</h3>
+            <p>تتذكر اختياراتك وتفضيلاتك</p>
+
+            <h3>ملفات تسويقية</h3>
+            <p>تُستخدم لعرض إعلانات ملائمة لاهتماماتك</p>
+
+            <div class="info-box">
+                <h4>
+                    <i class="fas fa-cog"></i>
+                    التحكم في ملفات تعريف الارتباط
+                </h4>
+                <p>يمكنك التحكم في ملفات تعريف الارتباط من خلال إعدادات متصفحك. ومع ذلك، قد يؤثر تعطيلها على وظائف الموقع.</p>
+            </div>
+        </div>
+
+        <div class="contact-box">
+            <h2>📞 هل لديك أسئلة حول سياسة الخصوصية؟</h2>
+            <p>نحن هنا للإجابة على جميع استفساراتك</p>
+            <div class="contact-buttons">
+                <a href="tel:+962790083039" class="contact-btn">
+                    <i class="fas fa-phone"></i>
+                    اتصل بنا
+                </a>
+                <a href="https://wa.me/962790083039" class="contact-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    واتساب
+                </a>
+                <a href="mailto:info@eco-
