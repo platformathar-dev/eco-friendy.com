@@ -11,7 +11,7 @@ app.use(express.static('public'));
 
 // 🏠 الصفحة الرئيسية - المتجر الكامل
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'Index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // 📝 صفحة التسجيل
