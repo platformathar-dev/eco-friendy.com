@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الخروج - Eco Friendly Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #fff3e6 0%, #ffe0b3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 450px;
+            width: 100%;
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 50px rgba(243, 146, 0, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo p {
+            color: #ff9933;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .logout-content {
+            text-align: center;
+        }
+
+        .logout-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #fff3e6 0%, #ffe0b3 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .logout-title {
+            margin-bottom: 30px;
+        }
+
+        .logout-title h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #c77400;
+            margin-bottom: 10px;
+        }
+
+        .logout-title p {
+            color: #757575;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .user-info {
+            background: #fffbf7;
+            border: 2px solid #ffe0b3;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: right;
+        }
+
+        .user-info p {
+            color: #616161;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .user-info .username {
+            color: #f39200;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #f39200 0%, #e68500 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(243, 146, 0, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(135deg, #e68500 0%, #c77400 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243, 146, 0, 0.4);
+        }
+
+        .logout-btn:disabled {
+            background: #bdbdbd;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .cancel-btn {
+            width: 100%;
+            padding: 15px;
+            background: white;
+            color: #757575;
+            border: 2px solid #ffe0b3;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background: #fffbf7;
+            border-color: #f39200;
+            color: #f39200;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-home a {
+            color: #757575;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-home a:hover {
+            color: #f39200;
+            text-decoration: underline;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 25px;
+                border-radius: 20px;
+            }
+
+            .logout-title h2 {
+                font-size: 20px;
+            }
+
+            .logout-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- الشعار -->
+        <div class="logo">
+            <img src="Eco-friendy.svg" alt="Eco Friendy" style="width: 180px; height: auto; margin-bottom: 15px;">
+            <p>تسوق بمسؤولية، احمِ كوكبنا</p>
+        </div>
+
+        <!-- محتوى صفحة الخروج -->
+        <div class="logout-content">
+            <!-- أيقونة الخروج -->
+            <div class="logout-icon">
+                👋
+            </div>
+
+            <!-- عنوان الخروج -->
+            <div class="logout-title">
+                <h2>هل تريد تسجيل الخروج؟</h2>
+                <p>سيتم تسجيل خروجك من حسابك وإنهاء جلستك الحالية</p>
+            </div>
+
+            <!-- معلومات المستخدم -->
+            <div class="user-info" id="userInfo">
+                <p>أنت مسجل حالياً باسم:</p>
+                <p class="username" id="username">جاري التحميل...</p>
+            </div>
+
+            <!-- زر تسجيل الخروج -->
+            <button type="button" class="logout-btn" id="logoutBtn">
+                تسجيل الخروج
+            </button>
+
+            <!-- زر الإلغاء -->
+            <button type="button" class="cancel-btn" id="cancelBtn">
+                إلغاء والبقاء في الحساب
+            </button>
+        </div>
+
+        <!-- العودة للصفحة الرئيسية -->
+        <div class="back-home">
+            <a href="/">← العودة للصفحة الرئيسية</a>
+        </div>
+    </div>
+
+    <script>
+        // جلب معلومات المستخدم الحالي
+        async function loadUserInfo() {
+            try {
+                const response = await fetch('/api/get-user.php');
+                const data = await response.json();
+
+                if (data.success && data.user) {
+                    document.getElementById('username').textContent = data.user.fullname || data.user.username;
+                } else {
+                    // إذا لم يكن هناك مستخدم مسجل دخول
+                    document.getElementById('username').textContent = 'غير معروف';
+                    document.querySelector('.user-info').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('خطأ في جلب معلومات المستخدم:', error);
+                document.getElementById('username').textContent = 'غير معروف';
+            }
+        }
+
+        // تحميل معلومات المستخدم عند تحميل الصفحة
+        loadUserInfo();
+
+        // معالجة تسجيل الخروج
+        document.getElementById('logoutBtn').addEventListener('click', async function() {
+            const btn = this;
+            
+            // تعطيل الزر وإظهار حالة التحميل
+            btn.disabled = true;
+            btn.innerHTML = 'جارِ تسجيل الخروج... <span class="spinner"></span>';
+
+            try {
+                const response = await fetch('/api/logout.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // تغيير النص والأيقونة
+                    document.querySelector('.logout-icon').textContent = '✅';
+                    document.querySelector('.logout-title h2').textContent = 'تم تسجيل الخروج بنجاح';
+                    document.querySelector('.logout-title p').textContent = 'شكراً لك! نراك قريباً';
+                    
+                    // إخفاء معلومات المستخدم والأزرار
+                    document.getElementById('userInfo').style.display = 'none';
+                    btn.style.display = 'none';
+                    document.getElementById('cancelBtn').style.display = 'none';
+
+                    // إعادة التوجيه بعد 2 ثانية
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    alert('❌ ' + (data.message || 'حدث خطأ أثناء تسجيل الخروج'));
+                    btn.disabled = false;
+                    btn.textContent = 'تسجيل الخروج';
+                }
+            } catch (error) {
+                console.error('خطأ:', error);
+                alert('❌ حدث خطأ في الاتصال. حاول مرة أخرى!');
+                btn.disabled = false;
+                btn.textContent = 'تسجيل الخروج';
+            }
+        });
+
+        // معالجة زر الإلغاء
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            window.location.href = '/';
+        });
+    </script>
+</body>
+</html>
