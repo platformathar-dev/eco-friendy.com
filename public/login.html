@@ -275,7 +275,7 @@
 
         <!-- رابط التسجيل -->
         <div class="register-link">
-            ليس لديك حساب؟ <a href="/register">إنشاء حساب جديد</a>
+            ليس لديك حساب؟ <a href="/register.html">إنشاء حساب جديد</a>
         </div>
 
         <!-- العودة للصفحة الرئيسية -->
@@ -356,7 +356,7 @@
                 };
 
                 try {
-                    const response = await fetch('/api/login', {
+                   const response = await fetch('/api/login.php', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(loginData)
