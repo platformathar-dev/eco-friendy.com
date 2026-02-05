@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eco Friendy - متجر مستلزمات الحيوانات الأليفة</title>
+    <title>Eco Friendy - الصفحة الرئيسية</title>
     
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -24,6 +21,7 @@
             --dark-orange: #c77400;
             --light-orange: #fff3e6;
             --accent-color: #ff6b35;
+            --success-color: #10b981;
             --text-dark: #1f2937;
             --text-light: #6b7280;
             --bg-light: #fffbf7;
@@ -57,6 +55,11 @@
             gap: 8px;
             color: white;
             text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .top-bar-item:hover {
+            opacity: 0.8;
         }
 
         .lang-btn {
@@ -73,6 +76,11 @@
             gap: 6px;
             font-family: 'Tajawal', sans-serif;
             transition: all 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: white;
+            color: var(--primary-color);
         }
 
         /* ============ MAIN HEADER ============ */
@@ -113,6 +121,12 @@
             color: var(--text-dark);
             font-size: 22px;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .header-icon:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
         }
 
         .badge {
@@ -143,6 +157,7 @@
         .search-section {
             background: white;
             padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .search-bar {
@@ -177,6 +192,11 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: var(--secondary-color);
         }
 
         /* ============ HERO SECTION ============ */
@@ -219,6 +239,13 @@
             display: inline-block;
             min-width: 200px;
             text-align: center;
+            border: none;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
         }
 
         .btn-white {
@@ -231,9 +258,18 @@
             color: white;
         }
 
-        /* ============ SECTION TITLE ============ */
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* ============ SECTION ============ */
         .section {
             padding: 40px 15px;
+        }
+
+        .section.bg-white {
+            background: white;
         }
 
         .section-title {
@@ -242,6 +278,26 @@
             font-weight: 900;
             color: var(--dark-orange);
             margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--dark-orange);
+        }
+
+        .view-all {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
         }
 
         /* ============ CATEGORIES SLIDER ============ */
@@ -275,6 +331,7 @@
             padding: 20px 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .category-card:active {
@@ -293,11 +350,6 @@
         }
 
         /* ============ SUB CATEGORIES ============ */
-        .sub-categories {
-            background: white;
-            padding: 30px 15px;
-        }
-
         .sub-cat-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -312,6 +364,7 @@
             text-align: center;
             border: 2px solid transparent;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .sub-cat-card:active {
@@ -330,36 +383,20 @@
             color: var(--dark-orange);
         }
 
-        /* ============ PRODUCTS SECTIONS ============ */
-        .products-section {
-            padding: 35px 15px;
-        }
-
-        .products-section.bg-white {
-            background: white;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .section-header h2 {
-            font-size: 20px;
-            font-weight: 900;
+        .sub-cat-title {
+            font-size: 18px;
+            font-weight: 700;
             color: var(--dark-orange);
+            margin-bottom: 15px;
+            text-align: center;
+            margin-top: 25px;
         }
 
-        .view-all {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
+        .sub-cat-title:first-child {
+            margin-top: 0;
         }
 
-        /* ============ PRODUCTS GRID (2 COLUMNS) ============ */
+        /* ============ PRODUCTS GRID ============ */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -372,6 +409,11 @@
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             position: relative;
+            transition: all 0.3s;
+        }
+
+        .product-card:active {
+            transform: scale(0.98);
         }
 
         .product-badges {
@@ -401,7 +443,7 @@
         }
 
         .badge-eco {
-            background: #10b981;
+            background: var(--success-color);
         }
 
         .product-image {
@@ -497,7 +539,7 @@
             transform: scale(0.95);
         }
 
-        /* ============ RELATED PRODUCTS SLIDER ============ */
+        /* ============ RELATED SLIDER ============ */
         .related-slider-container {
             position: relative;
             overflow: hidden;
@@ -550,6 +592,11 @@
             display: block;
             margin-bottom: 8px;
             font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
         }
 
         .social-links {
@@ -568,6 +615,11 @@
             justify-content: center;
             font-size: 16px;
             color: white;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-color);
         }
 
         .footer-bottom {
@@ -630,6 +682,12 @@
             color: var(--text-dark);
             text-decoration: none;
             font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-menu a:hover {
+            background: var(--bg-light);
+            color: var(--primary-color);
         }
 
         .overlay {
@@ -650,29 +708,63 @@
             opacity: 1;
         }
 
-        /* ============ AUTO SCROLL ANIMATION ============ */
-        @keyframes scroll {
-            0% {
+        /* ============ NOTIFICATION ============ */
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--success-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.show {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
                 transform: translateX(0);
-            }
-            100% {
-                transform: translateX(calc(-100% - 20px));
+                opacity: 1;
             }
         }
 
-        .auto-scroll {
-            animation: scroll 20s linear infinite;
+        /* ============ LOADING ============ */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
         }
 
-        .categories-slider:hover .auto-scroll,
-        .related-slider:hover .auto-scroll {
-            animation-play-state: paused;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">تمت الإضافة بنجاح!</span>
+    </div>
+
     <!-- Overlay -->
-    <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
+    <div class="overlay" id="overlay"></div>
 
     <!-- Mobile Nav -->
     <div class="mobile-nav" id="mobileNav">
@@ -684,12 +776,14 @@
         </div>
         
         <ul class="mobile-nav-menu">
-            <li><a href="#"><i class="fas fa-home"></i> الرئيسية</a></li>
-            <li><a href="#products"><i class="fas fa-shopping-bag"></i> المنتجات</a></li>
-            <li><a href="#"><i class="fas fa-dog"></i> كلاب</a></li>
-            <li><a href="#"><i class="fas fa-cat"></i> قطط</a></li>
-            <li><a href="#"><i class="fas fa-info-circle"></i> من نحن</a></li>
-            <li><a href="#"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+            <li><a href="products.html"><i class="fas fa-shopping-bag"></i> جميع المنتجات</a></li>
+            <li><a href="dogs.html"><i class="fas fa-dog"></i> كلاب</a></li>
+            <li><a href="cats.html"><i class="fas fa-cat"></i> قطط</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a></li>
+            <li><a href="wishlist.html"><i class="fas fa-heart"></i> المفضلة</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
         </ul>
     </div>
 
@@ -705,30 +799,30 @@
         </a>
         <button class="lang-btn" onclick="toggleLanguage()">
             <i class="fas fa-globe"></i>
-            <span id="lang-text">English</span>
+            <span>English</span>
         </button>
         <a href="#" class="top-bar-item">
             <i class="fas fa-map-marker-alt"></i>
-            الأردن - عمان - أبو نصير
+            الأردن - عمان
         </a>
     </div>
 
     <!-- Main Header -->
     <header class="main-header">
         <div class="header-content">
-            <a href="/" class="logo">
+            <a href="index.html" class="logo">
                 🐾 Eco Friendy
             </a>
             
             <div class="header-icons">
-                <div class="header-icon">
+                <a href="cart.html" class="header-icon">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="badge" id="cart-count">0</span>
-                </div>
-                <div class="header-icon">
+                </a>
+                <a href="wishlist.html" class="header-icon">
                     <i class="fas fa-heart"></i>
-                    <span class="badge">3</span>
-                </div>
+                    <span class="badge" id="wishlist-count">0</span>
+                </a>
                 <button class="mobile-menu-btn" onclick="openMobileMenu()">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -739,8 +833,8 @@
     <!-- Search Bar -->
     <div class="search-section">
         <div class="search-bar">
-            <input type="text" placeholder="ابحث عن منتجات...">
-            <button><i class="fas fa-search"></i></button>
+            <input type="text" placeholder="ابحث عن منتجات..." id="searchInput">
+            <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
         </div>
     </div>
 
@@ -750,8 +844,8 @@
         <p>متجرك الأول لمستلزمات وأطعمة ورعاية الحيوانات الأليفة في الأردن</p>
         <p>كل ما يحتاجه حيوانك الأليف في مكان واحد</p>
         <div class="hero-buttons">
-            <a href="#products" class="btn btn-white">تسوق الآن</a>
-            <a href="#" class="btn btn-accent">اعرف المزيد</a>
+            <a href="products.html" class="btn btn-white">تسوق الآن</a>
+            <a href="about.html" class="btn btn-accent">اعرف المزيد</a>
         </div>
     </section>
 
@@ -760,294 +854,91 @@
         <h2 class="section-title">تسوق حسب الفئة</h2>
         <div class="categories-slider-container">
             <div class="categories-slider" id="categoriesSlider">
-                <div class="category-card">
+                <a href="dogs.html" class="category-card">
                     <div class="category-icon">🐕</div>
                     <div class="category-name">كلاب</div>
-                </div>
-                <div class="category-card">
+                </a>
+                <a href="cats.html" class="category-card">
                     <div class="category-icon">🐈</div>
                     <div class="category-name">قطط</div>
-                </div>
-                <div class="category-card">
+                </a>
+                <a href="products.html?category=birds" class="category-card">
                     <div class="category-icon">🦜</div>
                     <div class="category-name">طيور</div>
-                </div>
-                <div class="category-card">
+                </a>
+                <a href="products.html?category=fish" class="category-card">
                     <div class="category-icon">🐠</div>
                     <div class="category-name">أسماك</div>
-                </div>
-                <div class="category-card">
+                </a>
+                <a href="products.html?category=rabbits" class="category-card">
                     <div class="category-icon">🐰</div>
                     <div class="category-name">أرانب</div>
-                </div>
-                <div class="category-card">
+                </a>
+                <a href="products.html?category=hamsters" class="category-card">
                     <div class="category-icon">🐹</div>
                     <div class="category-name">هامسترات</div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Sub Categories -->
-    <section class="sub-categories">
+    <section class="section bg-white">
         <h2 class="section-title">أقسام المتجر</h2>
         
-        <h3 style="font-size: 18px; font-weight: 700; color: var(--dark-orange); margin-bottom: 15px; text-align: center;">
-            🐕 كلاب
-        </h3>
+        <h3 class="sub-cat-title">🐕 كلاب</h3>
         <div class="sub-cat-grid">
-            <div class="sub-cat-card">
+            <a href="dogs.html?type=accessories" class="sub-cat-card">
                 <div class="sub-cat-icon">👔</div>
                 <div class="sub-cat-name">إكسسوارات</div>
-            </div>
-            <div class="sub-cat-card">
+            </a>
+            <a href="dogs.html?type=food" class="sub-cat-card">
                 <div class="sub-cat-icon">🍖</div>
                 <div class="sub-cat-name">طعام</div>
-            </div>
-            <div class="sub-cat-card">
+            </a>
+            <a href="dogs.html?type=care" class="sub-cat-card">
                 <div class="sub-cat-icon">💊</div>
                 <div class="sub-cat-name">رعاية</div>
-            </div>
+            </a>
         </div>
 
-        <h3 style="font-size: 18px; font-weight: 700; color: var(--dark-orange); margin-bottom: 15px; text-align: center; margin-top: 25px;">
-            🐈 قطط
-        </h3>
+        <h3 class="sub-cat-title">🐈 قطط</h3>
         <div class="sub-cat-grid">
-            <div class="sub-cat-card">
+            <a href="cats.html?type=accessories" class="sub-cat-card">
                 <div class="sub-cat-icon">👔</div>
                 <div class="sub-cat-name">إكسسوارات</div>
-            </div>
-            <div class="sub-cat-card">
+            </a>
+            <a href="cats.html?type=food" class="sub-cat-card">
                 <div class="sub-cat-icon">🍖</div>
                 <div class="sub-cat-name">طعام</div>
-            </div>
-            <div class="sub-cat-card">
+            </a>
+            <a href="cats.html?type=care" class="sub-cat-card">
                 <div class="sub-cat-icon">💊</div>
                 <div class="sub-cat-name">رعاية</div>
-            </div>
+            </a>
         </div>
     </section>
 
-    <!-- Latest Products (2 columns) -->
-    <section class="products-section" id="products">
+    <!-- Latest Products -->
+    <section class="section">
         <div class="section-header">
             <h2>منتجات أحدث ⭐</h2>
-            <a href="#" class="view-all">عرض الكل ←</a>
+            <a href="products.html?filter=new" class="view-all">عرض الكل ←</a>
         </div>
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-badges">
-                    <span class="badge-new">جديد</span>
-                    <span class="badge-eco">بيئي</span>
-                </div>
-                <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=400" class="product-image" alt="طعام كلاب">
-                <div class="product-info">
-                    <div class="product-category">كلاب</div>
-                    <h3 class="product-name">طعام كلاب عضوي ممتاز</h3>
-                    <div class="product-rating">
-                        <span class="stars">★★★★★</span>
-                        <span class="reviews">(127)</span>
-                    </div>
-                    <div class="product-price">
-                        <span class="current-price">35 دينار</span>
-                    </div>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-badges">
-                    <span class="badge-sale">خصم</span>
-                </div>
-                <img src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=400" class="product-image" alt="رمل قطط">
-                <div class="product-info">
-                    <div class="product-category">قطط</div>
-                    <h3 class="product-name">رمل قطط طبيعي متكتل</h3>
-                    <div class="product-rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="reviews">(89)</span>
-                    </div>
-                    <div class="product-price">
-                        <span class="current-price">18 دينار</span>
-                        <span class="original-price">25</span>
-                        <span class="discount-badge">-28%</span>
-                    </div>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-badges">
-                    <span class="badge-eco">بيئي</span>
-                </div>
-                <img src="https://images.unsplash.com/photo-1535294435445-d7249524ef2e?w=400" class="product-image" alt="لعبة كلاب">
-                <div class="product-info">
-                    <div class="product-category">كلاب</div>
-                    <h3 class="product-name">لعبة مضغ - مطاط طبيعي</h3>
-                    <div class="product-rating">
-                        <span class="stars">★★★★★</span>
-                        <span class="reviews">(203)</span>
-                    </div>
-                    <div class="product-price">
-                        <span class="current-price">12 دينار</span>
-                    </div>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-badges">
-                    <span class="badge-new">جديد</span>
-                </div>
-                <img src="https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?w=400" class="product-image" alt="طعام قطط">
-                <div class="product-info">
-                    <div class="product-category">قطط</div>
-                    <h3 class="product-name">طعام قطط - سمك طازج</h3>
-                    <div class="product-rating">
-                        <span class="stars">★★★★★</span>
-                        <span class="reviews">(156)</span>
-                    </div>
-                    <div class="product-price">
-                        <span class="current-price">28 دينار</span>
-                    </div>
-                    <button class="add-to-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
+        <div class="products-grid" id="latestProducts">
+            <!-- Products will be loaded by JavaScript -->
         </div>
     </section>
 
     <!-- Related Products Slider -->
-    <section class="products-section bg-white">
+    <section class="section bg-white">
         <div class="section-header">
             <h2>منتجات ذات صلة 🔥</h2>
-            <a href="#" class="view-all">عرض الكل ←</a>
+            <a href="products.html?filter=related" class="view-all">عرض الكل ←</a>
         </div>
         <div class="related-slider-container">
             <div class="related-slider" id="relatedSlider">
-                <div class="product-card related-card">
-                    <div class="product-badges">
-                        <span class="badge-eco">بيئي</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400" class="product-image" alt="طعام طيور">
-                    <div class="product-info">
-                        <div class="product-category">طيور</div>
-                        <h3 class="product-name">طعام طيور عضوي</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★½</span>
-                            <span class="reviews">(64)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">22 دينار</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-cart-plus"></i>
-                            أضف
-                        </button>
-                    </div>
-                </div>
-
-                <div class="product-card related-card">
-                    <div class="product-badges">
-                        <span class="badge-sale">خصم</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1548681528-6a5c45b66b42?w=400" class="product-image" alt="طوق">
-                    <div class="product-info">
-                        <div class="product-category">كلاب</div>
-                        <h3 class="product-name">طوق جلدي فاخر</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="reviews">(92)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">15 دينار</span>
-                            <span class="original-price">20</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-cart-plus"></i>
-                            أضف
-                        </button>
-                    </div>
-                </div>
-
-                <div class="product-card related-card">
-                    <div class="product-badges">
-                        <span class="badge-new">جديد</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=400" class="product-image" alt="حوض أسماك">
-                    <div class="product-info">
-                        <div class="product-category">أسماك</div>
-                        <h3 class="product-name">حوض أسماك زجاجي</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="reviews">(45)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">65 دينار</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-cart-plus"></i>
-                            أضف
-                        </button>
-                    </div>
-                </div>
-
-                <div class="product-card related-card">
-                    <div class="product-badges">
-                        <span class="badge-eco">بيئي</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1585664811087-47f65abbad64?w=400" class="product-image" alt="قفص">
-                    <div class="product-info">
-                        <div class="product-category">هامسترات</div>
-                        <h3 class="product-name">قفص فاخر مع ملحقات</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★½</span>
-                            <span class="reviews">(38)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">42 دينار</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-cart-plus"></i>
-                            أضف
-                        </button>
-                    </div>
-                </div>
-
-                <div class="product-card related-card">
-                    <div class="product-badges">
-                        <span class="badge-sale">خصم</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=400" class="product-image" alt="بيت قطط">
-                    <div class="product-info">
-                        <div class="product-category">قطط</div>
-                        <h3 class="product-name">بيت قطط دافئ</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="reviews">(178)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">32 دينار</span>
-                            <span class="original-price">45</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-cart-plus"></i>
-                            أضف
-                        </button>
-                    </div>
-                </div>
+                <!-- Products will be loaded by JavaScript -->
             </div>
         </div>
     </section>
@@ -1057,18 +948,18 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>روابط سريعة</h3>
-                <a href="#">الرئيسية</a>
-                <a href="#products">المنتجات</a>
-                <a href="#">من نحن</a>
-                <a href="#">اتصل بنا</a>
+                <a href="index.html">الرئيسية</a>
+                <a href="products.html">المنتجات</a>
+                <a href="about.html">من نحن</a>
+                <a href="contact.html">اتصل بنا</a>
             </div>
 
             <div class="footer-section">
                 <h3>خدمة العملاء</h3>
-                <a href="#">الأسئلة الشائعة</a>
-                <a href="#">سياسة الإرجاع</a>
-                <a href="#">الشحن والتوصيل</a>
-                <a href="#">سياسة الخصوصية</a>
+                <a href="faq.html">الأسئلة الشائعة</a>
+                <a href="returns.html">سياسة الإرجاع</a>
+                <a href="shipping.html">الشحن والتوصيل</a>
+                <a href="privacy.html">سياسة الخصوصية</a>
             </div>
 
             <div class="footer-section">
@@ -1100,119 +991,8 @@
         </div>
     </footer>
 
-    <script>
-        // Mobile Menu
-        function openMobileMenu() {
-            document.getElementById('mobileNav').classList.add('active');
-            document.getElementById('overlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeMobileMenu() {
-            document.getElementById('mobileNav').classList.remove('active');
-            document.getElementById('overlay').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Language Toggle
-        function toggleLanguage() {
-            const html = document.documentElement;
-            const currentDir = html.getAttribute('dir');
-            const newDir = currentDir === 'rtl' ? 'ltr' : 'rtl';
-            html.setAttribute('dir', newDir);
-            document.getElementById('lang-text').textContent = newDir === 'rtl' ? 'English' : 'العربية';
-        }
-
-        // Add to Cart
-        document.querySelectorAll('.add-to-cart').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const count = document.getElementById('cart-count');
-                count.textContent = parseInt(count.textContent) + 1;
-                
-                const originalHTML = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-check"></i> تمت';
-                this.style.background = '#10b981';
-                
-                setTimeout(() => {
-                    this.innerHTML = originalHTML;
-                    this.style.background = '';
-                }, 1500);
-            });
-        });
-
-        // Auto Scroll for Categories
-        let categoriesScrollInterval;
-        const categoriesSlider = document.getElementById('categoriesSlider');
-        
-        function startCategoriesAutoScroll() {
-            categoriesScrollInterval = setInterval(() => {
-                if (categoriesSlider.scrollLeft >= categoriesSlider.scrollWidth - categoriesSlider.clientWidth) {
-                    categoriesSlider.scrollLeft = 0;
-                } else {
-                    categoriesSlider.scrollLeft += 1;
-                }
-            }, 30);
-        }
-
-        categoriesSlider.addEventListener('mouseenter', () => {
-            clearInterval(categoriesScrollInterval);
-        });
-
-        categoriesSlider.addEventListener('mouseleave', () => {
-            startCategoriesAutoScroll();
-        });
-
-        categoriesSlider.addEventListener('touchstart', () => {
-            clearInterval(categoriesScrollInterval);
-        });
-
-        startCategoriesAutoScroll();
-
-        // Auto Scroll for Related Products
-        let relatedScrollInterval;
-        const relatedSlider = document.getElementById('relatedSlider');
-        
-        function startRelatedAutoScroll() {
-            relatedScrollInterval = setInterval(() => {
-                if (relatedSlider.scrollLeft >= relatedSlider.scrollWidth - relatedSlider.clientWidth) {
-                    relatedSlider.scrollLeft = 0;
-                } else {
-                    relatedSlider.scrollLeft += 1;
-                }
-            }, 30);
-        }
-
-        relatedSlider.addEventListener('mouseenter', () => {
-            clearInterval(relatedScrollInterval);
-        });
-
-        relatedSlider.addEventListener('mouseleave', () => {
-            startRelatedAutoScroll();
-        });
-
-        relatedSlider.addEventListener('touchstart', () => {
-            clearInterval(relatedScrollInterval);
-        });
-
-        startRelatedAutoScroll();
-
-        // Smooth Scroll for Links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                        closeMobileMenu();
-                    }
-                }
-            });
-        });
-    </script>
+    <script src="js/products-data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
