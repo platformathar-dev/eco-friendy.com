@@ -6,7 +6,7 @@
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'u407057164_ecofriendy');
 define('DB_USER', 'u407057164_ecofriendy');
-define('DB_PASS', 'Abazid@#$%1999');
+define('DB_PASS', 'Abazid@#$%27887');
 define('DB_CHARSET', 'utf8mb4');
 
 // إنشاء اتصال بقاعدة البيانات
