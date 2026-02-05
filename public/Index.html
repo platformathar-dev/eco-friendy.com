@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Friendly Store - متجرك البيئي الصديق للكوكب 🌱</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #10b981;
+            --secondary-color: #059669;
+            --dark-green: #064e3b;
+            --light-green: #d1fae5;
+            --accent-color: #f59e0b;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ============ TOP BAR ============ */
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .top-bar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .top-bar-left, .top-bar-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .top-bar a:hover {
+            opacity: 0.8;
+        }
+
+        /* ============ MAIN HEADER ============ */
+        .main-header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 36px;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+            min-width: 250px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            font-size: 15px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .search-bar button {
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: var(--secondary-color);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-icon {
+            position: relative;
+            color: var(--text-dark);
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .header-icon:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .user-menu {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-login, .btn-register {
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-login {
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            background: white;
+        }
+
+        .btn-login:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-register {
+            background: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-register:hover {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* ============ NAV MENU ============ */
+        .nav-menu {
+            background: var(--dark-green);
+            padding: 15px 0;
+        }
+
+        .nav-menu ul {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-menu a:hover {
+            color: var(--light-green);
+            transform: translateY(-2px);
+        }
+
+        /* ============ HERO SECTION ============ */
+        .hero {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.95)),
+                        url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1600') center/cover;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #d97706;
+        }
+
+        /* ============ FEATURES ============ */
+        .features {
+            padding: 60px 20px;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--dark-green);
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: var(--bg-light);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--dark-green);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 15px;
+        }
+
+        /* ============ PRODUCTS ============ */
+        .products-section {
+            padding: 60px 20px;
+            background: var(--bg-light);
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            background: white;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-badges {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .badge-new,
+        .badge-sale,
+        .badge-eco {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .badge-new {
+            background: var(--accent-color);
+        }
+
+        .badge-sale {
+            background: #ef4444;
+        }
+
+        .badge-eco {
+            background: var(--primary-color);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-category {
+            color: var(--text-light);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-green);
+            min-height: 50px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: var(--accent-color);
+        }
+
+        .reviews {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .current-price {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary-color);
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: #ef4444;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-to-cart:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            background: var(--dark-green);
+            color: white;
+            padding: 60px 20px 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--light-green);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+            padding-right: 10px;
+        }
+
+        .footer-section i {
+            margin-left: 10px;
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ============ LOADING ============ */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+        }
+
+        .loading i {
+            font-size: 48px;
+            color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
+
+            .search-bar {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .nav-menu ul {
+                gap: 20px;
+            }
+
+            .top-bar .container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ============ TOP BAR ============ -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <a href="mailto:info@eco-friendly.com">
+                    <i class="fas fa-envelope"></i>
+                    info@eco-friendly.com
+                </a>
+                <a href="tel:+962790083039">
+                    <i class="fas fa-phone"></i>
+                    +962790083039
+                </a>
+            </div>
+            <div class="top-bar-right">
+                <a href="#">
+                    <i class="fas fa-map-marker-alt"></i>
+                    الأردن - عمان - أبو نصير
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ MAIN HEADER ============ -->
+    <header class="main-header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>Eco Friendly</span>
+            </a>
+
+            <div class="search-bar">
+                <input type="text" placeholder="ابحث عن منتجات صديقة للبيئة...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="header-actions">
+                <div class="header-icon">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="header-icon" onclick="window.location.href='/cart'">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </div>
+                <div class="user-menu">
+                    <a href="/login" class="btn-login">دخول</a>
+                    <a href="/register" class="btn-register">تسجيل</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============ NAV MENU ============ -->
+    <nav class="nav-menu">
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i> الرئيسية</a></li>
+            <li><a href="#products"><i class="fas fa-shopping-bag"></i> المنتجات</a></li>
+            <li><a href="/about"><i class="fas fa-info-circle"></i> من نحن</a></li>
+            <li><a href="/contact"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+        </ul>
+    </nav>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🌱 مرحباً بك في Eco Friendly Store</h1>
+            <p>متجرك الأول للمنتجات الصديقة للبيئة في الأردن<br>نساعدك على العيش بطريقة أكثر استدامة وصحة</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn">تسوق الآن</a>
+                <a href="/about" class="btn btn-primary">اعرف المزيد</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FEATURES ============ -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">لماذا تختار Eco Friendly Store؟</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>100% صديق للبيئة</h3>
+                    <p>جميع منتجاتنا طبيعية وقابلة للتحلل البيولوجي</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>توصيل سريع</h3>
+                    <p>توصيل مجاني للطلبات فوق 50 دينار في جميع أنحاء الأردن</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>ضمان الجودة</h3>
+                    <p>نضمن جودة المنتجات وإمكانية الإرجاع خلال 14 يوم</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>دعم 24/7</h3>
+                    <p>فريق الدعم متاح دائماً للإجابة على استفساراتك</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PRODUCTS SECTION ============ -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <div class="products-header">
+                <h2 class="section-title" style="margin-bottom: 0;">منتجاتنا المميزة</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">الكل</button>
+                    <button class="filter-btn" data-category="مستلزمات يومية">مستلزمات يومية</button>
+                    <button class="filter-btn" data-category="العناية الشخصية">عناية شخصية</button>
+                    <button class="filter-btn" data-category="مطبخ">مطبخ</button>
+                    <button class="filter-btn" data-category="حقائب">حقائب</button>
+                </div>
+            </div>
+
+            <div class="products-grid" id="products-container">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>جاري تحميل المنتجات...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>عن Eco Friendly Store</h3>
+                <p>نحن متجر متخصص في بيع المنتجات الصديقة للبيئة والقابلة لإعادة الاستخدام. نؤمن بأن كل خطوة صغيرة نحو الاستدامة تصنع فرقاً كبيراً لكوكبنا.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <a href="/"><i class="fas fa-angle-left"></i> الرئيسية</a>
+                <a href="#products"><i class="fas fa-angle-left"></i> المنتجات</a>
+                <a href="/about"><i class="fas fa-angle-left"></i> من نحن</a>
+                <a href="/contact"><i class="fas fa-angle-left"></i> اتصل بنا</a>
+                <a href="/orders"><i class="fas fa-angle-left"></i> طلباتي</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>خدمة العملاء</h3>
+                <a href="#"><i class="fas fa-angle-left"></i> الأسئلة الشائعة</a>
+                <a href="#"><i class="fas fa-angle-left"></i> سياسة الإرجاع</a>
+                <a href="#"><i class="fas fa-angle-left"></i> سياسة الخصوصية</a>
+                <a href="#"><i class="fas fa-angle-left"></i> الشروط والأحكام</a>
+                <a href="#"><i class="fas fa-angle-left"></i> طرق الدفع</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>تواصل معنا</h3>
+                <p><i class="fas fa-map-marker-alt"></i> الأردن - عمان - أبو نصير</p>
+                <p><i class="fas fa-phone"></i> +962790083039</p>
+                <p><i class="fas fa-envelope"></i> info@eco-friendly.com</p>
+                <p><i class="fas fa-clock"></i> السبت - الخميس: 9 صباحاً - 8 مساءً</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Eco Friendly Store. جميع الحقوق محفوظة. صنع بـ <i class="fas fa-heart" style="color: var(--accent-color);"></i> من أجل كوكب أفضل</p>
+        </div>
+    </footer>
+
+    <!-- ============ JAVASCRIPT ============ -->
+    <script>
+        // جلب المنتجات من API
+        async function loadProducts() {
+            try {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayProducts(data.products);
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل المنتجات:', error);
+                document.getElementById('products-container').innerHTML = `
+                    <div class="loading">
+                        <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
+                        <p>عذراً، حدث خطأ في تحميل المنتجات</p>
+                    </div>
+                `;
+            }
+        }
+
+        // عرض المنتجات
+        function displayProducts(products, filter = 'all') {
+            const container = document.getElementById('products-container');
+            
+            const filteredProducts = filter === 'all' 
+                ? products 
+                : products.filter(p => p.category === filter);
+
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" data-category="${product.category}">
+                    <div class="product-badges">
+                        ${product.isNew ? '<span class="badge-new">جديد</span>' : ''}
+                        ${product.discount > 0 ? '<span class="badge-sale">خصم</span>' : ''}
+                        ${product.isEcoChoice ? '<span class="badge-eco">صديق للبيئة</span>' : ''}
+                    </div>
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-category">${product.category}</div>
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-rating">
+                            <span class="stars">${getStars(product.rating)}</span>
+                            <span class="reviews">(${product.reviews})</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">${product.price.toFixed(2)} دينار</span>
+                            ${product.discount > 0 ? `
+                                <span class="original-price">${product.originalPrice.toFixed(2)}</span>
+                                <span class="discount-badge">-${product.discount}%</span>
+                            ` : ''}
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id}, '${product.name}')">
+                            <i class="fas fa-shopping-cart"></i>
+                            أضف للسلة
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // إنشاء النجوم
+        function getStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            if (halfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // إضافة للسلة
+        async function addToCart(productId, productName) {
+            try {
+                const response = await fetch('/api/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        productId: productId,
+                        quantity: 1
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // تحديث عداد السلة
+                    const cartCount = document.getElementById('cart-count');
+                    cartCount.textContent = parseInt(cartCount.textContent) + 1;
+                    
+                    // رسالة نجاح
+                    alert(`✅ تم إضافة "${productName}" للسلة بنجاح!`);
+                }
+            } catch (error) {
+                console.error('خطأ في إضافة المنتج:', error);
+                alert('عذراً، حدث خطأ. يرجى المحاولة مرة أخرى');
+            }
+        }
+
+        // فلترة المنتجات
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+
+            // إضافة مستمع الأحداث لأزرار الفلتر
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    // إزالة الكلاس active من جميع الأزرار
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    // إضافة الكلاس active للزر المضغوط
+                    btn.classList.add('active');
+                    
+                    const category = btn.dataset.category;
+                    
+                    // إعادة جلب المنتجات وتطبيق الفلتر
+                    const response = await fetch('/api/products');
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        displayProducts(data.products, category);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
