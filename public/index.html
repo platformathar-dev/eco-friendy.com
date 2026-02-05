@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eco Friendy Store - متجر مستلزمات الحيوانات الأليفة 🐾</title>
+    <title>Eco Friendy - متجر مستلزمات الحيوانات الأليفة</title>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,8 +28,6 @@
             --text-light: #6b7280;
             --bg-light: #fffbf7;
             --white: #ffffff;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         body {
@@ -44,142 +42,69 @@
         .top-bar {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 8px 0;
+            padding: 10px 15px;
             font-size: 13px;
-            transition: all 0.3s ease;
-        }
-
-        .top-bar.scrolled {
-            display: none;
-        }
-
-        .top-bar .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .top-bar-left, .top-bar-right {
+        .top-bar-item {
             display: flex;
-            gap: 15px;
             align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .top-bar a {
+            gap: 8px;
             color: white;
             text-decoration: none;
-            transition: opacity 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
         }
 
-        .top-bar a:hover {
-            opacity: 0.8;
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
         }
 
         /* ============ MAIN HEADER ============ */
         .main-header {
             background: white;
-            box-shadow: var(--shadow);
+            padding: 12px 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            padding: 5px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-        }
-
-        .main-header.scrolled .header-content {
-            padding: 8px 15px;
-        }
-
-        .main-header.scrolled .logo img {
-            height: 35px;
         }
 
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            flex-wrap: wrap;
-            transition: all 0.3s ease;
         }
 
         .logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            flex-shrink: 0;
+            gap: 5px;
         }
 
-        .logo img {
-            height: 45px;
-            width: auto;
-            max-width: 180px;
-            transition: all 0.3s;
-        }
-
-        .search-bar {
-            flex: 1;
-            max-width: 500px;
-            position: relative;
-            min-width: 0;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 10px 45px 10px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 25px;
-            font-size: 14px;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(243, 146, 0, 0.1);
-        }
-
-        .search-bar button {
-            position: absolute;
-            left: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 6px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .search-bar button:hover {
-            background: var(--secondary-color);
-        }
-
-        .header-actions {
+        .header-icons {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             align-items: center;
         }
 
@@ -188,81 +113,473 @@
             color: var(--text-dark);
             font-size: 22px;
             cursor: pointer;
-            transition: all 0.3s;
-            padding: 5px;
-        }
-
-        .header-icon:hover {
-            color: var(--primary-color);
-            transform: scale(1.1);
         }
 
         .badge {
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: -8px;
+            right: -8px;
             background: var(--accent-color);
             color: white;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
         }
 
-        .user-menu {
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            font-size: 26px;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* ============ SEARCH BAR ============ */
+        .search-section {
+            background: white;
+            padding: 12px 15px;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 55px 12px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 30px;
+            font-size: 14px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-bar button {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* ============ HERO SECTION ============ */
+        .hero {
+            background: linear-gradient(135deg, rgba(243, 146, 0, 0.95), rgba(230, 133, 0, 0.95)),
+                        url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1600') center/cover;
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 15px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
             display: flex;
-            gap: 8px;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
+            align-items: center;
         }
 
-        .btn-login, .btn-register {
-            padding: 8px 18px;
-            border-radius: 25px;
+        .btn {
+            padding: 14px 50px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
             text-decoration: none;
-            font-weight: 600;
             transition: all 0.3s;
-            font-size: 13px;
-            white-space: nowrap;
+            display: inline-block;
+            min-width: 200px;
+            text-align: center;
         }
 
-        .btn-login {
+        .btn-white {
+            background: white;
             color: var(--primary-color);
-            border: 2px solid var(--primary-color);
+        }
+
+        .btn-accent {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* ============ SECTION TITLE ============ */
+        .section {
+            padding: 40px 15px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--dark-orange);
+            margin-bottom: 30px;
+        }
+
+        /* ============ CATEGORIES SLIDER ============ */
+        .categories-slider-container {
+            position: relative;
+            overflow: hidden;
+            margin: 0 -15px;
+            padding: 0 15px;
+        }
+
+        .categories-slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .categories-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-card {
+            min-width: 120px;
+            flex-shrink: 0;
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            padding: 20px 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .category-card:active {
+            transform: scale(0.95);
+        }
+
+        .category-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .category-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark-orange);
+        }
+
+        /* ============ SUB CATEGORIES ============ */
+        .sub-categories {
+            background: white;
+            padding: 30px 15px;
+        }
+
+        .sub-cat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .sub-cat-card {
+            background: var(--light-orange);
+            border-radius: 12px;
+            padding: 20px 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .sub-cat-card:active {
+            transform: scale(0.95);
+            border-color: var(--primary-color);
+        }
+
+        .sub-cat-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .sub-cat-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark-orange);
+        }
+
+        /* ============ PRODUCTS SECTIONS ============ */
+        .products-section {
+            padding: 35px 15px;
+        }
+
+        .products-section.bg-white {
             background: white;
         }
 
-        .btn-login:hover {
-            background: var(--primary-color);
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--dark-orange);
+        }
+
+        .view-all {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* ============ PRODUCTS GRID (2 COLUMNS) ============ */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .product-badges {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .badge-new, .badge-sale, .badge-eco {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
             color: white;
         }
 
-        .btn-register {
-            background: var(--primary-color);
-            color: white;
-            border: 2px solid var(--primary-color);
+        .badge-new {
+            background: var(--accent-color);
         }
 
-        .btn-register:hover {
-            background: var(--secondary-color);
-            border-color: var(--secondary-color);
+        .badge-sale {
+            background: #ef4444;
+        }
+
+        .badge-eco {
+            background: #10b981;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 12px;
+        }
+
+        .product-category {
+            color: var(--text-light);
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark-orange);
+            min-height: 38px;
+            line-height: 1.3;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .stars {
+            color: var(--accent-color);
+            font-size: 12px;
+        }
+
+        .reviews {
+            color: var(--text-light);
+            font-size: 11px;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .current-price {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--primary-color);
+        }
+
+        .original-price {
+            font-size: 13px;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: #ef4444;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:active {
+            transform: scale(0.95);
+        }
+
+        /* ============ RELATED PRODUCTS SLIDER ============ */
+        .related-slider-container {
+            position: relative;
+            overflow: hidden;
+            margin: 0 -15px;
+            padding: 0 15px;
+        }
+
+        .related-slider {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .related-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .related-card {
+            min-width: 160px;
+            flex-shrink: 0;
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            background: var(--dark-orange);
+            color: white;
+            padding: 40px 15px 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .footer-section h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--light-orange);
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
         }
 
         /* ============ MOBILE MENU ============ */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--text-dark);
-            cursor: pointer;
-            padding: 5px;
-        }
-
         .mobile-nav {
-            display: none;
             position: fixed;
             top: 0;
             right: -100%;
@@ -315,32 +632,6 @@
             font-weight: 500;
         }
 
-        .mobile-nav-menu a:hover {
-            background: var(--bg-light);
-            color: var(--primary-color);
-        }
-
-        .mobile-nav-menu i {
-            font-size: 20px;
-            width: 25px;
-        }
-
-        .mobile-nav-footer {
-            padding: 20px;
-            border-top: 1px solid #f0f0f0;
-        }
-
-        .mobile-user-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .mobile-user-buttons a {
-            text-align: center;
-        }
-
         .overlay {
             display: none;
             position: fixed;
@@ -355,713 +646,27 @@
         }
 
         .overlay.active {
+            display: block;
             opacity: 1;
         }
 
-        /* ============ NAV MENU ============ */
-        .nav-menu {
-            background: var(--dark-orange);
-            padding: 12px 0;
-        }
-
-        .nav-menu ul {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-menu a:hover {
-            color: var(--light-orange);
-        }
-
-        /* ============ HERO ============ */
-        .hero {
-            background: linear-gradient(135deg, rgba(243, 146, 0, 0.95), rgba(230, 133, 0, 0.95)),
-                        url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1600') center/cover;
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 36px;
-            font-weight: 900;
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 16px;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: white;
-            color: var(--primary-color);
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .btn-primary {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        /* ============ SECTIONS ============ */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--dark-orange);
-            margin-bottom: 40px;
-        }
-
-        .categories-section, .features, .products-section {
-            padding: 50px 15px;
-        }
-
-        .categories-section {
-            background: white;
-        }
-
-        .features {
-            background: white;
-        }
-
-        .products-section {
-            background: var(--bg-light);
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-        }
-
-        .category-card {
-            background: var(--bg-light);
-            border-radius: 12px;
-            padding: 25px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .category-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .category-icon {
-            font-size: 40px;
-            margin-bottom: 12px;
-        }
-
-        .category-name {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--dark-orange);
-            margin-bottom: 5px;
-        }
-
-        .category-count {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 25px;
-            border-radius: 12px;
-            background: var(--bg-light);
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .feature-icon {
-            font-size: 42px;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-
-        .feature-card h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: var(--dark-orange);
-        }
-
-        .feature-card p {
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        .products-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 8px 20px;
-            background: white;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 13px;
-            transition: all 0.3s;
-        }
-
-        .filter-btn.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* ============ PRODUCTS SLIDER ============ */
-        .products-slider-container {
-            position: relative;
-            overflow: hidden;
-            margin: 0 -15px;
-            padding: 0 15px;
-        }
-
-        .products-slider {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding-bottom: 15px;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-color) #e5e7eb;
-        }
-
-        .products-slider::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .products-slider::-webkit-scrollbar-track {
-            background: #e5e7eb;
-            border-radius: 10px;
-        }
-
-        .products-slider::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 10px;
-        }
-
-        .products-slider::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary-color);
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
-            position: relative;
-            min-width: 280px;
-            flex-shrink: 0;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .product-badges {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            z-index: 10;
-        }
-
-        .badge-new, .badge-sale, .badge-eco {
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .badge-new {
-            background: var(--accent-color);
-        }
-
-        .badge-sale {
-            background: #ef4444;
-        }
-
-        .badge-eco {
-            background: var(--primary-color);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-        }
-
-        .product-info {
-            padding: 18px;
-        }
-
-        .product-category {
-            color: var(--text-light);
-            font-size: 12px;
-            margin-bottom: 6px;
-        }
-
-        .product-name {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--dark-orange);
-            min-height: 45px;
-            line-height: 1.3;
-        }
-
-        .product-rating {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 12px;
-        }
-
-        .stars {
-            color: var(--accent-color);
-            font-size: 14px;
-        }
-
-        .reviews {
-            color: var(--text-light);
-            font-size: 13px;
-        }
-
-        .product-price {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-
-        .current-price {
-            font-size: 22px;
-            font-weight: 900;
-            color: var(--primary-color);
-        }
-
-        .original-price {
-            font-size: 15px;
-            color: var(--text-light);
-            text-decoration: line-through;
-        }
-
-        .discount-badge {
-            background: #ef4444;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .add-to-cart {
-            width: 100%;
-            padding: 10px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            font-family: 'Tajawal', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-
-        .add-to-cart:hover {
-            background: var(--secondary-color);
-        }
-
-        .add-to-cart:active {
-            transform: scale(0.95);
-        }
-
-        /* ============ SLIDER NAVIGATION ============ */
-        .slider-nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .slider-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            transition: all 0.3s;
-        }
-
-        .slider-btn:hover {
-            background: var(--secondary-color);
-        }
-
-        .slider-btn:active {
-            transform: scale(0.9);
-        }
-
-        /* ============ FOOTER ============ */
-        .footer {
-            background: var(--dark-orange);
-            color: white;
-            padding: 50px 15px 20px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-section h3 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--light-orange);
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .footer-section i {
-            margin-left: 8px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .social-icon {
-            width: 38px;
-            height: 38px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-icon:hover {
-            background: var(--primary-color);
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s;
-        }
-
-        .lang-btn:hover {
-            background: white;
-            color: var(--primary-color);
-        }
-
-        /* ============ RESPONSIVE ============ */
-        @media (max-width: 992px) {
-            .user-menu {
-                display: none;
+        /* ============ AUTO SCROLL ANIMATION ============ */
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
             }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .mobile-nav,
-            .overlay {
-                display: block;
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .product-card {
-                min-width: 260px;
+            100% {
+                transform: translateX(calc(-100% - 20px));
             }
         }
 
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 28px;
-            }
-
-            .hero p {
-                font-size: 15px;
-            }
-
-            .section-title {
-                font-size: 24px;
-            }
-
-            .top-bar-left,
-            .top-bar-right {
-                width: 100%;
-                justify-content: center;
-                font-size: 11px;
-                gap: 10px;
-            }
-
-            .categories-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
-            }
-
-            .category-card {
-                padding: 20px 10px;
-            }
-
-            .category-icon {
-                font-size: 32px;
-            }
-
-            .category-name {
-                font-size: 13px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .product-card {
-                min-width: 240px;
-            }
-
-            .product-image {
-                height: 200px;
-            }
+        .auto-scroll {
+            animation: scroll 20s linear infinite;
         }
 
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 22px;
-            }
-
-            .hero p {
-                font-size: 14px;
-            }
-
-            .hero {
-                padding: 40px 15px;
-            }
-
-            .btn {
-                padding: 10px 25px;
-                font-size: 14px;
-            }
-
-            .section-title {
-                font-size: 20px;
-                margin-bottom: 25px;
-            }
-
-            .categories-section, .features, .products-section {
-                padding: 35px 15px;
-            }
-
-            .header-content {
-                gap: 10px;
-            }
-
-            .logo img {
-                height: 38px;
-            }
-
-            .header-icon {
-                font-size: 20px;
-            }
-
-            .search-bar input {
-                padding: 9px 40px 9px 12px;
-                font-size: 13px;
-            }
-
-            .search-bar button {
-                padding: 5px 12px;
-                font-size: 13px;
-            }
-
-            .products-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .filter-buttons {
-                width: 100%;
-                overflow-x: auto;
-                flex-wrap: nowrap;
-                padding-bottom: 5px;
-            }
-
-            .filter-btn {
-                padding: 7px 18px;
-                font-size: 12px;
-                white-space: nowrap;
-            }
-
-            .product-card {
-                min-width: 220px;
-            }
-
-            .product-image {
-                height: 180px;
-            }
-
-            .product-name {
-                font-size: 14px;
-                min-height: 40px;
-            }
-
-            .current-price {
-                font-size: 19px;
-            }
-
-            .add-to-cart {
-                padding: 9px;
-                font-size: 14px;
-            }
-
-            .categories-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 360px) {
-            .hero h1 {
-                font-size: 20px;
-            }
-
-            .logo img {
-                height: 35px;
-            }
-
-            .product-card {
-                min-width: 200px;
-            }
+        .categories-slider:hover .auto-scroll,
+        .related-slider:hover .auto-scroll {
+            animation-play-state: paused;
         }
     </style>
 </head>
@@ -1072,344 +677,377 @@
     <!-- Mobile Nav -->
     <div class="mobile-nav" id="mobileNav">
         <div class="mobile-nav-header">
-            <h3>Eco Friendy</h3>
+            <h3>🐾 Eco Friendy</h3>
             <button class="mobile-nav-close" onclick="closeMobileMenu()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         
         <ul class="mobile-nav-menu">
-            <li><a href="/" onclick="closeMobileMenu()"><i class="fas fa-home"></i> الرئيسية</a></li>
-            <li><a href="#products" onclick="closeMobileMenu()"><i class="fas fa-shopping-bag"></i> المنتجات</a></li>
-            <li><a href="#" onclick="closeMobileMenu()"><i class="fas fa-info-circle"></i> من نحن</a></li>
-            <li><a href="#" onclick="closeMobileMenu()"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-            <li><a href="#" onclick="closeMobileMenu()"><i class="fas fa-shopping-cart"></i> السلة</a></li>
-            <li><a href="#" onclick="closeMobileMenu()"><i class="fas fa-heart"></i> المفضلة</a></li>
+            <li><a href="#"><i class="fas fa-home"></i> الرئيسية</a></li>
+            <li><a href="#products"><i class="fas fa-shopping-bag"></i> المنتجات</a></li>
+            <li><a href="#"><i class="fas fa-dog"></i> كلاب</a></li>
+            <li><a href="#"><i class="fas fa-cat"></i> قطط</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> من نحن</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
         </ul>
-
-        <div class="mobile-nav-footer">
-            <div class="mobile-user-buttons">
-                <a href="#" class="btn-login">دخول</a>
-                <a href="#" class="btn-register">تسجيل</a>
-            </div>
-            <button class="lang-btn" onclick="toggleLanguage()" style="border-color: var(--primary-color); color: var(--primary-color); width: 100%; justify-content: center;">
-                <i class="fas fa-globe"></i>
-                <span id="lang-text-mobile">English</span>
-            </button>
-        </div>
     </div>
 
     <!-- Top Bar -->
-    <div class="top-bar" id="topBar">
-        <div class="container">
-            <div class="top-bar-left">
-                <a href="mailto:info@eco-friendly.com">
-                    <i class="fas fa-envelope"></i>
-                    info@eco-friendly.com
-                </a>
-                <a href="tel:+962790083039">
-                    <i class="fas fa-phone"></i>
-                    +962790083039
-                </a>
-            </div>
-            <div class="top-bar-right">
-                <a href="#">
-                    <i class="fas fa-map-marker-alt"></i>
-                    الأردن - عمان
-                </a>
-                <button class="lang-btn" onclick="toggleLanguage()">
-                    <i class="fas fa-globe"></i>
-                    <span id="lang-text">English</span>
-                </button>
-            </div>
-        </div>
+    <div class="top-bar">
+        <a href="tel:962790083039" class="top-bar-item">
+            <i class="fas fa-phone"></i>
+            962790083039+
+        </a>
+        <a href="mailto:info@eco-friendy.com" class="top-bar-item">
+            <i class="fas fa-envelope"></i>
+            info@eco-friendy.com
+        </a>
+        <button class="lang-btn" onclick="toggleLanguage()">
+            <i class="fas fa-globe"></i>
+            <span id="lang-text">English</span>
+        </button>
+        <a href="#" class="top-bar-item">
+            <i class="fas fa-map-marker-alt"></i>
+            الأردن - عمان - أبو نصير
+        </a>
     </div>
 
     <!-- Main Header -->
-    <header class="main-header" id="mainHeader">
+    <header class="main-header">
         <div class="header-content">
-            <button class="mobile-menu-btn" onclick="openMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-
             <a href="/" class="logo">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 50'%3E%3Ctext x='10' y='35' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%23f39200'%3EEco Friendy%3C/text%3E%3Cpath d='M5,25 Q10,15 15,25 T25,25' stroke='%23f39200' stroke-width='2' fill='none'/%3E%3C/svg%3E" alt="Eco Friendy">
+                🐾 Eco Friendy
             </a>
-
-            <div class="search-bar">
-                <input type="text" placeholder="ابحث عن منتجات...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
-
-            <div class="header-actions">
-                <div class="header-icon">
-                    <i class="fas fa-heart"></i>
-                    <span class="badge">3</span>
-                </div>
+            
+            <div class="header-icons">
                 <div class="header-icon">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="badge" id="cart-count">0</span>
                 </div>
-                <div class="user-menu">
-                    <a href="#" class="btn-login">دخول</a>
-                    <a href="#" class="btn-register">تسجيل</a>
+                <div class="header-icon">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge">3</span>
                 </div>
+                <button class="mobile-menu-btn" onclick="openMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Nav Menu -->
-    <nav class="nav-menu">
-        <ul>
-            <li><a href="/"><i class="fas fa-home"></i> الرئيسية</a></li>
-            <li><a href="#products"><i class="fas fa-shopping-bag"></i> المنتجات</a></li>
-            <li><a href="#"><i class="fas fa-info-circle"></i> من نحن</a></li>
-            <li><a href="#"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-        </ul>
-    </nav>
+    <!-- Search Bar -->
+    <div class="search-section">
+        <div class="search-bar">
+            <input type="text" placeholder="ابحث عن منتجات...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </div>
 
     <!-- Hero -->
     <section class="hero">
-        <div class="container">
-            <h1>🐾 مرحباً بك في Eco Friendy Store</h1>
-            <p>متجرك الأول لمستلزمات وأطعمة ورعاية الحيوانات الأليفة في الأردن<br>كل ما يحتاجه حيوانك الأليف في مكان واحد</p>
-            <div class="hero-buttons">
-                <a href="#products" class="btn">تسوق الآن</a>
-                <a href="#" class="btn btn-primary">اعرف المزيد</a>
-            </div>
+        <h1>🐾 مرحباً بك في Eco Friendy Store</h1>
+        <p>متجرك الأول لمستلزمات وأطعمة ورعاية الحيوانات الأليفة في الأردن</p>
+        <p>كل ما يحتاجه حيوانك الأليف في مكان واحد</p>
+        <div class="hero-buttons">
+            <a href="#products" class="btn btn-white">تسوق الآن</a>
+            <a href="#" class="btn btn-accent">اعرف المزيد</a>
         </div>
     </section>
 
-    <!-- Categories -->
-    <section class="categories-section">
-        <div class="container">
-            <h2 class="section-title">تسوق حسب الفئة</h2>
-            <div class="categories-grid">
+    <!-- Categories Slider -->
+    <section class="section">
+        <h2 class="section-title">تسوق حسب الفئة</h2>
+        <div class="categories-slider-container">
+            <div class="categories-slider" id="categoriesSlider">
                 <div class="category-card">
                     <div class="category-icon">🐕</div>
                     <div class="category-name">كلاب</div>
-                    <div class="category-count">45 منتج</div>
                 </div>
                 <div class="category-card">
                     <div class="category-icon">🐈</div>
                     <div class="category-name">قطط</div>
-                    <div class="category-count">38 منتج</div>
                 </div>
                 <div class="category-card">
                     <div class="category-icon">🦜</div>
                     <div class="category-name">طيور</div>
-                    <div class="category-count">24 منتج</div>
                 </div>
                 <div class="category-card">
                     <div class="category-icon">🐠</div>
                     <div class="category-name">أسماك</div>
-                    <div class="category-count">32 منتج</div>
                 </div>
                 <div class="category-card">
                     <div class="category-icon">🐰</div>
                     <div class="category-name">أرانب</div>
-                    <div class="category-count">18 منتج</div>
                 </div>
                 <div class="category-card">
                     <div class="category-icon">🐹</div>
                     <div class="category-name">هامسترات</div>
-                    <div class="category-count">15 منتج</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features -->
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">لماذا تختار Eco Friendly Store؟</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-leaf"></i></div>
-                    <h3>100% صديق للبيئة</h3>
-                    <p>جميع منتجاتنا طبيعية وقابلة للتحلل البيولوجي</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
-                    <h3>توصيل سريع</h3>
-                    <p>توصيل مجاني للطلبات فوق 50 دينار</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>ضمان الجودة</h3>
-                    <p>نضمن جودة المنتجات وإمكانية الإرجاع خلال 14 يوم</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                    <h3>دعم 24/7</h3>
-                    <p>فريق الدعم متاح دائماً للإجابة على استفساراتك</p>
-                </div>
+    <!-- Sub Categories -->
+    <section class="sub-categories">
+        <h2 class="section-title">أقسام المتجر</h2>
+        
+        <h3 style="font-size: 18px; font-weight: 700; color: var(--dark-orange); margin-bottom: 15px; text-align: center;">
+            🐕 كلاب
+        </h3>
+        <div class="sub-cat-grid">
+            <div class="sub-cat-card">
+                <div class="sub-cat-icon">👔</div>
+                <div class="sub-cat-name">إكسسوارات</div>
+            </div>
+            <div class="sub-cat-card">
+                <div class="sub-cat-icon">🍖</div>
+                <div class="sub-cat-name">طعام</div>
+            </div>
+            <div class="sub-cat-card">
+                <div class="sub-cat-icon">💊</div>
+                <div class="sub-cat-name">رعاية</div>
+            </div>
+        </div>
+
+        <h3 style="font-size: 18px; font-weight: 700; color: var(--dark-orange); margin-bottom: 15px; text-align: center; margin-top: 25px;">
+            🐈 قطط
+        </h3>
+        <div class="sub-cat-grid">
+            <div class="sub-cat-card">
+                <div class="sub-cat-icon">👔</div>
+                <div class="sub-cat-name">إكسسوارات</div>
+            </div>
+            <div class="sub-cat-card">
+                <div class="sub-cat-icon">🍖</div>
+                <div class="sub-cat-name">طعام</div>
+            </div>
+            <div class="sub-cat-card">
+                <div class="sub-cat-icon">💊</div>
+                <div class="sub-cat-name">رعاية</div>
             </div>
         </div>
     </section>
 
-    <!-- Products -->
+    <!-- Latest Products (2 columns) -->
     <section class="products-section" id="products">
-        <div class="container">
-            <div class="products-header">
-                <h2 class="section-title" style="margin-bottom: 0;">منتجاتنا المميزة</h2>
-                <div class="filter-buttons">
-                    <button class="filter-btn active">الكل</button>
-                    <button class="filter-btn">كلاب</button>
-                    <button class="filter-btn">قطط</button>
-                    <button class="filter-btn">طيور</button>
+        <div class="section-header">
+            <h2>منتجات أحدث ⭐</h2>
+            <a href="#" class="view-all">عرض الكل ←</a>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-badges">
+                    <span class="badge-new">جديد</span>
+                    <span class="badge-eco">بيئي</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=400" class="product-image" alt="طعام كلاب">
+                <div class="product-info">
+                    <div class="product-category">كلاب</div>
+                    <h3 class="product-name">طعام كلاب عضوي ممتاز</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="reviews">(127)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">35 دينار</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        أضف للسلة
+                    </button>
                 </div>
             </div>
 
-            <div class="products-slider-container">
-                <div class="products-slider" id="productsSlider">
-                    <div class="product-card">
-                        <div class="product-badges">
-                            <span class="badge-new">جديد</span>
-                            <span class="badge-eco">صديق للبيئة</span>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=400" class="product-image" alt="طعام كلاب">
-                        <div class="product-info">
-                            <div class="product-category">كلاب</div>
-                            <h3 class="product-name">طعام كلاب عضوي ممتاز</h3>
-                            <div class="product-rating">
-                                <span class="stars">★★★★½</span>
-                                <span class="reviews">(127)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="current-price">35.00 دينار</span>
-                            </div>
-                            <button class="add-to-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                                أضف للسلة
-                            </button>
-                        </div>
+            <div class="product-card">
+                <div class="product-badges">
+                    <span class="badge-sale">خصم</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=400" class="product-image" alt="رمل قطط">
+                <div class="product-info">
+                    <div class="product-category">قطط</div>
+                    <h3 class="product-name">رمل قطط طبيعي متكتل</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="reviews">(89)</span>
                     </div>
-
-                    <div class="product-card">
-                        <div class="product-badges">
-                            <span class="badge-sale">خصم</span>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=400" class="product-image" alt="رمل قطط">
-                        <div class="product-info">
-                            <div class="product-category">قطط</div>
-                            <h3 class="product-name">رمل قطط طبيعي متكتل</h3>
-                            <div class="product-rating">
-                                <span class="stars">★★★★☆</span>
-                                <span class="reviews">(89)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="current-price">18.00 دينار</span>
-                                <span class="original-price">25.00</span>
-                                <span class="discount-badge">-28%</span>
-                            </div>
-                            <button class="add-to-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                                أضف للسلة
-                            </button>
-                        </div>
+                    <div class="product-price">
+                        <span class="current-price">18 دينار</span>
+                        <span class="original-price">25</span>
+                        <span class="discount-badge">-28%</span>
                     </div>
-
-                    <div class="product-card">
-                        <div class="product-badges">
-                            <span class="badge-eco">صديق للبيئة</span>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1535294435445-d7249524ef2e?w=400" class="product-image" alt="لعبة كلاب">
-                        <div class="product-info">
-                            <div class="product-category">كلاب</div>
-                            <h3 class="product-name">لعبة مضغ - مطاط طبيعي</h3>
-                            <div class="product-rating">
-                                <span class="stars">★★★★★</span>
-                                <span class="reviews">(203)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="current-price">12.00 دينار</span>
-                            </div>
-                            <button class="add-to-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                                أضف للسلة
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-badges">
-                            <span class="badge-new">جديد</span>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400" class="product-image" alt="طعام طيور">
-                        <div class="product-info">
-                            <div class="product-category">طيور</div>
-                            <h3 class="product-name">طعام طيور - حبوب عضوية</h3>
-                            <div class="product-rating">
-                                <span class="stars">★★★★½</span>
-                                <span class="reviews">(64)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="current-price">22.00 دينار</span>
-                            </div>
-                            <button class="add-to-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                                أضف للسلة
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-badges">
-                            <span class="badge-eco">صديق للبيئة</span>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?w=400" class="product-image" alt="طعام قطط">
-                        <div class="product-info">
-                            <div class="product-category">قطط</div>
-                            <h3 class="product-name">طعام قطط - سمك طازج</h3>
-                            <div class="product-rating">
-                                <span class="stars">★★★★★</span>
-                                <span class="reviews">(156)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="current-price">28.00 دينار</span>
-                            </div>
-                            <button class="add-to-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                                أضف للسلة
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-badges">
-                            <span class="badge-sale">خصم</span>
-                            <span class="badge-eco">صديق للبيئة</span>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1548681528-6a5c45b66b42?w=400" class="product-image" alt="أكسسوارات كلاب">
-                        <div class="product-info">
-                            <div class="product-category">كلاب</div>
-                            <h3 class="product-name">طوق جلدي طبيعي</h3>
-                            <div class="product-rating">
-                                <span class="stars">★★★★½</span>
-                                <span class="reviews">(92)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="current-price">15.00 دينار</span>
-                                <span class="original-price">20.00</span>
-                                <span class="discount-badge">-25%</span>
-                            </div>
-                            <button class="add-to-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                                أضف للسلة
-                            </button>
-                        </div>
-                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        أضف للسلة
+                    </button>
                 </div>
             </div>
 
-            <div class="slider-nav">
-                <button class="slider-btn" onclick="scrollProducts('left')">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="slider-btn" onclick="scrollProducts('right')">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
+            <div class="product-card">
+                <div class="product-badges">
+                    <span class="badge-eco">بيئي</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1535294435445-d7249524ef2e?w=400" class="product-image" alt="لعبة كلاب">
+                <div class="product-info">
+                    <div class="product-category">كلاب</div>
+                    <h3 class="product-name">لعبة مضغ - مطاط طبيعي</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="reviews">(203)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">12 دينار</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        أضف للسلة
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-badges">
+                    <span class="badge-new">جديد</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?w=400" class="product-image" alt="طعام قطط">
+                <div class="product-info">
+                    <div class="product-category">قطط</div>
+                    <h3 class="product-name">طعام قطط - سمك طازج</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="reviews">(156)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">28 دينار</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        أضف للسلة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products Slider -->
+    <section class="products-section bg-white">
+        <div class="section-header">
+            <h2>منتجات ذات صلة 🔥</h2>
+            <a href="#" class="view-all">عرض الكل ←</a>
+        </div>
+        <div class="related-slider-container">
+            <div class="related-slider" id="relatedSlider">
+                <div class="product-card related-card">
+                    <div class="product-badges">
+                        <span class="badge-eco">بيئي</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400" class="product-image" alt="طعام طيور">
+                    <div class="product-info">
+                        <div class="product-category">طيور</div>
+                        <h3 class="product-name">طعام طيور عضوي</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★½</span>
+                            <span class="reviews">(64)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">22 دينار</span>
+                        </div>
+                        <button class="add-to-cart">
+                            <i class="fas fa-cart-plus"></i>
+                            أضف
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card related-card">
+                    <div class="product-badges">
+                        <span class="badge-sale">خصم</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1548681528-6a5c45b66b42?w=400" class="product-image" alt="طوق">
+                    <div class="product-info">
+                        <div class="product-category">كلاب</div>
+                        <h3 class="product-name">طوق جلدي فاخر</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="reviews">(92)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">15 دينار</span>
+                            <span class="original-price">20</span>
+                        </div>
+                        <button class="add-to-cart">
+                            <i class="fas fa-cart-plus"></i>
+                            أضف
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card related-card">
+                    <div class="product-badges">
+                        <span class="badge-new">جديد</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=400" class="product-image" alt="حوض أسماك">
+                    <div class="product-info">
+                        <div class="product-category">أسماك</div>
+                        <h3 class="product-name">حوض أسماك زجاجي</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="reviews">(45)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">65 دينار</span>
+                        </div>
+                        <button class="add-to-cart">
+                            <i class="fas fa-cart-plus"></i>
+                            أضف
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card related-card">
+                    <div class="product-badges">
+                        <span class="badge-eco">بيئي</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1585664811087-47f65abbad64?w=400" class="product-image" alt="قفص">
+                    <div class="product-info">
+                        <div class="product-category">هامسترات</div>
+                        <h3 class="product-name">قفص فاخر مع ملحقات</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★½</span>
+                            <span class="reviews">(38)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">42 دينار</span>
+                        </div>
+                        <button class="add-to-cart">
+                            <i class="fas fa-cart-plus"></i>
+                            أضف
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card related-card">
+                    <div class="product-badges">
+                        <span class="badge-sale">خصم</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=400" class="product-image" alt="بيت قطط">
+                    <div class="product-info">
+                        <div class="product-category">قطط</div>
+                        <h3 class="product-name">بيت قطط دافئ</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="reviews">(178)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">32 دينار</span>
+                            <span class="original-price">45</span>
+                        </div>
+                        <button class="add-to-cart">
+                            <i class="fas fa-cart-plus"></i>
+                            أضف
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1418,46 +1056,52 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>عن Eco Friendy Store</h3>
-                <p>نحن متجر متخصص في مستلزمات وأطعمة ورعاية الحيوانات الأليفة.</p>
-                <div class="social-links">
-                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-
-            <div class="footer-section">
                 <h3>روابط سريعة</h3>
-                <a href="/"><i class="fas fa-angle-left"></i> الرئيسية</a>
-                <a href="#products"><i class="fas fa-angle-left"></i> المنتجات</a>
-                <a href="#"><i class="fas fa-angle-left"></i> من نحن</a>
-                <a href="#"><i class="fas fa-angle-left"></i> اتصل بنا</a>
+                <a href="#">الرئيسية</a>
+                <a href="#products">المنتجات</a>
+                <a href="#">من نحن</a>
+                <a href="#">اتصل بنا</a>
             </div>
 
             <div class="footer-section">
                 <h3>خدمة العملاء</h3>
-                <a href="#"><i class="fas fa-angle-left"></i> الأسئلة الشائعة</a>
-                <a href="#"><i class="fas fa-angle-left"></i> سياسة الإرجاع</a>
-                <a href="#"><i class="fas fa-angle-left"></i> سياسة الخصوصية</a>
+                <a href="#">الأسئلة الشائعة</a>
+                <a href="#">سياسة الإرجاع</a>
+                <a href="#">الشحن والتوصيل</a>
+                <a href="#">سياسة الخصوصية</a>
             </div>
 
             <div class="footer-section">
                 <h3>تواصل معنا</h3>
-                <p><i class="fas fa-map-marker-alt"></i> الأردن - عمان</p>
-                <p><i class="fas fa-phone"></i> +962790083039</p>
-                <p><i class="fas fa-envelope"></i> info@eco-friendly.com</p>
+                <a href="tel:+962790083039">
+                    <i class="fas fa-phone"></i> +962790083039
+                </a>
+                <a href="mailto:info@eco-friendy.com">
+                    <i class="fas fa-envelope"></i> info@eco-friendy.com
+                </a>
+                <a href="#">
+                    <i class="fas fa-map-marker-alt"></i> الأردن - عمان
+                </a>
+            </div>
+
+            <div class="footer-section">
+                <h3>تابعنا</h3>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2024 Eco Friendy Store. جميع الحقوق محفوظة ❤️</p>
+            <p>&copy; 2024 Eco Friendy Store. جميع الحقوق محفوظة ❤️🐾</p>
         </div>
     </footer>
 
     <script>
-        // Mobile Menu Functions
+        // Mobile Menu
         function openMobileMenu() {
             document.getElementById('mobileNav').classList.add('active');
             document.getElementById('overlay').classList.add('active');
@@ -1470,31 +1114,13 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Scroll Header Effect
-        window.addEventListener('scroll', () => {
-            const scroll = window.pageYOffset;
-            const header = document.getElementById('mainHeader');
-            const topBar = document.getElementById('topBar');
-
-            if (scroll > 100) {
-                header.classList.add('scrolled');
-                topBar.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-                topBar.classList.remove('scrolled');
-            }
-        });
-
         // Language Toggle
         function toggleLanguage() {
             const html = document.documentElement;
             const currentDir = html.getAttribute('dir');
             const newDir = currentDir === 'rtl' ? 'ltr' : 'rtl';
             html.setAttribute('dir', newDir);
-            
-            const langText = newDir === 'rtl' ? 'English' : 'العربية';
-            document.getElementById('lang-text').textContent = langText;
-            document.getElementById('lang-text-mobile').textContent = langText;
+            document.getElementById('lang-text').textContent = newDir === 'rtl' ? 'English' : 'العربية';
         }
 
         // Add to Cart
@@ -1503,77 +1129,87 @@
                 const count = document.getElementById('cart-count');
                 count.textContent = parseInt(count.textContent) + 1;
                 
-                // Show success message
-                this.innerHTML = '<i class="fas fa-check"></i> تمت الإضافة';
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> تمت';
                 this.style.background = '#10b981';
                 
                 setTimeout(() => {
-                    this.innerHTML = '<i class="fas fa-shopping-cart"></i> أضف للسلة';
+                    this.innerHTML = originalHTML;
                     this.style.background = '';
-                }, 2000);
+                }, 1500);
             });
         });
 
-        // Filter Buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Products Slider Navigation
-        function scrollProducts(direction) {
-            const slider = document.getElementById('productsSlider');
-            const scrollAmount = 300;
-            
-            if (direction === 'right') {
-                slider.scrollBy({
-                    left: -scrollAmount,
-                    behavior: 'smooth'
-                });
-            } else {
-                slider.scrollBy({
-                    left: scrollAmount,
-                    behavior: 'smooth'
-                });
-            }
+        // Auto Scroll for Categories
+        let categoriesScrollInterval;
+        const categoriesSlider = document.getElementById('categoriesSlider');
+        
+        function startCategoriesAutoScroll() {
+            categoriesScrollInterval = setInterval(() => {
+                if (categoriesSlider.scrollLeft >= categoriesSlider.scrollWidth - categoriesSlider.clientWidth) {
+                    categoriesSlider.scrollLeft = 0;
+                } else {
+                    categoriesSlider.scrollLeft += 1;
+                }
+            }, 30);
         }
 
-        // Touch Swipe for Products Slider
-        let touchStartX = 0;
-        let touchEndX = 0;
-        const slider = document.getElementById('productsSlider');
-
-        slider.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
+        categoriesSlider.addEventListener('mouseenter', () => {
+            clearInterval(categoriesScrollInterval);
         });
 
-        slider.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
+        categoriesSlider.addEventListener('mouseleave', () => {
+            startCategoriesAutoScroll();
         });
 
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                scrollProducts('left');
-            }
-            if (touchEndX > touchStartX + 50) {
-                scrollProducts('right');
-            }
+        categoriesSlider.addEventListener('touchstart', () => {
+            clearInterval(categoriesScrollInterval);
+        });
+
+        startCategoriesAutoScroll();
+
+        // Auto Scroll for Related Products
+        let relatedScrollInterval;
+        const relatedSlider = document.getElementById('relatedSlider');
+        
+        function startRelatedAutoScroll() {
+            relatedScrollInterval = setInterval(() => {
+                if (relatedSlider.scrollLeft >= relatedSlider.scrollWidth - relatedSlider.clientWidth) {
+                    relatedSlider.scrollLeft = 0;
+                } else {
+                    relatedSlider.scrollLeft += 1;
+                }
+            }, 30);
         }
 
-        // Smooth Scroll for Anchor Links
+        relatedSlider.addEventListener('mouseenter', () => {
+            clearInterval(relatedScrollInterval);
+        });
+
+        relatedSlider.addEventListener('mouseleave', () => {
+            startRelatedAutoScroll();
+        });
+
+        relatedSlider.addEventListener('touchstart', () => {
+            clearInterval(relatedScrollInterval);
+        });
+
+        startRelatedAutoScroll();
+
+        // Smooth Scroll for Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    closeMobileMenu();
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        closeMobileMenu();
+                    }
                 }
             });
         });
