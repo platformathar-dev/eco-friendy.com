@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأسئلة الشائعة - Eco Friendy</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #f39200;
+            --secondary-color: #e68500;
+            --dark-orange: #c77400;
+            --light-orange: #fff3e6;
+            --accent-color: #ff6b35;
+            --success-color: #10b981;
+            --cliq-purple: #6B2E8E;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #fffbf7;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 10px 15px;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-header {
+            background: white;
+            padding: 12px 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-icon {
+            position: relative;
+            color: var(--text-dark);
+            font-size: 22px;
+            text-decoration: none;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 15px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 15px;
+        }
+
+        .faq-search {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 18px;
+        }
+
+        .faq-categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .category-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .faq-section {
+            margin-bottom: 30px;
+        }
+
+        .faq-section-title {
+            color: var(--dark-orange);
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .faq-question:hover {
+            background: var(--light-orange);
+        }
+
+        .faq-question-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark-orange);
+            flex: 1;
+        }
+
+        .faq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--light-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            background: var(--primary-color);
+            color: white;
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 800px;
+        }
+
+        .faq-answer-content {
+            padding: 0 20px 20px 20px;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .faq-answer-content ul {
+            margin: 10px 0 10px 20px;
+        }
+
+        .faq-answer-content li {
+            margin-bottom: 8px;
+        }
+
+        /* ============ CLIQ PAYMENT BOX ============ */
+        .cliq-payment-box {
+            background: linear-gradient(135deg, var(--cliq-purple), #8B3EB5);
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin: 20px 0;
+            color: white;
+            box-shadow: 0 4px 12px rgba(107, 46, 142, 0.3);
+        }
+
+        .cliq-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .cliq-logo {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 900;
+            font-size: 24px;
+            color: var(--cliq-purple);
+            letter-spacing: 2px;
+        }
+
+        .cliq-bank {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .cliq-details {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .cliq-alias {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .cliq-alias-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .cliq-alias-value {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn {
+            background: white;
+            color: var(--cliq-purple);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .cliq-steps {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .cliq-steps strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .cliq-steps ol {
+            margin-right: 20px;
+        }
+
+        .cliq-steps li {
+            margin-bottom: 8px;
+        }
+
+        .help-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .help-section h2 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .help-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .help-btn {
+            background: white;
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            z-index: 2000;
+            transition: right 0.3s;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .mobile-nav-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-nav-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 26px;
+            }
+
+            .faq-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .cliq-logo {
+                font-size: 20px;
+                padding: 8px 15px;
+            }
+
+            .cliq-alias-value {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <h3>🐾 Eco Friendy</h3>
+            <button class="mobile-nav-close" onclick="closeMobileMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <ul class="mobile-nav-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+            <li><a href="products.html"><i class="fas fa-shopping-bag"></i> جميع المنتجات</a></li>
+            <li><a href="dogs.html"><i class="fas fa-dog"></i> كلاب</a></li>
+            <li><a href="cats.html"><i class="fas fa-cat"></i> قطط</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a></li>
+            <li><a href="wishlist.html"><i class="fas fa-heart"></i> المفضلة</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+        </ul>
+    </div>
+
+    <div class="top-bar">
+        <a href="tel:962790083039" class="top-bar-item">
+            <i class="fas fa-phone"></i> 962790083039+
+        </a>
+        <a href="mailto:info@eco-friendy.com" class="top-bar-item">
+            <i class="fas fa-envelope"></i> info@eco-friendy.com
+        </a>
+    </div>
+
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">🐾 Eco Friendy</a>
+            
+            <div class="header-icons">
+                <a href="cart.html" class="header-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </a>
+                <a href="wishlist.html" class="header-icon">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge" id="wishlist-count">0</span>
+                </a>
+                <button class="mobile-menu-btn" onclick="openMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h1>❓ الأسئلة الشائعة</h1>
+        <p>نجيب على جميع استفساراتك حول منتجاتنا وخدماتنا</p>
+    </div>
+
+    <div class="faq-container">
+        <div class="faq-search">
+            <div class="search-box">
+                <input type="text" id="faqSearch" placeholder="ابحث عن سؤالك هنا..." onkeyup="searchFAQ()">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <div class="faq-categories">
+            <button class="category-btn active" onclick="filterCategory('all')">
+                <i class="fas fa-th"></i> الكل
+            </button>
+            <button class="category-btn" onclick="filterCategory('payment')">
+                <i class="fas fa-credit-card"></i> الدفع
+            </button>
+            <button class="category-btn" onclick="filterCategory('shipping')">
+                <i class="fas fa-shipping-fast"></i> الشحن
+            </button>
+            <button class="category-btn" onclick="filterCategory('products')">
+                <i class="fas fa-box"></i> المنتجات
+            </button>
+        </div>
+
+        <div id="faqContent">
+            <!-- قسم الدفع -->
+            <div class="faq-section" data-category="payment">
+                <div class="faq-section-title">
+                    <div class="faq-section-icon">💳</div>
+                    الدفع والتحويل
+                </div>
+
+                <div class="faq-item active">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-text">كيف أدفع عبر كليك CliQ؟</div>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <div class="cliq-payment-box">
+                                <div class="cliq-header">
+                                    <div class="cliq-logo">CliQ</div>
+                                    <div class="cliq-bank">
+                                        🏦 بنك الاتحاد<br>
+                                        Union Bank
+                                    </div>
+                                </div>
+
+                                <div class="cliq-details">
+                                    <div class="cliq-alias">
+                                        <div>
+                                            <div class="cliq-alias-label">الاسم المستعار CliQ Alias</div>
+                                            <div class="cliq-alias-value">ABDSULEMAN</div>
+                                        </div>
+                                        <button class="copy-btn" onclick="copyAlias()">
+                                            <i class="fas fa-copy"></i>
+                                            نسخ
+                                        </button>
+                                    </div>
+
+                                    <div class="cliq-steps">
+                                        <strong>📱 خطوات الدفع:</strong>
+                                        <ol>
+                                            <li>افتح تطبيق البنك الخاص بك</li>
+                                            <li>اختر خدمة كليك CliQ</li>
+                                            <li>أدخل الاسم المستعار: <strong>ABDSULEMAN</strong></li>
+                                            <li>أدخل المبلغ المطلوب</li>
+                                            <li>أكد العملية</li>
+                                            <li>أرسل لنا لقطة شاشة للتحويل</li>
+                                        </ol>
+                                    </div>
+                                </div>
+
+                                <div style="text-align: center; font-size: 13px; opacity: 0.9;">
+                                    ⚡ التحويل فوري وآمن عبر جميع البنوك الأردنية
+                                </div>
+                            </div>
+
+                            <p><strong>📝 ملاحظة مهمة:</strong></p>
+                            <p>بعد إتمام التحويل، يرجى إرسال لقطة شاشة للتحويل مع رقم الطلب إلى:</p>
+                            <ul>
+                                <li>📱 واتساب: +962790083039</li>
+                                <li>📧 بريد: info@eco-friendy.com</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-text">هل الدفع عند الاستلام متوفر؟</div>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>حالياً، الدفع متاح فقط عبر كليك CliQ لضمان سرعة وأمان العملية.</p>
+                            <p>✅ مميزات الدفع عبر كليك:</p>
+                            <ul>
+                                <li>⚡ تحويل فوري خلال ثوانٍ</li>
+                                <li>🔒 آمن ومضمون 100%</li>
+                                <li>📱 من أي بنك أردني</li>
+                                <li>💯 بدون رسوم إضافية</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-text">متى يتم تأكيد طلبي بعد الدفع؟</div>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>بمجرد استلامنا لإثبات التحويل، سيتم تأكيد طلبك خلال:</p>
+                            <ul>
+                                <li>⏰ في أوقات العمل: خلال ساعة واحدة</li>
+                                <li>🌙 خارج أوقات العمل: في صباح اليوم التالي</li>
+                            </ul>
+                            <p>سنرسل لك رسالة تأكيد فوراً عبر واتساب 📱</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قسم الشحن -->
+            <div class="faq-section" data-category="shipping">
+                <div class="faq-section-title">
+                    <div class="faq-section-icon">🚚</div>
+                    الشحن والتوصيل
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-text">كم يستغرق وقت التوصيل؟</div>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>مدة التوصيل تعتمد على موقعك:</p>
+                            <ul>
+                                <li>📍 داخل عمان: 1-2 يوم عمل</li>
+                                <li>📍 خارج عمان: 2-4 أيام عمل</li>
+                                <li>📍 المحافظات البعيدة: 3-5 أيام عمل</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-text">كم تكلفة الشحن؟</div>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>🎉 الشحن مجاني للطلبات فوق 50 دينار!</p>
+                            <p>للطلبات أقل من 50 دينار: 3 دنانير رسوم شحن</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-text">هل توصلون لجميع مناطق الأردن؟</div>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>نعم! نوصل لجميع مناطق الأردن 🇯🇴</p>
+                            <ul>
+                                <li>✅ عمان وضواحيها</li>
+                                <li>✅ إربد والشمال</li>
+                                <li>✅ الزرقاء</li>
+                                <li>✅ العقبة والجنوب</li>
+                                <li>✅ جميع المحافظات</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قسم المنتجات -->
+            <div class="faq-section" data-category="products">
+                <div class="faq-section-title">
+                    <div class="faq-section-icon">📦</div>
+                    المنتجات والجودة
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-text">هل المنتجات أصلية؟</div>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>نعم! جميع منتجاتنا أصلية 100% ومن مصادر موثوقة</p>
+                            <ul>
+                                <li>✅ منتجات عضوية طبيعية</li>
+                                <li>✅ معتمدة من الجهات الرسمية</li>
+                                <li>✅ آمنة للحيوانات الأليفة</li>
+                                <li>✅ صديقة للبيئة</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-text">هل يمكنني إرجاع أو استبدال المنتج؟</div>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>نعم! نوفر ضمان الإرجاع والاستبدال:</p>
+                            <ul>
+                                <li>📅 خلال 14 يوم من تاريخ الاستلام</li>
+                                <li>📦 المنتج في حالته الأصلية</li>
+                                <li>🏷️ العبوة لم تفتح</li>
+                                <li>🧾 توفر الفاتورة</li>
+                            </ul>
+                            <p>للإرجاع أو الاستبدال، تواصل معنا على: +962790083039</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-text">كيف أختار المنتج المناسب لحيواني؟</div>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>نحن هنا لمساعدتك! 🐾</p>
+                            <ul>
+                                <li>📞 اتصل بنا على: +962790083039</li>
+                                <li>💬 راسلنا عبر واتساب</li>
+                                <li>📧 بريد: info@eco-friendy.com</li>
+                            </ul>
+                            <p>فريقنا المتخصص سيساعدك في اختيار المنتج الأنسب لحيوانك الأليف</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>💬 لم تجد إجابة لسؤالك؟</h2>
+            <p>لا تتردد في التواصل معنا - نحن هنا لمساعدتك!</p>
+            <div class="help-buttons">
+                <a href="tel:+962790083039" class="help-btn">
+                    <i class="fas fa-phone"></i>
+                    اتصل بنا
+                </a>
+                <a href="https://wa.me/962790083039" class="help-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    واتساب
+                </a>
+                <a href="contact.html" class="help-btn">
+                    <i class="fas fa-envelope"></i>
+                    راسلنا
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function toggleFAQ(element) {
+            const faqItem = element.closest('.faq-item');
+            const wasActive = faqItem.classList.contains('active');
+            
+            // إغلاق جميع الأسئلة
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // فتح السؤال المحدد إذا لم يكن مفتوحاً
+            if (!wasActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        function filterCategory(category) {
+            // تحديث الأزرار
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // فلترة الأقسام
+            const sections = document.querySelectorAll('.faq-section');
+            sections.forEach(section => {
+                if (category === 'all') {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 
+                        section.dataset.category === category ? 'block' : 'none';
+                }
+            });
+        }
+
+        function searchFAQ() {
+            const searchTerm = document.getElementById('faqSearch').value.toLowerCase();
+            const items = document.querySelectorAll('.faq-item');
+            
+            items.forEach(item => {
+                const question = item.querySelector('.faq-question-text').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    if (searchTerm.length > 0) {
+                        item.classList.add('active');
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // إظهار/إخفاء العناوين
+            document.querySelectorAll('.faq-section').forEach(section => {
+                const visibleItems = section.querySelectorAll('.faq-item[style*="display: block"]');
+                section.style.display = visibleItems.length > 0 ? 'block' : 'none';
+            });
+        }
+
+        function copyAlias() {
+            const alias = 'ABDSULEMAN';
+            navigator.clipboard.writeText(alias).then(() => {
+                const btn = event.target.closest('.copy-btn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                btn.style.background = '#10b981';
+                btn.style.color = 'white';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.background = '';
+                    btn.style.color = '';
+                }, 2000);
+            });
+        }
+
+        function openMobileMenu() {
+            document.getElementById('mobileNav').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileNav').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        document.getElementById('overlay').addEventListener('click', closeMobileMenu);
+    </script>
+</body>
+</html>
