@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا - Eco Friendy</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #f39200;
+            --dark-orange: #c77400;
+            --light-orange: #fff3e6;
+            --accent-color: #ff6b35;
+            --success-color: #10b981;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #fffbf7;
+        }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+        .top-bar { background: linear-gradient(135deg, var(--primary-color), #e68500); color: white; padding: 10px 15px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .top-bar-item { color: white; text-decoration: none; font-size: 13px; }
+        .main-header { background: white; padding: 12px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 22px; font-weight: 900; color: var(--primary-color); text-decoration: none; }
+        .header-icons { display: flex; gap: 15px; }
+        .header-icon { position: relative; color: var(--text-dark); font-size: 22px; text-decoration: none; }
+        .badge { position: absolute; top: -8px; right: -8px; background: var(--accent-color); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
+        .page-header { background: var(--primary-color); color: white; padding: 40px 15px; text-align: center; }
+        .page-header h1 { font-size: 32px; font-weight: 900; }
+        .contact-container { max-width: 800px; margin: 0 auto; padding: 40px 15px; }
+        .contact-info { background: white; border-radius: 15px; padding: 30px 20px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .contact-item { display: flex; align-items: center; gap: 15px; padding: 20px; background: var(--light-orange); border-radius: 12px; margin-bottom: 15px; }
+        .contact-icon { width: 50px; height: 50px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+        .contact-details h3 { color: var(--dark-orange); margin-bottom: 5px; }
+        .contact-details a { color: var(--text-dark); text-decoration: none; }
+        .form-section { background: white; border-radius: 15px; padding: 30px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .form-section h2 { color: var(--dark-orange); font-size: 24px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark-orange); }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-family: 'Tajawal', sans-serif; font-size: 14px; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .submit-btn { width: 100%; padding: 15px; background: var(--primary-color); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: 700; cursor: pointer; font-family: 'Tajawal', sans-serif; }
+        .submit-btn:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="tel:962790083039" class="top-bar-item"><i class="fas fa-phone"></i> 962790083039+</a>
+        <a href="mailto:info@eco-friendy.com" class="top-bar-item"><i class="fas fa-envelope"></i> info@eco-friendy.com</a>
+    </div>
+
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">🐾 Eco Friendy</a>
+            <div class="header-icons">
+                <a href="cart.html" class="header-icon"><i class="fas fa-shopping-cart"></i><span class="badge" id="cart-count">0</span></a>
+                <a href="index.html" class="header-icon"><i class="fas fa-home"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-header"><h1>📞 اتصل بنا</h1></div>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                <div class="contact-details">
+                    <h3>الهاتف</h3>
+                    <a href="tel:+962790083039">+962790083039</a>
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                <div class="contact-details">
+                    <h3>البريد الإلكتروني</h3>
+                    <a href="mailto:info@eco-friendy.com">info@eco-friendy.com</a>
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="contact-details">
+                    <h3>العنوان</h3>
+                    <p>الأردن - عمان - أبو نصير</p>
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                <div class="contact-details">
+                    <h3>ساعات العمل</h3>
+                    <p>السبت - الخميس: 9:00 صباحاً - 9:00 مساءً</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>أرسل لنا رسالة</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label>الاسم</label>
+                    <input type="text" required placeholder="أدخل اسمك">
+                </div>
+                
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" required placeholder="example@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" required placeholder="+962">
+                </div>
+                
+                <div class="form-group">
+                    <label>الرسالة</label>
+                    <textarea required placeholder="اكتب رسالتك هنا..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    إرسال الرسالة
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', updateCounters);
+        
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('✅ شكراً لتواصلك معنا!\n\nسنرد عليك في أقرب وقت ممكن.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
