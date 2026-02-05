@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الإرجاع والاسترجاع - Eco Friendy</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #f39200;
+            --secondary-color: #e68500;
+            --dark-orange: #c77400;
+            --light-orange: #fff3e6;
+            --accent-color: #ff6b35;
+            --success-color: #10b981;
+            --info-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #fffbf7;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 10px 15px;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-header {
+            background: white;
+            padding: 12px 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-icon {
+            position: relative;
+            color: var(--text-dark);
+            font-size: 22px;
+            text-decoration: none;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 15px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .returns-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 15px;
+        }
+
+        .intro-box {
+            background: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .intro-box h2 {
+            color: var(--dark-orange);
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .intro-box p {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .highlight-box h3 {
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .highlight-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .highlight-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .highlight-icon {
+            font-size: 28px;
+        }
+
+        .highlight-text {
+            text-align: right;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .policy-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .policy-section h2 {
+            color: var(--dark-orange);
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--light-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .policy-section h3 {
+            color: var(--dark-orange);
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+        }
+
+        .policy-section p {
+            margin-bottom: 15px;
+        }
+
+        .policy-section ul {
+            margin: 15px 0 15px 25px;
+        }
+
+        .policy-section li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .checklist-item {
+            background: var(--light-orange);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .checklist-icon {
+            color: var(--success-color);
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-right: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #92400e;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-box ul {
+            margin: 10px 0 10px 25px;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border-right: 4px solid var(--info-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #1e40af;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .steps-container {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .step-item {
+            background: var(--light-orange);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: var(--dark-orange);
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .contact-box h2 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .contact-box p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-method {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .contact-method:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .contact-method i {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .contact-method strong {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .contact-method span {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            z-index: 2000;
+            transition: right 0.3s;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .mobile-nav-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-nav-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 26px;
+            }
+
+            .highlight-features {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <h3>🐾 Eco Friendy</h3>
+            <button class="mobile-nav-close" onclick="closeMobileMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <ul class="mobile-nav-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+            <li><a href="products.html"><i class="fas fa-shopping-bag"></i> جميع المنتجات</a></li>
+            <li><a href="dogs.html"><i class="fas fa-dog"></i> كلاب</a></li>
+            <li><a href="cats.html"><i class="fas fa-cat"></i> قطط</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a></li>
+            <li><a href="wishlist.html"><i class="fas fa-heart"></i> المفضلة</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</a></li>
+        </ul>
+    </div>
+
+    <div class="top-bar">
+        <a href="tel:962790083039" class="top-bar-item">
+            <i class="fas fa-phone"></i> 962790083039+
+        </a>
+        <a href="mailto:info@eco-friendy.com" class="top-bar-item">
+            <i class="fas fa-envelope"></i> info@eco-friendy.com
+        </a>
+    </div>
+
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">🐾 Eco Friendy</a>
+            
+            <div class="header-icons">
+                <a href="cart.html" class="header-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </a>
+                <a href="wishlist.html" class="header-icon">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge" id="wishlist-count">0</span>
+                </a>
+                <button class="mobile-menu-btn" onclick="openMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h1>🔄 سياسة الإرجاع والاسترجاع</h1>
+        <p>راحتك ورضاك هو أولويتنا - إرجاع واستبدال سهل ومضمون</p>
+    </div>
+
+    <div class="returns-container">
+        <div class="intro-box">
+            <h2>نضمن لك تجربة تسوق آمنة ومريحة</h2>
+            <p>في Eco Friendy، نؤمن بجودة منتجاتنا ونثق في اختياراتك. لذلك نوفر لك سياسة إرجاع واسترجاع مرنة وسهلة لضمان رضاك التام.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h3>✨ ضمان الرضا الكامل</h3>
+            <div class="highlight-features">
+                <div class="highlight-item">
+                    <div class="highlight-icon">📅</div>
+                    <div class="highlight-text">14 يوم<br>ضمان الإرجاع</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">💯</div>
+                    <div class="highlight-text">استرجاع كامل<br>للمبلغ</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">🔄</div>
+                    <div class="highlight-text">استبدال<br>مجاني</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">🚚</div>
+                    <div class="highlight-text">شحن الإرجاع<br>علينا</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="policy-section">
+            <h2>
+                <div class="section-icon">📋</div>
+                شروط الإرجاع والاستبدال
+            </h2>
+
+            <p>لضمان قبول طلب الإرجاع أو الاستبدال، يجب توفر الشروط التالية:</p>
+
+            <div class="checklist-item">
+                <i class="fas fa-check-circle checklist-icon"></i>
+                <div>
+                    <strong>المدة الزمنية:</strong> خلال 14 يوم من تاريخ استلام المنتج
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <i class="fas fa-check-circle checklist-icon"></i>
+                <div>
+                    <strong>حالة المنتج:</strong> المنتج في حالته الأصلية دون استخدام
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <i class="fas fa-check-circle checklist-icon"></i>
+                <div>
+                    <strong>العبوة الأصلية:</strong> العبوة والملصقات سليمة ولم تفتح
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <i class="fas fa-check-circle checklist-icon"></i>
+                <div>
+                    <strong>الفاتورة:</strong> توفر الفاتورة الأصلية أو نسخة منها
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <i class="fas fa-check-circle checklist-icon"></i>
+                <div>
+                    <strong>الملحقات:</strong> جميع الملحقات والهدايا المرفقة (إن وجدت)
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>
+                    <i class="fas fa-exclamation-triangle"></i>
+                    حالات لا يمكن إرجاعها
+                </h4>
+                <ul>
+                    <li>المنتجات الغذائية المفتوحة أو المستخدمة</li>
+                    <li>منتجات النظافة والعناية المفتوحة</li>
+                    <li>المنتجات التي انتهت فترة الإرجاع (14 يوم)</li>
+                    <li>المنتجات المخصصة أو المصنوعة حسب الطلب</li>
+                    <li>المنتجات التالفة بسبب سوء الاستخدام</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="policy-section">
+            <h2>
+                <div class="section-icon">🔄</div>
+                أنواع الإرجاع
+            </h2>
+
+            <h3>1️⃣ استرجاع المبلغ الكامل</h3>
+            <p>يمكنك استرجاع كامل قيمة المنتج إذا:</p>
+            <ul>
+                <li>المنتج لا يطابق الوصف المذكور</li>
+                <li>وصلك منتج معيب أو تالف</li>
+                <li>المنتج غير مناسب لحيوانك الأليف</li>
+                <li>استلمت منتج خاطئ</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>
+                    <i class="fas fa-info-circle"></i>
+                    مدة استرجاع المبلغ
+                </h4>
+                <p>سيتم إرجاع المبلغ خلال 3-7 أيام عمل بعد استلام المنتج المرتجع وفحصه.</p>
+                <p>الإرجاع سيكون عبر نفس طريقة الدفع (كليك CliQ).</p>
+            </div>
+
+            <h3>2️⃣ استبدال المنتج</h3>
+            <p>يمكنك استبدال المنتج بمنتج آخر من نفس القيمة أو أكثر:</p>
+            <ul>
+                <li>اختيار منتج آخر من المتجر</li>
+                <li>استبدال بمقاس أو نوع مختلف</li>
+                <li>لا توجد رسوم إضافية للاستبدال</li>
+                <li>الشحن مجاني للمنتج البديل</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h2>
+                <div class="section-icon">📝</div>
+                خطوات طلب الإرجاع
+            </h2>
+
+            <p>اتبع هذه الخطوات البسيطة لإرجاع أو استبدال منتجك:</p>
+
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>تواصل معنا</h4>
+                        <p>اتصل بنا على +962790083039 أو راسلنا عبر واتساب</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>أخبرنا بالسبب</h4>
+                        <p>اشرح لنا سبب الإرجاع وأرسل صور للمنتج</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>احصل على رقم الإرجاع</h4>
+                        <p>سنعطيك رقم إرجاع خاص لمتابعة طلبك</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>تغليف المنتج</h4>
+                        <p>غلّف المنتج بشكل جيد في عبوته الأصلية</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>الشحن</h4>
+                        <p>سنرسل لك مندوب لاستلام المنتج (مجاناً)</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>الفحص والاسترجاع</h4>
+                        <p>بعد فحص المنتج، سيتم إرجاع المبلغ أو إرسال البديل</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="policy-section">
+            <h2>
+                <div class="section-icon">💼</div>
+                حالات خاصة
+            </h2>
+
+            <h3>🎁 المنتجات التالفة عند الاستلام</h3>
+            <p>إذا وصلك منتج تالف أو معيب:</p>
+            <ul>
+                <li>لا تقبل الاستلام وأبلغ المندوب فوراً</li>
+                <li>التقط صور للمنتج والعبوة</li>
+                <li>اتصل بنا فوراً على +962790083039</li>
+                <li>سنستبدل المنتج أو نسترجع المبلغ فوراً</li>
+            </ul>
+
+            <h3>📦 المنتج الخاطئ</h3>
+            <p>إذا استلمت منتج غير الذي طلبته:</p>
+            <ul>
+                <li>تواصل معنا خلال 24 ساعة</li>
+                <li>سنستبدل المنتج فوراً بدون أي تكلفة</li>
+                <li>الشحن مجاني للمنتج الصحيح</li>
+            </ul>
+
+            <h3>🐾 المنتج غير مناسب للحيوان</h3>
+            <p>إذا كان المنتج غير مناسب لحيوانك الأليف:</p>
+            <ul>
+                <li>يمكنك إرجاعه خلال 14 يوم</li>
+                <li>شرط عدم فتح العبوة</li>
+                <li>سنساعدك في اختيار البديل المناسب</li>
+            </ul>
+        </div>
+
+        <div class="contact-box">
+            <h2>💬 هل لديك استفسار عن الإرجاع؟</h2>
+            <p>فريقنا جاهز لمساعدتك في أي وقت</p>
+            
+            <div class="contact-methods">
+                <a href="tel:+962790083039" class="contact-method">
+                    <i class="fas fa-phone"></i>
+                    <strong>اتصل بنا</strong>
+                    <span>+962790083039</span>
+                </a>
+
+                <a href="https://wa.me/962790083039" class="contact-method" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <strong>واتساب</strong>
+                    <span>متاح 24/7</span>
+                </a>
+
+                <a href="mailto:info@eco-friendy.com" class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <strong>البريد</strong>
+                    <span>info@eco-friendy.com</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function openMobileMenu() {
+            document.getElementById('mobileNav').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileNav').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        document.getElementById('overlay').addEventListener('click', closeMobileMenu);
+    </script>
+</body>
+</html>
