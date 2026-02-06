@@ -1,44 +1,63 @@
 <?php
 // api/get-products.php
-// جلب قائمة المنتجات
+// جلب قائمة المنتجات - متاح للجميع (بدون تسجيل دخول)
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Content-Type');
 
-session_start();
-
-// التحقق من تسجيل الدخول
-if (!isset($_SESSION['user_id'])) {
-    http_response_code(401);
-    echo json_encode([
-        'success' => false,
-        'message' => 'يجب تسجيل الدخول أولاً'
-    ], JSON_UNESCAPED_UNICODE);
-    exit();
-}
-
 require_once '../config.php';
 
 try {
     $pdo = getDBConnection();
-
+    
     if (!$pdo) {
         throw new Exception('فشل الاتصال بقاعدة البيانات');
     }
-
-    // جلب جميع المنتجات
-    $sql = "SELECT * FROM products ORDER BY created_at DESC";
+    
+    // جلب جميع المنتجات النشطة فقط
+    // إزالة شرط تسجيل الدخول لأن المنتجات يجب أن تكون متاحة للجميع
+    $sql = "SELECT 
+                id,
+                name,
+                category,
+                sub_category,
+                price,
+                stock,
+                description,
+                image,
+                status,
+                created_at,
+                updated_at
+            FROM products 
+            WHERE status = 'active'
+            ORDER BY created_at DESC";
+    
     $stmt = $pdo->query($sql);
-    $products = $stmt->fetchAll();
-
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // تحويل الأنواع للتأكد من صحة البيانات
+    foreach ($products as &$product) {
+        $product['id'] = (int)$product['id'];
+        $product['price'] = (float)$product['price'];
+        $product['stock'] = (int)$product['stock'];
+    }
+    
     echo json_encode([
         'success' => true,
         'products' => $products,
         'total' => count($products)
+    ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'خطأ في قاعدة البيانات',
+        'error' => $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
-
+    
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode([
