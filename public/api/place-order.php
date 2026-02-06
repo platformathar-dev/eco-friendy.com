@@ -1,12 +1,11 @@
 <?php
 // api/place-order.php
-// حفظ طلب جديد - نسخة محسّنة
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Accept');
 
-// تفعيل عرض الأخطاء
+// تفعيل عرض الأخطاء للتطوير (احذف هذا في الإنتاج)
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -18,7 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // التحقق من POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die(json_encode(['success' => false, 'message' => 'Method not allowed'], JSON_UNESCAPED_UNICODE));
+    http_response_code(405);
+    die(json_encode([
+        'success' => false, 
+        'message' => 'Method not allowed'
+    ], JSON_UNESCAPED_UNICODE));
 }
 
 require_once '../config.php';
@@ -27,26 +30,37 @@ require_once '../config.php';
 $input = file_get_contents('php://input');
 $data = json_decode($input, true);
 
+// تسجيل البيانات المستلمة (للتطوير فقط)
+error_log("Received data: " . print_r($data, true));
+
 // التحقق من البيانات
 if (!$data) {
-    die(json_encode(['success' => false, 'message' => 'No data received'], JSON_UNESCAPED_UNICODE));
+    http_response_code(400);
+    die(json_encode([
+        'success' => false, 
+        'message' => 'No data received'
+    ], JSON_UNESCAPED_UNICODE));
 }
 
-if (empty($data['customer_name']) || empty($data['customer_phone']) || 
-    empty($data['customer_address']) || empty($data['items']) || 
-    empty($data['total_amount'])) {
-    die(json_encode(['success' => false, 'message' => 'Missing required fields'], JSON_UNESCAPED_UNICODE));
+// التحقق من الحقول المطلوبة
+$required = ['customer_name', 'customer_phone', 'customer_address', 'items', 'total_amount'];
+foreach ($required as $field) {
+    if (empty($data[$field])) {
+        http_response_code(400);
+        die(json_encode([
+            'success' => false, 
+            'message' => "Missing required field: $field"
+        ], JSON_UNESCAPED_UNICODE));
+    }
 }
 
 try {
-    // الاتصال بقاعدة البيانات
     $pdo = getDBConnection();
     
     if (!$pdo) {
-        die(json_encode(['success' => false, 'message' => 'Database connection failed'], JSON_UNESCAPED_UNICODE));
+        throw new Exception('Database connection failed');
     }
     
-    // بدء المعاملة
     $pdo->beginTransaction();
     
     // تحضير البيانات
@@ -60,7 +74,7 @@ try {
     $total_amount = floatval($data['total_amount']);
     $status = isset($data['status']) ? trim($data['status']) : 'pending';
     
-    // إدراج الطلب - جميع الحقول
+    // إدراج الطلب
     $sql = "INSERT INTO orders 
             (user_id, customer_name, customer_phone, customer_address, shipping_address, 
              notes, payment_method, total_amount, status, created_at, updated_at) 
@@ -69,7 +83,7 @@ try {
              :notes, :payment_method, :total_amount, :status, NOW(), NOW())";
     
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([
+    $result = $stmt->execute([
         ':user_id' => $user_id,
         ':customer_name' => $customer_name,
         ':customer_phone' => $customer_phone,
@@ -80,6 +94,10 @@ try {
         ':total_amount' => $total_amount,
         ':status' => $status
     ]);
+    
+    if (!$result) {
+        throw new Exception('Failed to insert order');
+    }
     
     $orderId = $pdo->lastInsertId();
     
@@ -93,7 +111,7 @@ try {
     $stmtItem = $pdo->prepare($sqlItem);
     
     foreach ($data['items'] as $item) {
-        if (empty($item['product_id']) || empty($item['quantity']) || !isset($item['price'])) {
+        if (!isset($item['product_id']) || !isset($item['quantity']) || !isset($item['price'])) {
             throw new Exception('Invalid item data');
         }
         
@@ -104,7 +122,7 @@ try {
             ':price' => floatval($item['price'])
         ]);
         
-        // تحديث المخزون بطريقة آمنة
+        // تحديث المخزون
         $sqlUpdateStock = "UPDATE products 
                           SET stock = GREATEST(0, stock - :quantity) 
                           WHERE id = :product_id";
@@ -115,37 +133,34 @@ try {
         ]);
     }
     
-    // تأكيد المعاملة
     $pdo->commit();
     
-    // إرسال الاستجابة
+    // إرسال استجابة النجاح
+    http_response_code(200);
     echo json_encode([
         'success' => true,
         'message' => 'تم تسجيل طلبك بنجاح',
         'order_id' => $orderId,
         'order_number' => str_pad($orderId, 5, '0', STR_PAD_LEFT),
         'data' => [
-            'user_id' => $user_id,
             'customer_name' => $customer_name,
-            'customer_phone' => $customer_phone,
-            'customer_address' => $customer_address,
-            'shipping_address' => $shipping_address,
-            'payment_method' => $payment_method,
             'total_amount' => $total_amount,
+            'payment_method' => $payment_method,
             'status' => $status
         ]
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
-    // إلغاء المعاملة
     if (isset($pdo) && $pdo->inTransaction()) {
         $pdo->rollBack();
     }
     
-    // إرسال رسالة الخطأ
+    error_log("Order error: " . $e->getMessage());
+    
+    http_response_code(500);
     die(json_encode([
         'success' => false,
-        'message' => 'Error: ' . $e->getMessage()
+        'message' => $e->getMessage()
     ], JSON_UNESCAPED_UNICODE));
 }
 ?>
