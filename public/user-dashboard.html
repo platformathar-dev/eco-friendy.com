@@ -776,33 +776,12 @@
 
         <!-- Tabs -->
         <div class="tabs">
-            <button class="tab active" onclick="switchTab('products')">المنتجات المتاحة</button>
-            <button class="tab" onclick="switchTab('orders')">طلباتي</button>
+            <button class="tab active" onclick="switchTab('orders')">طلباتي</button>
             <button class="tab" onclick="switchTab('profile')">معلوماتي</button>
         </div>
 
-        <!-- Products Tab -->
-        <div id="products-tab" class="tab-content active">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">تصفح المنتجات (<span id="products-count">0</span>)</h2>
-                </div>
-
-                <div class="search-box">
-                    <input type="text" id="product-search" placeholder="🔍 البحث عن منتج..." onkeyup="searchProducts()">
-                </div>
-
-                <div class="products-grid" id="products-grid">
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
-                        <p>جاري تحميل المنتجات...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Orders Tab -->
-        <div id="orders-tab" class="tab-content">
+        <div id="orders-tab" class="tab-content active">
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">طلباتي (<span id="orders-count">0</span>)</h2>
@@ -897,7 +876,6 @@
 
     <script>
         // متغيرات عامة
-        let allProducts = [];
         let allOrders = [];
         let currentUser = null;
 
@@ -911,7 +889,6 @@
             try {
                 await loadUserProfile();
                 await loadUserStats();
-                await loadProducts();
                 await loadOrders();
                 hideLoading();
             } catch (error) {
@@ -977,94 +954,6 @@
         }
 
         // جلب المنتجات
-        async function loadProducts() {
-            try {
-                const response = await fetch('/api/get-products.php');
-                const data = await response.json();
-                
-                if (data.success) {
-                    // تصفية المنتجات النشطة فقط
-                    allProducts = data.products.filter(p => p.status === 'active');
-                    displayProducts(allProducts);
-                    document.getElementById('products-count').textContent = allProducts.length;
-                } else {
-                    throw new Error(data.message);
-                }
-            } catch (error) {
-                console.error('خطأ في جلب المنتجات:', error);
-                document.getElementById('products-grid').innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">❌</div>
-                        <p>فشل في تحميل المنتجات</p>
-                    </div>
-                `;
-            }
-        }
-
-        // عرض المنتجات
-        function displayProducts(products) {
-            const grid = document.getElementById('products-grid');
-            
-            if (products.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🛍️</div>
-                        <p>لا توجد منتجات متاحة حالياً</p>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = products.map(product => {
-                const imageTag = product.image ? 
-                    `<img src="${product.image}" alt="${product.name}">` : 
-                    '<div class="no-image">📦</div>';
-                
-                const stockStatus = product.stock > 0 ? 
-                    `متوفر (${product.stock} قطعة)` : 
-                    'غير متوفر';
-                
-                return `
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            ${imageTag}
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">${product.name}</div>
-                            <div class="product-description">${product.description}</div>
-                            <div class="product-footer">
-                                <div>
-                                    <div class="product-price">${parseFloat(product.price).toFixed(2)} د.أ</div>
-                                    <div class="product-stock">${stockStatus}</div>
-                                </div>
-                            </div>
-                            <a href="index.html#product-${product.id}" style="text-decoration: none;">
-                                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" 
-                                        ${product.stock === 0 ? 'disabled' : ''}>
-                                    ${product.stock > 0 ? '🛒 إضافة للسلة' : 'غير متوفر'}
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // البحث عن المنتجات
-        function searchProducts() {
-            const searchTerm = document.getElementById('product-search').value.toLowerCase();
-            if (searchTerm === '') {
-                displayProducts(allProducts);
-                return;
-            }
-            const filtered = allProducts.filter(p => 
-                p.name.toLowerCase().includes(searchTerm) ||
-                p.category.toLowerCase().includes(searchTerm) ||
-                p.description.toLowerCase().includes(searchTerm)
-            );
-            displayProducts(filtered);
-        }
-
         // جلب الطلبات
         async function loadOrders() {
             try {
