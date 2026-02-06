@@ -279,7 +279,7 @@
         </div>
 
         <!-- العودة للصفحة الرئيسية -->
-        <div class="index.html">
+        <div class="back-home">
             <a href="/">← العودة للصفحة الرئيسية</a>
         </div>
     </div>
@@ -349,10 +349,11 @@
                 submitBtn.textContent = 'جارِ تسجيل الدخول...';
                 submitBtn.disabled = true;
 
+                // إرسال البيانات بالاسم الصحيح الذي يتوقعه ملف PHP
                 const loginData = {
-                    identifier,
-                    password,
-                    remember
+                    username: identifier,  // تغيير من identifier إلى username
+                    password: password,
+                    remember: remember
                 };
 
                 try {
@@ -366,16 +367,16 @@
 
                     if (data.success) {
                         // عرض رسالة النجاح مع الدور
-                        let roleText = data.user.role === 'admin' ? 'مسؤول' : 'مستخدم';
+                        let roleText = data.user.role === 'admin' ? 'مدير' : 'مستخدم';
                         alert('✅ تم تسجيل الدخول بنجاح!\n\nمرحباً بك ' + data.user.fullname + '\nالدور: ' + roleText);
                         
                         // التوجيه حسب الدور
                         if (data.redirect) {
                             window.location.href = data.redirect;
                         } else if (data.user.role === 'admin') {
-                            window.location.href = '/admin-dashboard.html';
+                            window.location.href = '/dashboard.html';
                         } else {
-                            window.location.href = '/user-dashboard.html';
+                            window.location.href = '/index.html';
                         }
                     } else {
                         alert('❌ ' + (data.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة'));
