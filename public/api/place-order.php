@@ -113,22 +113,14 @@ try {
         $itemSql = "INSERT INTO order_items (
                         order_id, 
                         product_id, 
-                        product_name,
                         quantity, 
                         price, 
                         total
-                    ) VALUES (?, ?, ?, ?, ?, ?)";
+                    ) VALUES (?, ?, ?, ?, ?)";
         
         $itemStmt = $pdo->prepare($itemSql);
         
         foreach ($data['items'] as $item) {
-            // جلب اسم المنتج من قاعدة البيانات
-            $productSql = "SELECT name FROM products WHERE id = ?";
-            $productStmt = $pdo->prepare($productSql);
-            $productStmt->execute([(int)$item['product_id']]);
-            $product = $productStmt->fetch();
-            
-            $productName = $product ? $product['name'] : 'منتج غير معروف';
             $quantity = (int)$item['quantity'];
             $price = (float)$item['price'];
             $total = $quantity * $price;
@@ -136,7 +128,6 @@ try {
             $itemStmt->execute([
                 $orderId,
                 (int)$item['product_id'],
-                $productName,
                 $quantity,
                 $price,
                 $total
