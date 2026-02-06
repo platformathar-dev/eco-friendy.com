@@ -10,7 +10,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 session_start();
 
 // التحقق من تسجيل الدخول
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode([
         'success' => false,
@@ -23,7 +23,7 @@ require_once '../config.php';
 
 try {
     $pdo = getDBConnection();
-    
+
     if (!$pdo) {
         throw new Exception('فشل الاتصال بقاعدة البيانات');
     }
@@ -43,7 +43,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => $e->getMessage()
+        'message' => 'حدث خطأ: ' . $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
 }
 ?>
