@@ -1,166 +1,156 @@
 <?php
-// api/place-order.php
+// api/place-order.php - إصدار محدث يدعم المستخدمين المسجلين والزوار
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Accept');
+header('Access-Control-Allow-Headers: Content-Type');
 
-// تفعيل عرض الأخطاء للتطوير (احذف هذا في الإنتاج)
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-// التعامل مع OPTIONS
+// معالجة طلبات OPTIONS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-// التحقق من POST
+// التأكد من أن الطلب POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    die(json_encode([
-        'success' => false, 
-        'message' => 'Method not allowed'
-    ], JSON_UNESCAPED_UNICODE));
+    echo json_encode([
+        'success' => false,
+        'message' => 'طريقة الطلب غير مسموحة'
+    ], JSON_UNESCAPED_UNICODE);
+    exit();
 }
 
 require_once '../config.php';
 
-// قراءة البيانات
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
-
-// تسجيل البيانات المستلمة (للتطوير فقط)
-error_log("Received data: " . print_r($data, true));
-
-// التحقق من البيانات
-if (!$data) {
-    http_response_code(400);
-    die(json_encode([
-        'success' => false, 
-        'message' => 'No data received'
-    ], JSON_UNESCAPED_UNICODE));
-}
-
-// التحقق من الحقول المطلوبة
-$required = ['customer_name', 'customer_phone', 'customer_address', 'items', 'total_amount'];
-foreach ($required as $field) {
-    if (empty($data[$field])) {
-        http_response_code(400);
-        die(json_encode([
-            'success' => false, 
-            'message' => "Missing required field: $field"
-        ], JSON_UNESCAPED_UNICODE));
-    }
-}
-
 try {
-    $pdo = getDBConnection();
+    // قراءة البيانات من الطلب
+    $input = file_get_contents('php://input');
+    $data = json_decode($input, true);
     
-    if (!$pdo) {
-        throw new Exception('Database connection failed');
+    if (!$data) {
+        throw new Exception('لم يتم استلام بيانات صحيحة');
     }
     
+    // التحقق من الحقول المطلوبة
+    $requiredFields = ['customer_name', 'customer_phone', 'customer_address', 'payment_method', 'items', 'total_amount'];
+    foreach ($requiredFields as $field) {
+        if (!isset($data[$field]) || empty($data[$field])) {
+            throw new Exception("الحقل المطلوب مفقود: {$field}");
+        }
+    }
+    
+    // الاتصال بقاعدة البيانات
+    $pdo = getDBConnection();
+    if (!$pdo) {
+        throw new Exception('فشل الاتصال بقاعدة البيانات');
+    }
+    
+    // بدء المعاملة
     $pdo->beginTransaction();
     
-    // تحضير البيانات
-    $user_id = isset($data['user_id']) ? intval($data['user_id']) : 0;
-    $customer_name = trim($data['customer_name']);
-    $customer_phone = trim($data['customer_phone']);
-    $customer_address = trim($data['customer_address']);
-    $shipping_address = isset($data['shipping_address']) ? trim($data['shipping_address']) : $customer_address;
-    $notes = isset($data['notes']) ? trim($data['notes']) : '';
-    $payment_method = isset($data['payment_method']) ? trim($data['payment_method']) : 'cod';
-    $total_amount = floatval($data['total_amount']);
-    $status = isset($data['status']) ? trim($data['status']) : 'pending';
+    // معالجة user_id - دعم كلاً من المستخدمين المسجلين والزوار
+    $userId = null;
+    if (isset($data['user_id']) && $data['user_id'] > 0) {
+        // مستخدم مسجل - التحقق من وجوده
+        $checkUser = $pdo->prepare("SELECT id FROM users WHERE id = ?");
+        $checkUser->execute([$data['user_id']]);
+        if ($checkUser->fetch()) {
+            $userId = $data['user_id'];
+        }
+    }
+    // إذا لم يكن هناك user_id صالح، سيبقى NULL للزوار
     
-    // إدراج الطلب
-    $sql = "INSERT INTO orders 
-            (user_id, customer_name, customer_phone, customer_address, shipping_address, 
-             notes, payment_method, total_amount, status, created_at, updated_at) 
-            VALUES 
-            (:user_id, :customer_name, :customer_phone, :customer_address, :shipping_address, 
-             :notes, :payment_method, :total_amount, :status, NOW(), NOW())";
+    // إنشاء رقم طلب فريد
+    $orderNumber = 'ORD-' . date('Ymd') . '-' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+    
+    // إدخال الطلب في قاعدة البيانات
+    $sql = "INSERT INTO orders (
+        order_number,
+        user_id,
+        customer_name,
+        customer_phone,
+        customer_address,
+        shipping_address,
+        notes,
+        payment_method,
+        status,
+        total_amount,
+        created_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
     
     $stmt = $pdo->prepare($sql);
-    $result = $stmt->execute([
-        ':user_id' => $user_id,
-        ':customer_name' => $customer_name,
-        ':customer_phone' => $customer_phone,
-        ':customer_address' => $customer_address,
-        ':shipping_address' => $shipping_address,
-        ':notes' => $notes,
-        ':payment_method' => $payment_method,
-        ':total_amount' => $total_amount,
-        ':status' => $status
+    $stmt->execute([
+        $orderNumber,
+        $userId, // سيكون NULL للزوار
+        $data['customer_name'],
+        $data['customer_phone'],
+        $data['customer_address'],
+        $data['shipping_address'] ?? $data['customer_address'],
+        $data['notes'] ?? '',
+        $data['payment_method'],
+        $data['status'] ?? 'pending',
+        $data['total_amount']
     ]);
     
-    if (!$result) {
-        throw new Exception('Failed to insert order');
-    }
-    
+    // الحصول على معرف الطلب
     $orderId = $pdo->lastInsertId();
     
-    if (!$orderId) {
-        throw new Exception('Failed to get order ID');
+    // إدخال عناصر الطلب
+    if (!isset($data['items']) || !is_array($data['items']) || count($data['items']) === 0) {
+        throw new Exception('لا توجد عناصر في الطلب');
     }
     
-    // إدراج المنتجات
-    $sqlItem = "INSERT INTO order_items (order_id, product_id, quantity, price) 
-                VALUES (:order_id, :product_id, :quantity, :price)";
-    $stmtItem = $pdo->prepare($sqlItem);
+    $itemSql = "INSERT INTO order_items (
+        order_id,
+        product_id,
+        quantity,
+        price,
+        subtotal
+    ) VALUES (?, ?, ?, ?, ?)";
+    
+    $itemStmt = $pdo->prepare($itemSql);
     
     foreach ($data['items'] as $item) {
         if (!isset($item['product_id']) || !isset($item['quantity']) || !isset($item['price'])) {
-            throw new Exception('Invalid item data');
+            throw new Exception('بيانات العنصر غير كاملة');
         }
         
-        $stmtItem->execute([
-            ':order_id' => $orderId,
-            ':product_id' => intval($item['product_id']),
-            ':quantity' => intval($item['quantity']),
-            ':price' => floatval($item['price'])
-        ]);
+        $subtotal = $item['quantity'] * $item['price'];
         
-        // تحديث المخزون
-        $sqlUpdateStock = "UPDATE products 
-                          SET stock = GREATEST(0, stock - :quantity) 
-                          WHERE id = :product_id";
-        $stmtStock = $pdo->prepare($sqlUpdateStock);
-        $stmtStock->execute([
-            ':quantity' => intval($item['quantity']),
-            ':product_id' => intval($item['product_id'])
+        $itemStmt->execute([
+            $orderId,
+            $item['product_id'],
+            $item['quantity'],
+            $item['price'],
+            $subtotal
         ]);
     }
     
+    // تأكيد المعاملة
     $pdo->commit();
     
-    // إرسال استجابة النجاح
-    http_response_code(200);
+    // إرجاع استجابة نجاح
+    http_response_code(201);
     echo json_encode([
         'success' => true,
-        'message' => 'تم تسجيل طلبك بنجاح',
+        'message' => 'تم إنشاء الطلب بنجاح',
         'order_id' => $orderId,
-        'order_number' => str_pad($orderId, 5, '0', STR_PAD_LEFT),
-        'data' => [
-            'customer_name' => $customer_name,
-            'total_amount' => $total_amount,
-            'payment_method' => $payment_method,
-            'status' => $status
-        ]
+        'order_number' => $orderNumber,
+        'user_type' => $userId ? 'registered' : 'guest'
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
+    // التراجع عن المعاملة في حالة الخطأ
     if (isset($pdo) && $pdo->inTransaction()) {
         $pdo->rollBack();
     }
     
-    error_log("Order error: " . $e->getMessage());
-    
-    http_response_code(500);
-    die(json_encode([
+    http_response_code(400);
+    echo json_encode([
         'success' => false,
-        'message' => $e->getMessage()
-    ], JSON_UNESCAPED_UNICODE));
+        'message' => $e->getMessage(),
+        'error_details' => $e->getTrace()
+    ], JSON_UNESCAPED_UNICODE);
 }
 ?>
