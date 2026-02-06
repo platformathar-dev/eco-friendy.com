@@ -17,11 +17,11 @@ try {
     }
     
     // جلب جميع المنتجات النشطة فقط
+    // تم تحديث الاستعلام ليتوافق مع بنية الجدول الفعلية
     $sql = "SELECT 
                 id,
                 name,
                 category,
-                sub_category,
                 price,
                 stock,
                 description,
@@ -41,6 +41,14 @@ try {
         $product['id'] = (int)$product['id'];
         $product['price'] = (float)$product['price'];
         $product['stock'] = (int)$product['stock'];
+        
+        // إضافة حقول افتراضية إذا كانت فارغة
+        if (empty($product['image'])) {
+            $product['image'] = null;
+        }
+        if (empty($product['description'])) {
+            $product['description'] = 'لا يوجد وصف';
+        }
     }
     
     echo json_encode([
