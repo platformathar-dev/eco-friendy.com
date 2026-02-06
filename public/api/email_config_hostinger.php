@@ -13,7 +13,7 @@ define('SMTP_HOST', 'smtp.hostinger.com');
 define('SMTP_PORT', 465); // استخدام SSL على المنفذ 465
 define('SMTP_SECURE', 'ssl'); // SSL encryption
 define('SMTP_USERNAME', 'info@eco-friendy.com'); // بريدك الإلكتروني الكامل
-define('SMTP_PASSWORD', 'YOUR_EMAIL_PASSWORD'); // ⚠️ ضع كلمة مرور البريد هنا
+define('SMTP_PASSWORD', 'Abdullah@#$%27887'); // ⚠️ ضع كلمة مرور البريد هنا
 define('SMTP_FROM_EMAIL', 'info@eco-friendy.com');
 define('SMTP_FROM_NAME', 'Eco Friendly Store');
 
