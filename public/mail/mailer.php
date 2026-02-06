@@ -8,6 +8,7 @@ require __DIR__ . '/PHPMailer/Exception.php';
 require __DIR__ . '/PHPMailer/PHPMailer.php';
 require __DIR__ . '/PHPMailer/SMTP.php';
 
+
 /**
  * دالة إرسال إيميل
  * @param string $to      البريد المستلم
