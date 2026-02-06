@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - Eco Friendly Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #fff3e6 0%, #ffe0b3 100%);
+            min-height: 100vh;
+            color: #1a1a1a;
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .spinner {
+            border: 5px solid #ffe0b3;
+            border-top: 5px solid #f39200;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 20px 40px;
+            box-shadow: 0 2px 15px rgba(243, 146, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container img {
+            width: 60px;
+            height: auto;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f39200;
+        }
+
+        .logo-subtitle {
+            font-size: 12px;
+            color: #757575;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #fff3e6 0%, #ffe0b3 100%);
+            border-radius: 12px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #f39200 0%, #e68500 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #c77400;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: #757575;
+        }
+
+        .logout-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(211, 47, 47, 0.3);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.4);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(243, 146, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .welcome-icon {
+            font-size: 64px;
+        }
+
+        .welcome-text h1 {
+            font-size: 28px;
+            color: #f39200;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text p {
+            color: #757575;
+            font-size: 16px;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(243, 146, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(243, 146, 0, 0.2);
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .stat-icon.orders { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); }
+        .stat-icon.pending { background: linear-gradient(135deg, #fff3e6 0%, #ffe0b3 100%); }
+        .stat-icon.completed { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); }
+        .stat-icon.total { background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); }
+
+        .stat-info h3 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #f39200;
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            color: #757575;
+            font-size: 15px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(243, 146, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 12px 30px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            color: #757575;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #f39200 0%, #e68500 100%);
+            color: white;
+            box-shadow: 0 3px 10px rgba(243, 146, 0, 0.3);
+        }
+
+        .tab:hover:not(.active) {
+            background: #ffe0b3;
+            color: #f39200;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(243, 146, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #c77400;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f39200 0%, #e68500 100%);
+            color: white;
+            box-shadow: 0 3px 10px rgba(243, 146, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 146, 0, 0.4);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        /* Search */
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ffe0b3;
+            border-radius: 12px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 15px;
+            background: #fffbf7;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #f39200;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(243, 146, 0, 0.1);
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #fff3e6 0%, #ffe0b3 100%);
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: right;
+            font-weight: 700;
+            color: #c77400;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 18px 15px;
+            border-bottom: 1px solid #ffe0b3;
+            font-size: 14px;
+        }
+
+        tbody tr {
+            transition: all 0.3s;
+        }
+
+        tbody tr:hover {
+            background: #fffbf7;
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background: rgba(56, 142, 60, 0.1);
+            color: #388e3c;
+        }
+
+        .badge-warning {
+            background: rgba(245, 124, 0, 0.1);
+            color: #f57c00;
+        }
+
+        .badge-danger {
+            background: rgba(211, 47, 47, 0.1);
+            color: #d32f2f;
+        }
+
+        .badge-info {
+            background: rgba(243, 146, 0, 0.1);
+            color: #f39200;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #757575;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        /* Product Card */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(243, 146, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(243, 146, 0, 0.2);
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: #fffbf7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-image-container .no-image {
+            font-size: 64px;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #c77400;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: #757575;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f39200;
+        }
+
+        .product-stock {
+            font-size: 12px;
+            color: #757575;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ffe0b3;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f39200;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            color: #757575;
+            line-height: 1;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #d32f2f;
+            transform: rotate(90deg);
+        }
+
+        .order-summary {
+            background: #fffbf7;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .order-summary-item.total {
+            border-top: 2px solid #ffe0b3;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #f39200;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .profile-item {
+            padding: 15px;
+            background: #fffbf7;
+            border-radius: 12px;
+            border: 2px solid #ffe0b3;
+        }
+
+        .profile-item label {
+            display: block;
+            font-size: 12px;
+            color: #757575;
+            margin-bottom: 5px;
+        }
+
+        .profile-item .value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #c77400;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .welcome-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 12px 8px;
+            }
+
+            .modal-content {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo-container">
+                <img src="Eco-friendy.svg" alt="Eco Friendy Logo">
+                <div class="logo-text">
+                    <div class="logo-title">Eco Friendly</div>
+                    <div class="logo-subtitle">حسابي</div>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">م</div>
+                <div class="user-details">
+                    <div class="user-name" id="user-name">جاري التحميل...</div>
+                    <div class="user-role">مستخدم</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-icon">👋</div>
+            <div class="welcome-text">
+                <h1>مرحباً بك، <span id="welcome-name">مستخدم</span>!</h1>
+                <p>نحن سعداء برؤيتك مرة أخرى. تصفح منتجاتنا الصديقة للبيئة وتابع طلباتك</p>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon orders">📦</div>
+                <div class="stat-info">
+                    <h3 id="total-orders">0</h3>
+                    <p>إجمالي الطلبات</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon pending">⏳</div>
+                <div class="stat-info">
+                    <h3 id="pending-orders">0</h3>
+                    <p>طلبات قيد التنفيذ</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon completed">✅</div>
+                <div class="stat-info">
+                    <h3 id="completed-orders">0</h3>
+                    <p>طلبات مكتملة</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon total">💰</div>
+                <div class="stat-info">
+                    <h3 id="total-spent">0 د.أ</h3>
+                    <p>إجمالي المشتريات</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('products')">المنتجات المتاحة</button>
+            <button class="tab" onclick="switchTab('orders')">طلباتي</button>
+            <button class="tab" onclick="switchTab('profile')">معلوماتي</button>
+        </div>
+
+        <!-- Products Tab -->
+        <div id="products-tab" class="tab-content active">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">تصفح المنتجات (<span id="products-count">0</span>)</h2>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="product-search" placeholder="🔍 البحث عن منتج..." onkeyup="searchProducts()">
+                </div>
+
+                <div class="products-grid" id="products-grid">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>جاري تحميل المنتجات...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div id="orders-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">طلباتي (<span id="orders-count">0</span>)</h2>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="order-search" placeholder="🔍 البحث عن طلب..." onkeyup="searchOrders()">
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>التاريخ</th>
+                                <th>المنتجات</th>
+                                <th>المبلغ الإجمالي</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-tbody">
+                            <tr>
+                                <td colspan="6" class="empty-state">
+                                    <div class="empty-state-icon">📦</div>
+                                    <p>لا توجد طلبات حتى الآن. ابدأ بالتسوق الآن!</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="profile-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">معلوماتي الشخصية</h2>
+                </div>
+
+                <div class="profile-section">
+                    <div class="profile-item">
+                        <label>الاسم الكامل</label>
+                        <div class="value" id="profile-fullname">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>اسم المستخدم</label>
+                        <div class="value" id="profile-username">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>البريد الإلكتروني</label>
+                        <div class="value" id="profile-email">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>رقم الهاتف</label>
+                        <div class="value" id="profile-phone">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>الجنس</label>
+                        <div class="value" id="profile-gender">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>الدولة</label>
+                        <div class="value" id="profile-country">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>تاريخ التسجيل</label>
+                        <div class="value" id="profile-created">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>آخر تسجيل دخول</label>
+                        <div class="value" id="profile-last-login">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">تفاصيل الطلب</h3>
+                <button class="close-btn" onclick="closeModal('order-modal')">&times;</button>
+            </div>
+            <div id="order-details-content">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات عامة
+        let allProducts = [];
+        let allOrders = [];
+        let currentUser = null;
+
+        // تحميل البيانات
+        window.addEventListener('DOMContentLoaded', async function() {
+            await loadUserData();
+        });
+
+        async function loadUserData() {
+            showLoading();
+            try {
+                await loadUserProfile();
+                await loadUserStats();
+                await loadProducts();
+                await loadOrders();
+                hideLoading();
+            } catch (error) {
+                console.error('خطأ:', error);
+                hideLoading();
+                alert('حدث خطأ في تحميل البيانات');
+            }
+        }
+
+        // جلب معلومات المستخدم
+        async function loadUserProfile() {
+            try {
+                const response = await fetch('/api/get-user-profile.php');
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentUser = data.user;
+                    updateUserInterface();
+                } else {
+                    throw new Error(data.message);
+                }
+            } catch (error) {
+                console.error('خطأ في جلب معلومات المستخدم:', error);
+            }
+        }
+
+        // تحديث واجهة المستخدم
+        function updateUserInterface() {
+            if (!currentUser) return;
+
+            // تحديث الهيدر
+            const userInitial = currentUser.fullname.charAt(0);
+            document.getElementById('user-avatar').textContent = userInitial;
+            document.getElementById('user-name').textContent = currentUser.fullname;
+            document.getElementById('welcome-name').textContent = currentUser.fullname;
+
+            // تحديث المعلومات الشخصية
+            document.getElementById('profile-fullname').textContent = currentUser.fullname;
+            document.getElementById('profile-username').textContent = currentUser.username;
+            document.getElementById('profile-email').textContent = currentUser.email;
+            document.getElementById('profile-phone').textContent = currentUser.phone;
+            document.getElementById('profile-gender').textContent = currentUser.gender === 'male' ? 'ذكر' : 'أنثى';
+            document.getElementById('profile-country').textContent = currentUser.country;
+            document.getElementById('profile-created').textContent = currentUser.created_at;
+            document.getElementById('profile-last-login').textContent = currentUser.last_login || 'لم يسجل بعد';
+        }
+
+        // جلب إحصائيات المستخدم
+        async function loadUserStats() {
+            try {
+                const response = await fetch('/api/user-stats.php');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('total-orders').textContent = data.stats.total_orders;
+                    document.getElementById('pending-orders').textContent = data.stats.pending_orders;
+                    document.getElementById('completed-orders').textContent = data.stats.completed_orders;
+                    document.getElementById('total-spent').textContent = data.stats.total_spent;
+                }
+            } catch (error) {
+                console.error('خطأ في جلب الإحصائيات:', error);
+            }
+        }
+
+        // جلب المنتجات
+        async function loadProducts() {
+            try {
+                const response = await fetch('/api/get-products.php');
+                const data = await response.json();
+                
+                if (data.success) {
+                    // تصفية المنتجات النشطة فقط
+                    allProducts = data.products.filter(p => p.status === 'active');
+                    displayProducts(allProducts);
+                    document.getElementById('products-count').textContent = allProducts.length;
+                } else {
+                    throw new Error(data.message);
+                }
+            } catch (error) {
+                console.error('خطأ في جلب المنتجات:', error);
+                document.getElementById('products-grid').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">❌</div>
+                        <p>فشل في تحميل المنتجات</p>
+                    </div>
+                `;
+            }
+        }
+
+        // عرض المنتجات
+        function displayProducts(products) {
+            const grid = document.getElementById('products-grid');
+            
+            if (products.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🛍️</div>
+                        <p>لا توجد منتجات متاحة حالياً</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = products.map(product => {
+                const imageTag = product.image ? 
+                    `<img src="${product.image}" alt="${product.name}">` : 
+                    '<div class="no-image">📦</div>';
+                
+                const stockStatus = product.stock > 0 ? 
+                    `متوفر (${product.stock} قطعة)` : 
+                    'غير متوفر';
+                
+                return `
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            ${imageTag}
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-description">${product.description}</div>
+                            <div class="product-footer">
+                                <div>
+                                    <div class="product-price">${parseFloat(product.price).toFixed(2)} د.أ</div>
+                                    <div class="product-stock">${stockStatus}</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" 
+                                    ${product.stock === 0 ? 'disabled' : ''}>
+                                ${product.stock > 0 ? '🛒 إضافة للسلة' : 'غير متوفر'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // البحث عن المنتجات
+        function searchProducts() {
+            const searchTerm = document.getElementById('product-search').value.toLowerCase();
+            if (searchTerm === '') {
+                displayProducts(allProducts);
+                return;
+            }
+            const filtered = allProducts.filter(p => 
+                p.name.toLowerCase().includes(searchTerm) ||
+                p.category.toLowerCase().includes(searchTerm) ||
+                p.description.toLowerCase().includes(searchTerm)
+            );
+            displayProducts(filtered);
+        }
+
+        // جلب الطلبات
+        async function loadOrders() {
+            try {
+                const response = await fetch('/api/get-user-orders.php');
+                const data = await response.json();
+                
+                if (data.success) {
+                    allOrders = data.orders;
+                    displayOrders(allOrders);
+                    document.getElementById('orders-count').textContent = data.total;
+                } else {
+                    throw new Error(data.message);
+                }
+            } catch (error) {
+                console.error('خطأ في جلب الطلبات:', error);
+                document.getElementById('orders-tbody').innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <div class="empty-state-icon">📦</div>
+                            <p>لا توجد طلبات حتى الآن</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // عرض الطلبات
+        function displayOrders(orders) {
+            const tbody = document.getElementById('orders-tbody');
+            
+            if (orders.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <div class="empty-state-icon">📦</div>
+                            <p>لا توجد طلبات حتى الآن. ابدأ بالتسوق الآن!</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = orders.map(order => {
+                let statusBadge, statusText;
+                
+                switch(order.status) {
+                    case 'pending':
+                        statusBadge = 'badge-warning';
+                        statusText = 'قيد الانتظار';
+                        break;
+                    case 'processing':
+                        statusBadge = 'badge-info';
+                        statusText = 'قيد التنفيذ';
+                        break;
+                    case 'completed':
+                        statusBadge = 'badge-success';
+                        statusText = 'مكتمل';
+                        break;
+                    case 'cancelled':
+                        statusBadge = 'badge-danger';
+                        statusText = 'ملغي';
+                        break;
+                    default:
+                        statusBadge = 'badge-info';
+                        statusText = order.status;
+                }
+                
+                return `
+                    <tr>
+                        <td>#${order.id}</td>
+                        <td>${order.created_at}</td>
+                        <td>${order.items_count} منتج</td>
+                        <td>${parseFloat(order.total_amount).toFixed(2)} د.أ</td>
+                        <td><span class="badge ${statusBadge}">${statusText}</span></td>
+                        <td class="actions">
+                            <button class="btn btn-primary btn-sm" onclick="viewOrder(${order.id})">عرض التفاصيل</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // البحث عن الطلبات
+        function searchOrders() {
+            const searchTerm = document.getElementById('order-search').value.toLowerCase();
+            if (searchTerm === '') {
+                displayOrders(allOrders);
+                return;
+            }
+            const filtered = allOrders.filter(o => 
+                o.id.toString().includes(searchTerm)
+            );
+            displayOrders(filtered);
+        }
+
+        // عرض تفاصيل طلب
+        function viewOrder(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const content = document.getElementById('order-details-content');
+            
+            let statusBadge, statusText;
+            switch(order.status) {
+                case 'pending':
+                    statusBadge = 'badge-warning';
+                    statusText = 'قيد الانتظار';
+                    break;
+                case 'processing':
+                    statusBadge = 'badge-info';
+                    statusText = 'قيد التنفيذ';
+                    break;
+                case 'completed':
+                    statusBadge = 'badge-success';
+                    statusText = 'مكتمل';
+                    break;
+                case 'cancelled':
+                    statusBadge = 'badge-danger';
+                    statusText = 'ملغي';
+                    break;
+            }
+
+            content.innerHTML = `
+                <div class="order-summary">
+                    <div class="order-summary-item">
+                        <span>رقم الطلب:</span>
+                        <strong>#${order.id}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>التاريخ:</span>
+                        <strong>${order.created_at}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>الحالة:</span>
+                        <span class="badge ${statusBadge}">${statusText}</span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>عدد المنتجات:</span>
+                        <strong>${order.items_count}</strong>
+                    </div>
+                    <div class="order-summary-item total">
+                        <span>المبلغ الإجمالي:</span>
+                        <strong>${parseFloat(order.total_amount).toFixed(2)} د.أ</strong>
+                    </div>
+                </div>
+                ${order.notes ? `
+                    <div style="padding: 15px; background: #fffbf7; border-radius: 10px; margin-top: 15px;">
+                        <strong style="color: #c77400;">ملاحظات:</strong>
+                        <p style="margin-top: 8px; color: #757575;">${order.notes}</p>
+                    </div>
+                ` : ''}
+            `;
+
+            document.getElementById('order-modal').classList.add('active');
+        }
+
+        // تسجيل الخروج
+        async function logout() {
+            if (!confirm('هل تريد تسجيل الخروج؟')) return;
+            
+            showLoading();
+            try {
+                const response = await fetch('/api/logout.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    window.location.href = '/login.html';
+                } else {
+                    alert('❌ فشل في تسجيل الخروج');
+                    hideLoading();
+                }
+            } catch (error) {
+                console.error('خطأ:', error);
+                alert('❌ حدث خطأ');
+                hideLoading();
+            }
+        }
+
+        // التبديل بين التبويبات
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // إغلاق النافذة المنبثقة
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // إغلاق عند النقر خارج النافذة
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+
+        // إظهار/إخفاء التحميل
+        function showLoading() {
+            document.getElementById('loading-overlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
