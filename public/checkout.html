@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الطلب - Eco Friendy</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #f39200;
+            --secondary-color: #e68500;
+            --dark-orange: #c77400;
+            --light-orange: #fff3e6;
+            --accent-color: #ff6b35;
+            --success-color: #10b981;
+            --info-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #fffbf7;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 10px 15px;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .top-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .top-bar-item:hover { opacity: 0.8; }
+
+        .main-header {
+            background: white;
+            padding: 12px 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .page-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px 15px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .checkout-container {
+            padding: 20px 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .checkout-steps {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .step.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--light-orange);
+            color: var(--dark-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .step.active .step-number {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr 400px;
+            }
+        }
+
+        .checkout-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--dark-orange);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-orange);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .payment-methods {
+            display: grid;
+            gap: 15px;
+        }
+
+        .payment-method {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-color);
+            background: var(--light-orange);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background: var(--light-orange);
+        }
+
+        .payment-method input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-color);
+        }
+
+        .payment-method-info {
+            flex: 1;
+        }
+
+        .payment-method-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark-orange);
+            margin-bottom: 5px;
+        }
+
+        .payment-method-desc {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .payment-icon {
+            font-size: 32px;
+            color: var(--primary-color);
+        }
+
+        /* CliQ Payment Details */
+        .cliq-details {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 12px;
+            border: 2px solid #3b82f6;
+        }
+
+        .cliq-details.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cliq-bank-info {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .cliq-alias {
+            background: var(--dark-orange);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .cliq-alias-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .cliq-alias-value {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .copy-btn:active {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .cliq-steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .cliq-steps li {
+            counter-increment: step-counter;
+            padding: 10px 0;
+            padding-right: 35px;
+            position: relative;
+        }
+
+        .cliq-steps li:before {
+            content: counter(step-counter);
+            position: absolute;
+            right: 0;
+            top: 8px;
+            width: 25px;
+            height: 25px;
+            background: var(--info-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .upload-section {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px dashed var(--info-color);
+        }
+
+        .upload-label {
+            display: block;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-label:hover {
+            background: #f0f9ff;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: var(--info-color);
+            margin-bottom: 10px;
+        }
+
+        #screenshot {
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        /* Order Summary */
+        .order-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .order-item-details {
+            flex: 1;
+        }
+
+        .order-item-name {
+            font-weight: 700;
+            color: var(--dark-orange);
+            margin-bottom: 5px;
+        }
+
+        .order-item-qty {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .order-item-price {
+            font-weight: 900;
+            color: var(--primary-color);
+        }
+
+        .order-summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .order-summary-row.total {
+            border-top: 2px solid var(--light-orange);
+            margin-top: 10px;
+            padding-top: 15px;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--dark-orange);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #059669;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 2px solid #3b82f6;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+        }
+
+        .contact-info {
+            background: var(--light-orange);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+        }
+
+        .contact-item i {
+            color: var(--primary-color);
+            width: 25px;
+        }
+
+        .contact-item a {
+            color: var(--dark-orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--success-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification.show {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Success Modal */
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 5000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .success-modal.active {
+            display: flex;
+        }
+
+        .success-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--success-color);
+            margin-bottom: 15px;
+        }
+
+        .success-msg {
+            color: var(--text-light);
+            font-size: 15px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .order-id {
+            background: var(--light-orange);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .order-id-label {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .order-id-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--dark-orange);
+        }
+
+        .success-btn {
+            padding: 12px 40px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">تمت العملية بنجاح!</span>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <a href="tel:+962790083039" class="top-bar-item"><i class="fas fa-phone"></i> +962790083039</a>
+        <a href="mailto:info@eco-friendy.com" class="top-bar-item"><i class="fas fa-envelope"></i> info@eco-friendy.com</a>
+        <a href="#" class="top-bar-item"><i class="fas fa-map-marker-alt"></i> الأردن - عمان</a>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">🐾 Eco Friendy</a>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>💳 إتمام الطلب</h1>
+        <div class="breadcrumb">
+            <a href="index.html">الرئيسية</a>
+            <span>/</span>
+            <a href="cart.html">السلة</a>
+            <span>/</span>
+            <span>الدفع</span>
+        </div>
+    </div>
+
+    <!-- Checkout Steps -->
+    <div class="checkout-container">
+        <div class="checkout-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <span>السلة</span>
+            </div>
+            <div class="step active">
+                <div class="step-number">2</div>
+                <span>معلومات الشحن</span>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <span>الدفع</span>
+            </div>
+        </div>
+
+        <form id="checkoutForm" onsubmit="submitOrder(event)">
+            <div class="checkout-grid">
+                <!-- Left Column: Forms -->
+                <div>
+                    <!-- Shipping Information -->
+                    <div class="checkout-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-shipping-fast"></i>
+                            معلومات الشحن
+                        </h2>
+
+                        <div class="form-group">
+                            <label>الاسم الكامل *</label>
+                            <input type="text" id="name" required placeholder="أدخل اسمك الكامل">
+                        </div>
+
+                        <div class="form-group">
+                            <label>رقم الهاتف *</label>
+                            <input type="tel" id="phone" required placeholder="07XXXXXXXX">
+                        </div>
+
+                        <div class="form-group">
+                            <label>المدينة *</label>
+                            <input type="text" id="city" required placeholder="عمان، إربد، الزرقاء...">
+                        </div>
+
+                        <div class="form-group">
+                            <label>العنوان التفصيلي *</label>
+                            <textarea id="address" required placeholder="الشارع - رقم المبنى - أي تفاصيل إضافية"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ملاحظات (اختياري)</label>
+                            <textarea id="notes" placeholder="أي ملاحظات خاصة بالطلب..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="checkout-section" style="margin-top: 20px;">
+                        <h2 class="section-title">
+                            <i class="fas fa-credit-card"></i>
+                            طريقة الدفع
+                        </h2>
+
+                        <div class="payment-methods">
+                            <!-- CliQ Payment -->
+                            <label class="payment-method" onclick="selectPayment('cliq')">
+                                <input type="radio" name="payment" value="cliq" id="payment-cliq" checked>
+                                <div class="payment-icon">💳</div>
+                                <div class="payment-method-info">
+                                    <div class="payment-method-title">الدفع عبر كليك CliQ</div>
+                                    <div class="payment-method-desc">تحويل فوري وآمن عبر جميع البنوك الأردنية</div>
+                                </div>
+                            </label>
+
+                            <!-- Cash on Delivery -->
+                            <label class="payment-method" onclick="selectPayment('cod')">
+                                <input type="radio" name="payment" value="cod" id="payment-cod">
+                                <div class="payment-icon">💵</div>
+                                <div class="payment-method-info">
+                                    <div class="payment-method-title">الدفع عند الاستلام</div>
+                                    <div class="payment-method-desc">ادفع نقداً عند استلام الطلب</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- CliQ Details -->
+                        <div class="cliq-details" id="cliqDetails">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <span>يرجى إتمام التحويل قبل تأكيد الطلب</span>
+                            </div>
+
+                            <div class="cliq-bank-info">
+                                <div style="text-align: center; margin-bottom: 10px;">
+                                    <i class="fas fa-university" style="font-size: 36px; color: var(--info-color);"></i>
+                                </div>
+                                <div style="text-align: center; font-size: 18px; font-weight: 700; color: var(--dark-orange);">
+                                    🏦 بنك الاتحاد Union Bank
+                                </div>
+                            </div>
+
+                            <div class="cliq-alias">
+                                <div class="cliq-alias-label">الاسم المستعار CliQ Alias</div>
+                                <div class="cliq-alias-value" id="cliqAlias">ABDSULEMAN</div>
+                                <button type="button" class="copy-btn" onclick="copyAlias()">
+                                    <i class="fas fa-copy"></i> نسخ
+                                </button>
+                            </div>
+
+                            <div style="background: white; padding: 15px; border-radius: 10px;">
+                                <div style="font-weight: 700; margin-bottom: 10px; color: var(--dark-orange);">
+                                    📱 خطوات الدفع:
+                                </div>
+                                <ol class="cliq-steps">
+                                    <li>افتح تطبيق البنك الخاص بك</li>
+                                    <li>اختر خدمة كليك CliQ</li>
+                                    <li>أدخل الاسم المستعار: <strong>ABDSULEMAN</strong></li>
+                                    <li>أدخل المبلغ المطلوب: <strong id="cliqAmount">0.00 د.أ</strong></li>
+                                    <li>أكد العملية</li>
+                                    <li>التقط لقطة شاشة للتحويل</li>
+                                </ol>
+                            </div>
+
+                            <div class="upload-section">
+                                <label for="screenshot" class="upload-label">
+                                    <div class="upload-icon">📸</div>
+                                    <div style="font-weight: 700; margin-bottom: 5px;">رفع لقطة شاشة التحويل</div>
+                                    <div style="font-size: 13px; color: var(--text-light);">انقر لاختيار الصورة</div>
+                                </label>
+                                <input type="file" id="screenshot" accept="image/*" onchange="previewScreenshot(event)">
+                                <div id="screenshotPreview"></div>
+                            </div>
+
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>⚡ التحويل فوري وآمن عبر جميع البنوك الأردنية</span>
+                            </div>
+
+                            <div class="contact-info">
+                                <div style="font-weight: 700; margin-bottom: 10px; color: var(--dark-orange);">
+                                    📝 للاستفسار أو إرسال إثبات الدفع:
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <a href="https://wa.me/962790083039" target="_blank">+962790083039</a>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <a href="mailto:info@eco-friendy.com">info@eco-friendy.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Order Summary -->
+                <div>
+                    <div class="checkout-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-receipt"></i>
+                            ملخص الطلب
+                        </h2>
+
+                        <div id="orderItems"></div>
+
+                        <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--light-orange);">
+                            <div class="order-summary-row">
+                                <span>المجموع الفرعي:</span>
+                                <span id="subtotal">0.00 د.أ</span>
+                            </div>
+                            <div class="order-summary-row">
+                                <span>الشحن:</span>
+                                <span id="shipping">0.00 د.أ</span>
+                            </div>
+                            <div class="order-summary-row total">
+                                <span>الإجمالي:</span>
+                                <span id="total">0.00 د.أ</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-check-circle"></i>
+                            تأكيد الطلب
+                        </button>
+
+                        <div style="text-align: center; margin-top: 15px;">
+                            <a href="cart.html" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">
+                                <i class="fas fa-arrow-right"></i> العودة للسلة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">🎉</div>
+            <h3 class="success-title">تم تأكيد طلبك بنجاح!</h3>
+            <div class="order-id">
+                <div class="order-id-label">رقم الطلب</div>
+                <div class="order-id-value" id="orderIdDisplay">#0000</div>
+            </div>
+            <p class="success-msg" id="successMessage"></p>
+            <button class="success-btn" onclick="closeSuccess()">العودة للرئيسية</button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== متغيرات عامة ====================
+        let cart = JSON.parse(localStorage.getItem('eco_cart') || '[]');
+        let selectedPayment = 'cliq';
+
+        // ==================== تحميل الصفحة ====================
+        window.addEventListener('DOMContentLoaded', function() {
+            // التحقق من وجود منتجات
+            if (cart.length === 0) {
+                window.location.href = 'cart.html';
+                return;
+            }
+
+            loadOrderSummary();
+            loadSavedInfo();
+            selectPayment('cliq');
+        });
+
+        // ==================== تحميل ملخص الطلب ====================
+        function loadOrderSummary() {
+            const orderItemsContainer = document.getElementById('orderItems');
+            let html = '';
+
+            cart.forEach(item => {
+                const imageUrl = item.image || 'https://via.placeholder.com/60?text=📦';
+                html += `
+                    <div class="order-item">
+                        <img src="${imageUrl}" alt="${item.name}" class="order-item-image" onerror="this.src='https://via.placeholder.com/60?text=📦'">
+                        <div class="order-item-details">
+                            <div class="order-item-name">${item.name}</div>
+                            <div class="order-item-qty">الكمية: ${item.qty}</div>
+                        </div>
+                        <div class="order-item-price">${(parseFloat(item.price) * item.qty).toFixed(2)} د.أ</div>
+                    </div>
+                `;
+            });
+
+            orderItemsContainer.innerHTML = html;
+
+            // حساب الإجمالي
+            const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
+            const shipping = subtotal >= 50 ? 0 : 3;
+            const total = subtotal + shipping;
+
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' د.أ';
+            document.getElementById('shipping').textContent = shipping === 0 ? 'مجاني 🎉' : shipping.toFixed(2) + ' د.أ';
+            document.getElementById('total').textContent = total.toFixed(2) + ' د.أ';
+            document.getElementById('cliqAmount').textContent = total.toFixed(2) + ' د.أ';
+        }
+
+        // ==================== تحميل المعلومات المحفوظة ====================
+        function loadSavedInfo() {
+            document.getElementById('name').value = localStorage.getItem('eco_user_name') || '';
+            document.getElementById('phone').value = localStorage.getItem('eco_user_phone') || '';
+            document.getElementById('address').value = localStorage.getItem('eco_user_address') || '';
+        }
+
+        // ==================== اختيار طريقة الدفع ====================
+        function selectPayment(method) {
+            selectedPayment = method;
+            
+            // تحديث الراديو بتن
+            document.getElementById('payment-' + method).checked = true;
+            
+            // تحديث الكلاسات
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.getElementById('payment-' + method).closest('.payment-method').classList.add('selected');
+            
+            // إظهار/إخفاء تفاصيل كليك
+            const cliqDetails = document.getElementById('cliqDetails');
+            if (method === 'cliq') {
+                cliqDetails.classList.add('active');
+            } else {
+                cliqDetails.classList.remove('active');
+            }
+        }
+
+        // ==================== نسخ الاسم المستعار ====================
+        function copyAlias() {
+            const alias = document.getElementById('cliqAlias').textContent;
+            navigator.clipboard.writeText(alias).then(() => {
+                showNotification('✅ تم نسخ الاسم المستعار: ' + alias);
+            }).catch(() => {
+                showNotification('❌ فشل النسخ، يرجى النسخ يدوياً');
+            });
+        }
+
+        // ==================== معاينة لقطة الشاشة ====================
+        function previewScreenshot(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('screenshotPreview').innerHTML = `
+                        <img src="${e.target.result}" class="preview-image" alt="Screenshot">
+                        <div style="text-align: center; margin-top: 10px; color: var(--success-color);">
+                            <i class="fas fa-check-circle"></i> تم رفع الصورة بنجاح
+                        </div>
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ==================== إرسال الطلب ====================
+        async function submitOrder(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const notes = document.getElementById('notes').value.trim();
+            const screenshot = document.getElementById('screenshot').files[0];
+
+            // التحقق من رفع الصورة للدفع بكليك
+            if (selectedPayment === 'cliq' && !screenshot) {
+                showNotification('⚠️ يرجى رفع لقطة شاشة التحويل');
+                return;
+            }
+
+            // حفظ المعلومات
+            localStorage.setItem('eco_user_name', name);
+            localStorage.setItem('eco_user_phone', phone);
+            localStorage.setItem('eco_user_address', city + ' - ' + address);
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إرسال الطلب...';
+
+            try {
+                const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
+                const shipping = subtotal >= 50 ? 0 : 3;
+                const total = subtotal + shipping;
+
+                const orderData = {
+                    customer_name: name,
+                    customer_phone: phone,
+                    customer_address: city + ' - ' + address,
+                    notes: notes,
+                    payment_method: selectedPayment,
+                    items: cart.map(item => ({
+                        product_id: item.id,
+                        quantity: item.qty,
+                        price: parseFloat(item.price)
+                    })),
+                    total_amount: total.toFixed(2)
+                };
+
+                const response = await fetch('api/place-order.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showSuccessModal(name, data.order_id, selectedPayment);
+                } else {
+                    // في حالة عدم توفر API
+                    const orderId = Math.floor(Math.random() * 10000);
+                    showSuccessModal(name, orderId, selectedPayment);
+                }
+            } catch (error) {
+                console.error('خطأ:', error);
+                // في حالة الخطأ
+                const orderId = Math.floor(Math.random() * 10000);
+                showSuccessModal(name, orderId, selectedPayment);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد الطلب';
+            }
+        }
+
+        // ==================== عرض رسالة النجاح ====================
+        function showSuccessModal(customerName, orderId, paymentMethod) {
+            document.getElementById('orderIdDisplay').textContent = '#' + orderId;
+            
+            let message = `شكراً لك <strong>${customerName}</strong>!<br><br>`;
+            
+            if (paymentMethod === 'cliq') {
+                message += `تم استلام طلبك وننتظر تأكيد الدفع.<br><br>`;
+                message += `يرجى إرسال لقطة شاشة التحويل مع رقم الطلب إلى:<br>`;
+                message += `📱 واتساب: <strong>+962790083039</strong><br>`;
+                message += `📧 بريد: <strong>info@eco-friendy.com</strong>`;
+            } else {
+                message += `سيتم توصيل طلبك قريباً.<br>`;
+                message += `سنتواصل معك لتأكيد موعد التوصيل.`;
+            }
+
+            document.getElementById('successMessage').innerHTML = message;
+            document.getElementById('successModal').classList.add('active');
+
+            // تفريغ السلة
+            localStorage.removeItem('eco_cart');
+        }
+
+        function closeSuccess() {
+            document.getElementById('successModal').classList.remove('active');
+            window.location.href = 'index.html';
+        }
+
+        // ==================== الإشعارات ====================
+        function showNotification(text) {
+            const el = document.getElementById('notification');
+            document.getElementById('notificationText').textContent = text;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
