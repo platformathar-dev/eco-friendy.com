@@ -15,8 +15,12 @@ session_start();
 require_once '../config.php';
 
 try {
+    // قراءة البيانات المرسلة
     $input = file_get_contents('php://input');
     $data = json_decode($input, true);
+    
+    // تسجيل البيانات المستلمة للتشخيص (يمكن حذف هذا السطر لاحقاً)
+    error_log("Login attempt data: " . print_r($data, true));
     
     if (!$data) {
         throw new Exception('بيانات غير صالحة');
@@ -30,10 +34,11 @@ try {
     $username = trim($data['username']);
     $password = $data['password'];
     
+    // محاولة الاتصال بقاعدة البيانات
     $pdo = getDBConnection();
     
     if (!$pdo) {
-        throw new Exception('فشل الاتصال بقاعدة البيانات');
+        throw new Exception('فشل الاتصال بقاعدة البيانات. يرجى المحاولة لاحقاً.');
     }
     
     // البحث عن المستخدم
@@ -46,11 +51,14 @@ try {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$user) {
+        // تسجيل محاولة تسجيل دخول فاشلة
+        error_log("Login failed: User not found - " . $username);
         throw new Exception('اسم المستخدم أو كلمة المرور غير صحيحة');
     }
     
     // التحقق من كلمة المرور
     if (!password_verify($password, $user['password'])) {
+        error_log("Login failed: Wrong password for user - " . $username);
         throw new Exception('اسم المستخدم أو كلمة المرور غير صحيحة');
     }
     
@@ -60,21 +68,29 @@ try {
     }
     
     if ($user['status'] === 'inactive') {
-        throw new Exception('هذا الحساب غير نشط');
+        throw new Exception('هذا الحساب غير نشط. يرجى التواصل مع الإدارة');
     }
     
     // تحديث آخر تسجيل دخول
-    $updateSql = "UPDATE users SET last_login = NOW() WHERE id = :id";
-    $updateStmt = $pdo->prepare($updateSql);
-    $updateStmt->execute([':id' => $user['id']]);
+    try {
+        $updateSql = "UPDATE users SET last_login = NOW() WHERE id = :id";
+        $updateStmt = $pdo->prepare($updateSql);
+        $updateStmt->execute([':id' => $user['id']]);
+    } catch (PDOException $e) {
+        // تسجيل الخطأ لكن لا نوقف عملية تسجيل الدخول
+        error_log("Failed to update last_login: " . $e->getMessage());
+    }
     
     // حفظ بيانات المستخدم في الجلسة
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['username'] = $user['username'];
     $_SESSION['fullname'] = $user['fullname'];
     $_SESSION['email'] = $user['email'];
-    $_SESSION['role'] = $user['role']; // هذا هو المهم!
+    $_SESSION['role'] = $user['role'];
     $_SESSION['logged_in'] = true;
+    
+    // تسجيل نجاح تسجيل الدخول
+    error_log("Login successful: " . $user['username'] . " (Role: " . $user['role'] . ")");
     
     // إعداد البيانات للإرجاع (بدون كلمة المرور)
     unset($user['password']);
@@ -87,14 +103,15 @@ try {
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (PDOException $e) {
+    error_log("PDO Error in login: " . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => 'خطأ في قاعدة البيانات',
-        'error' => $e->getMessage()
+        'message' => 'خطأ في قاعدة البيانات: ' . $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
+    error_log("General Error in login: " . $e->getMessage());
     http_response_code(400);
     echo json_encode([
         'success' => false,
