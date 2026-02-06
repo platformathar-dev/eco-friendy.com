@@ -41,13 +41,16 @@ try {
         throw new Exception('فشل الاتصال بقاعدة البيانات. يرجى المحاولة لاحقاً.');
     }
     
-    // البحث عن المستخدم
+    // البحث عن المستخدم - الحل: استخدام معاملين منفصلين
     $sql = "SELECT id, fullname, username, email, password, role, status 
             FROM users 
-            WHERE username = :username OR email = :username";
+            WHERE username = :username OR email = :email";
     
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([':username' => $username]);
+    $stmt->execute([
+        ':username' => $username,
+        ':email' => $username  // نفس القيمة لكن باسم معامل مختلف
+    ]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$user) {
