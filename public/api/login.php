@@ -102,7 +102,7 @@ try {
         'success' => true,
         'message' => 'تم تسجيل الدخول بنجاح',
         'user' => $user,
-        'redirect' => $user['role'] === 'admin' ? '/dashboard.html' : '/index.html'
+        'redirect' => $user['role'] === 'admin' ? '/admin-dashboard.html' : '/user-dashboard.html'
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (PDOException $e) {
