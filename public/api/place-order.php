@@ -114,23 +114,20 @@ try {
                         order_id, 
                         product_id, 
                         quantity, 
-                        price, 
-                        total
-                    ) VALUES (?, ?, ?, ?, ?)";
+                        price
+                    ) VALUES (?, ?, ?, ?)";
         
         $itemStmt = $pdo->prepare($itemSql);
         
         foreach ($data['items'] as $item) {
             $quantity = (int)$item['quantity'];
             $price = (float)$item['price'];
-            $total = $quantity * $price;
             
             $itemStmt->execute([
                 $orderId,
                 (int)$item['product_id'],
                 $quantity,
-                $price,
-                $total
+                $price
             ]);
         }
     } else {
