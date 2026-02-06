@@ -1,21 +1,21 @@
 <?php
+// ملف API لجلب إحصائيات المستخدم
 // api/user-stats.php
-// جلب إحصائيات المستخدم
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Content-Type');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
+require_once '../config.php';
+
+// بدء الجلسة
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-session_start();
-
 // التحقق من تسجيل الدخول
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     http_response_code(401);
     echo json_encode([
         'success' => false,
@@ -24,11 +24,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-require_once '../config.php';
-
 try {
     $pdo = getDBConnection();
-
     if (!$pdo) {
         throw new Exception('فشل الاتصال بقاعدة البيانات');
     }
@@ -36,24 +33,28 @@ try {
     $userId = $_SESSION['user_id'];
 
     // إجمالي الطلبات
-    $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM orders WHERE user_id = ?");
+    $sql = "SELECT COUNT(*) as total FROM orders WHERE user_id = ?";
+    $stmt = $pdo->prepare($sql);
     $stmt->execute([$userId]);
-    $totalOrders = $stmt->fetch()['count'];
+    $totalOrders = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-    // الطلبات قيد الانتظار والتنفيذ
-    $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM orders WHERE user_id = ? AND status IN ('pending', 'processing')");
+    // طلبات قيد الانتظار
+    $sql = "SELECT COUNT(*) as total FROM orders WHERE user_id = ? AND status IN ('pending', 'processing')";
+    $stmt = $pdo->prepare($sql);
     $stmt->execute([$userId]);
-    $pendingOrders = $stmt->fetch()['count'];
+    $pendingOrders = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-    // الطلبات المكتملة
-    $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM orders WHERE user_id = ? AND status = 'completed'");
+    // طلبات مكتملة
+    $sql = "SELECT COUNT(*) as total FROM orders WHERE user_id = ? AND status = 'completed'";
+    $stmt = $pdo->prepare($sql);
     $stmt->execute([$userId]);
-    $completedOrders = $stmt->fetch()['count'];
+    $completedOrders = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-    // إجمالي المبلغ المنفق
-    $stmt = $pdo->prepare("SELECT COALESCE(SUM(total_amount), 0) as total FROM orders WHERE user_id = ? AND status != 'cancelled'");
+    // إجمالي المشتريات
+    $sql = "SELECT COALESCE(SUM(total_amount), 0) as total FROM orders WHERE user_id = ?";
+    $stmt = $pdo->prepare($sql);
     $stmt->execute([$userId]);
-    $totalSpent = $stmt->fetch()['total'];
+    $totalSpent = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
     echo json_encode([
         'success' => true,
@@ -69,7 +70,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => 'حدث خطأ: ' . $e->getMessage()
+        'message' => $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
 }
 ?>
