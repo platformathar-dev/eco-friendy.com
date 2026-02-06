@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -103,6 +105,28 @@
             display: flex;
             align-items: center;
             gap: 20px;
+        }
+
+        .visit-store-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #388e3c 0%, #2e7d32 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(56, 142, 60, 0.3);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .visit-store-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 142, 60, 0.4);
         }
 
         .user-info {
@@ -327,9 +351,20 @@
             box-shadow: 0 3px 10px rgba(56, 142, 60, 0.3);
         }
 
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 142, 60, 0.4);
+        }
+
         .btn-sm {
             padding: 8px 16px;
             font-size: 13px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         /* Search */
@@ -435,6 +470,45 @@
         .empty-state-icon {
             font-size: 64px;
             margin-bottom: 20px;
+        }
+
+        /* Status Select in Table */
+        .status-select {
+            padding: 6px 12px;
+            border: 2px solid #ffe0b3;
+            border-radius: 8px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .status-select:focus {
+            outline: none;
+            border-color: #f39200;
+            box-shadow: 0 0 0 3px rgba(243, 146, 0, 0.1);
+        }
+
+        .status-select.pending {
+            color: #f57c00;
+            border-color: rgba(245, 124, 0, 0.3);
+        }
+
+        .status-select.processing {
+            color: #f39200;
+            border-color: rgba(243, 146, 0, 0.3);
+        }
+
+        .status-select.completed {
+            color: #388e3c;
+            border-color: rgba(56, 142, 60, 0.3);
+        }
+
+        .status-select.cancelled {
+            color: #d32f2f;
+            border-color: rgba(211, 47, 47, 0.3);
         }
 
         /* Modal */
@@ -693,6 +767,14 @@
             .modal-content {
                 padding: 25px 20px;
             }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .header-actions .btn {
+                flex: 1;
+            }
         }
     </style>
 </head>
@@ -714,6 +796,9 @@
             </div>
         </div>
         <div class="header-right">
+            <a href="/index.html" class="visit-store-btn" target="_blank">
+                🛒 زيارة المتجر
+            </a>
             <div class="user-info">
                 <div class="user-avatar" id="user-avatar">A</div>
                 <div class="user-details">
@@ -846,6 +931,11 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">إدارة الطلبات (<span id="orders-count">0</span>)</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-success" onclick="exportOrdersToExcel()">
+                            📥 تنزيل Excel
+                        </button>
+                    </div>
                 </div>
 
                 <div class="search-box">
@@ -1139,7 +1229,6 @@
             document.getElementById('product-old-image').value = '';
             document.getElementById('product-status').value = 'active';
             selectedImageFile = null;
-            // إعادة تعيين منطقة الصورة
             document.getElementById('upload-placeholder').style.display = 'block';
             document.getElementById('image-preview-container').style.display = 'none';
             document.getElementById('image-upload-area').classList.remove('has-image');
@@ -1163,7 +1252,6 @@
 
             selectedImageFile = null;
 
-            // عرض الصورة الحالية إن وجدت
             if (product.image) {
                 document.getElementById('image-preview').src = product.image;
                 document.getElementById('upload-placeholder').style.display = 'none';
@@ -1183,8 +1271,6 @@
             showLoading();
 
             const productId = document.getElementById('product-id').value;
-
-            // استخدام FormData لدعم رفع الملفات
             const formData = new FormData();
             formData.append('name', document.getElementById('product-name').value);
             formData.append('description', document.getElementById('product-description').value);
@@ -1198,17 +1284,15 @@
                 formData.append('old_image', document.getElementById('product-old-image').value);
             }
 
-            // إضافة الصورة إن وجدت
             if (selectedImageFile) {
                 formData.append('image', selectedImageFile);
             }
 
             try {
                 const url = productId ? '/api/update-product.php' : '/api/add-product.php';
-
                 const response = await fetch(url, {
                     method: 'POST',
-                    body: formData  // لا نضيف Content-Type لأن المتصفح يضيفه تلقائياً مع boundary
+                    body: formData
                 });
 
                 const data = await response.json();
@@ -1462,26 +1546,26 @@
             }
 
             tbody.innerHTML = orders.map(order => {
-                let statusBadge, statusText;
+                let statusClass, statusText;
                 switch(order.status) {
                     case 'pending':
-                        statusBadge = 'badge-warning';
+                        statusClass = 'pending';
                         statusText = 'قيد الانتظار';
                         break;
                     case 'processing':
-                        statusBadge = 'badge-info';
+                        statusClass = 'processing';
                         statusText = 'قيد التنفيذ';
                         break;
                     case 'completed':
-                        statusBadge = 'badge-success';
+                        statusClass = 'completed';
                         statusText = 'مكتمل';
                         break;
                     case 'cancelled':
-                        statusBadge = 'badge-danger';
+                        statusClass = 'cancelled';
                         statusText = 'ملغي';
                         break;
                     default:
-                        statusBadge = 'badge-info';
+                        statusClass = 'processing';
                         statusText = order.status;
                 }
 
@@ -1492,7 +1576,14 @@
                         <td>${order.created_at}</td>
                         <td>${order.items_count} منتج</td>
                         <td>${parseFloat(order.total_amount).toFixed(2)} د.أ</td>
-                        <td><span class="badge ${statusBadge}">${statusText}</span></td>
+                        <td>
+                            <select class="status-select ${statusClass}" onchange="updateOrderStatusQuick(${order.id}, this.value, this)">
+                                <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>قيد الانتظار</option>
+                                <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>قيد التنفيذ</option>
+                                <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>مكتمل</option>
+                                <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+                            </select>
+                        </td>
                         <td class="actions">
                             <button class="btn btn-primary btn-sm" onclick="viewOrder(${order.id})">التفاصيل</button>
                         </td>
@@ -1512,6 +1603,39 @@
                 (o.customer_name && o.customer_name.toLowerCase().includes(searchTerm))
             );
             displayOrders(filtered);
+        }
+
+        async function updateOrderStatusQuick(orderId, newStatus, selectElement) {
+            const oldClass = selectElement.className.split(' ').find(c => ['pending', 'processing', 'completed', 'cancelled'].includes(c));
+            selectElement.className = selectElement.className.replace(oldClass, newStatus);
+            
+            try {
+                const response = await fetch('/api/update-order-status.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ order_id: orderId, status: newStatus })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // تحديث البيانات المحلية
+                    const orderIndex = allOrders.findIndex(o => o.id === orderId);
+                    if (orderIndex !== -1) {
+                        allOrders[orderIndex].status = newStatus;
+                    }
+                    await loadStats();
+                } else {
+                    alert('❌ ' + data.message);
+                    selectElement.className = selectElement.className.replace(newStatus, oldClass);
+                    selectElement.value = oldClass;
+                }
+            } catch (error) {
+                console.error('خطأ:', error);
+                alert('❌ حدث خطأ في تحديث الحالة');
+                selectElement.className = selectElement.className.replace(newStatus, oldClass);
+                selectElement.value = oldClass;
+            }
         }
 
         function viewOrder(orderId) {
@@ -1603,6 +1727,7 @@
 
                 if (data.success) {
                     alert('✅ تم تحديث حالة الطلب');
+                    closeModal('order-modal');
                     await loadOrders();
                     await loadStats();
                 } else {
@@ -1614,6 +1739,62 @@
             } finally {
                 hideLoading();
             }
+        }
+
+        // ==================== تصدير Excel ====================
+        function exportOrdersToExcel() {
+            if (allOrders.length === 0) {
+                alert('⚠️ لا توجد طلبات لتصديرها');
+                return;
+            }
+
+            // إعداد البيانات للتصدير
+            const excelData = allOrders.map(order => {
+                let statusText;
+                switch(order.status) {
+                    case 'pending': statusText = 'قيد الانتظار'; break;
+                    case 'processing': statusText = 'قيد التنفيذ'; break;
+                    case 'completed': statusText = 'مكتمل'; break;
+                    case 'cancelled': statusText = 'ملغي'; break;
+                    default: statusText = order.status;
+                }
+
+                return {
+                    'رقم الطلب': order.id,
+                    'اسم العميل': order.customer_name || '-',
+                    'التاريخ': order.created_at,
+                    'عدد المنتجات': order.items_count,
+                    'المبلغ الإجمالي (د.أ)': parseFloat(order.total_amount).toFixed(2),
+                    'الحالة': statusText,
+                    'الملاحظات': order.notes || '-'
+                };
+            });
+
+            // إنشاء ورقة عمل
+            const worksheet = XLSX.utils.json_to_sheet(excelData);
+            
+            // تنسيق العرض
+            const columnWidths = [
+                { wch: 12 }, // رقم الطلب
+                { wch: 25 }, // اسم العميل
+                { wch: 20 }, // التاريخ
+                { wch: 15 }, // عدد المنتجات
+                { wch: 20 }, // المبلغ
+                { wch: 15 }, // الحالة
+                { wch: 30 }  // الملاحظات
+            ];
+            worksheet['!cols'] = columnWidths;
+
+            // إنشاء كتاب العمل
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'الطلبات');
+
+            // تنزيل الملف
+            const today = new Date().toISOString().split('T')[0];
+            const filename = `طلبات-${today}.xlsx`;
+            XLSX.writeFile(workbook, filename);
+
+            alert('✅ تم تنزيل ملف Excel بنجاح');
         }
 
         // ==================== المستخدم الحالي ====================
