@@ -544,6 +544,128 @@
             border: 2px solid #ffe0b3;
         }
 
+        /* Image Upload */
+        .image-upload-area {
+            border: 2px dashed #ffe0b3;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fffbf7;
+            position: relative;
+        }
+
+        .image-upload-area:hover {
+            border-color: #f39200;
+            background: #fff8f0;
+        }
+
+        .image-upload-area.has-image {
+            padding: 10px;
+        }
+
+        .image-upload-area input[type="file"] {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            color: #757575;
+            font-size: 14px;
+        }
+
+        .upload-text span {
+            color: #f39200;
+            font-weight: 600;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .remove-image-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .remove-image-btn:hover {
+            background: #b71c1c;
+            transform: scale(1.1);
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: #fffbf7;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .order-summary-item.total {
+            border-top: 2px solid #ffe0b3;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #f39200;
+        }
+
+        .order-items-list {
+            margin-top: 15px;
+        }
+
+        .order-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ffe0b3;
+        }
+
+        .order-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .order-status-select {
+            padding: 8px 15px;
+            border: 2px solid #ffe0b3;
+            border-radius: 8px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            background: #fffbf7;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header {
@@ -723,12 +845,35 @@
         <div id="orders-tab" class="tab-content">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">إدارة الطلبات (قريباً)</h2>
+                    <h2 class="card-title">إدارة الطلبات (<span id="orders-count">0</span>)</h2>
                 </div>
 
-                <div class="empty-state">
-                    <div class="empty-state-icon">📦</div>
-                    <p>سيتم إضافة نظام الطلبات قريباً</p>
+                <div class="search-box">
+                    <input type="text" id="order-search" placeholder="🔍 البحث عن طلب..." onkeyup="searchOrders()">
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>العميل</th>
+                                <th>التاريخ</th>
+                                <th>عدد المنتجات</th>
+                                <th>المبلغ الإجمالي</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-tbody">
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    <div class="empty-state-icon">📭</div>
+                                    <p>جاري تحميل الطلبات...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -743,7 +888,8 @@
             </div>
             <form id="product-form" onsubmit="saveProduct(event)">
                 <input type="hidden" id="product-id">
-                
+                <input type="hidden" id="product-old-image">
+
                 <div class="form-group">
                     <label>اسم المنتج *</label>
                     <input type="text" id="product-name" required placeholder="أدخل اسم المنتج">
@@ -760,16 +906,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>الفئة *</label>
-                    <select id="product-category" required>
-                        <option value="">اختر الفئة...</option>
-                        <option value="أدوات منزلية">أدوات منزلية</option>
-                        <option value="ملابس">ملابس</option>
-                        <option value="مستحضرات تجميل">مستحضرات تجميل</option>
-                        <option value="طعام وشراب">طعام وشراب</option>
-                        <option value="ديكور">ديكور</option>
-                        <option value="أخرى">أخرى</option>
-                    </select>
+                    <label>الفئة / التصنيف *</label>
+                    <input type="text" id="product-category" required placeholder="أدخل اسم التصنيف (مثال: أدوات منزلية، ملابس، مستحضرات...)">
                 </div>
 
                 <div class="form-group">
@@ -778,8 +916,26 @@
                 </div>
 
                 <div class="form-group">
-                    <label>رابط الصورة</label>
-                    <input type="url" id="product-image" placeholder="https://example.com/image.jpg">
+                    <label>الحالة *</label>
+                    <select id="product-status">
+                        <option value="active">نشط</option>
+                        <option value="inactive">غير نشط</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>صورة المنتج</label>
+                    <div class="image-upload-area" id="image-upload-area" onclick="document.getElementById('product-image-file').click()">
+                        <input type="file" id="product-image-file" accept="image/*" onchange="handleImageUpload(event)">
+                        <div id="upload-placeholder">
+                            <div class="upload-icon">📷</div>
+                            <div class="upload-text">اضغط هنا أو اسحب صورة لرفعها<br><span>JPG, PNG, WEBP (حد أقصى 2MB)</span></div>
+                        </div>
+                        <div id="image-preview-container" style="display: none;">
+                            <img id="image-preview" class="image-preview" src="" alt="معاينة">
+                            <button type="button" class="remove-image-btn" onclick="removeImage(event)">&times;</button>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="width: 100%;" id="product-submit-btn">
@@ -789,10 +945,34 @@
         </div>
     </div>
 
+    <!-- Order Details Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">تفاصيل الطلب</h3>
+                <button class="close-btn" onclick="closeModal('order-modal')">&times;</button>
+            </div>
+            <div id="order-details-content"></div>
+        </div>
+    </div>
+
+    <!-- User Details Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">تفاصيل المستخدم</h3>
+                <button class="close-btn" onclick="closeModal('user-modal')">&times;</button>
+            </div>
+            <div id="user-details-content"></div>
+        </div>
+    </div>
+
     <script>
         // متغيرات عامة
         let allUsers = [];
         let allProducts = [];
+        let allOrders = [];
+        let selectedImageFile = null;
 
         // تحميل البيانات
         window.addEventListener('DOMContentLoaded', async function() {
@@ -805,6 +985,7 @@
                 await loadStats();
                 await loadProducts();
                 await loadUsers();
+                await loadOrders();
                 updateCurrentUser();
                 hideLoading();
             } catch (error) {
@@ -814,7 +995,7 @@
             }
         }
 
-        // جلب الإحصائيات
+        // ==================== الإحصائيات ====================
         async function loadStats() {
             try {
                 const response = await fetch('/api/dashboard-stats.php');
@@ -830,7 +1011,7 @@
             }
         }
 
-        // جلب المنتجات
+        // ==================== المنتجات ====================
         async function loadProducts() {
             try {
                 const response = await fetch('/api/get-products.php');
@@ -839,7 +1020,6 @@
                     allProducts = data.products;
                     displayProducts(allProducts);
                     document.getElementById('products-count').textContent = data.total;
-                    document.getElementById('total-products').textContent = data.total;
                 } else {
                     throw new Error(data.message);
                 }
@@ -856,10 +1036,9 @@
             }
         }
 
-        // عرض المنتجات
         function displayProducts(products) {
             const tbody = document.getElementById('products-tbody');
-            
+
             if (products.length === 0) {
                 tbody.innerHTML = `
                     <tr>
@@ -875,10 +1054,10 @@
             tbody.innerHTML = products.map(product => {
                 const statusBadge = product.status === 'active' ? 'badge-success' : 'badge-danger';
                 const statusText = product.status === 'active' ? 'نشط' : 'غير نشط';
-                const imageTag = product.image ? 
-                    `<img src="${product.image}" class="product-image" alt="${product.name}">` : 
+                const imageTag = product.image ?
+                    `<img src="${product.image}" class="product-image" alt="${product.name}" onerror="this.outerHTML='<div style=\\'width:60px;height:60px;background:#ffe0b3;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;\\'>📦</div>'">` :
                     '<div style="width:60px;height:60px;background:#ffe0b3;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;">📦</div>';
-                
+
                 return `
                     <tr>
                         <td>${imageTag}</td>
@@ -889,37 +1068,84 @@
                         <td><span class="badge ${statusBadge}">${statusText}</span></td>
                         <td class="actions">
                             <button class="btn btn-primary btn-sm" onclick="editProduct(${product.id})">تعديل</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id}, '${product.name}')">حذف</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id}, '${product.name.replace(/'/g, "\\'")}')">حذف</button>
                         </td>
                     </tr>
                 `;
             }).join('');
         }
 
-        // البحث عن المنتجات
         function searchProducts() {
             const searchTerm = document.getElementById('product-search').value.toLowerCase();
             if (searchTerm === '') {
                 displayProducts(allProducts);
                 return;
             }
-            const filtered = allProducts.filter(p => 
+            const filtered = allProducts.filter(p =>
                 p.name.toLowerCase().includes(searchTerm) ||
                 p.category.toLowerCase().includes(searchTerm)
             );
             displayProducts(filtered);
         }
 
-        // فتح نافذة إضافة منتج
+        // ==================== رفع الصور ====================
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // التحقق من نوع الملف
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+            if (!allowedTypes.includes(file.type)) {
+                alert('❌ نوع الملف غير مدعوم. يرجى رفع صورة بصيغة JPG, PNG, WEBP أو GIF');
+                event.target.value = '';
+                return;
+            }
+
+            // التحقق من حجم الملف (2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('❌ حجم الصورة كبير جداً. الحد الأقصى 2MB');
+                event.target.value = '';
+                return;
+            }
+
+            selectedImageFile = file;
+
+            // معاينة الصورة
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('image-preview').src = e.target.result;
+                document.getElementById('upload-placeholder').style.display = 'none';
+                document.getElementById('image-preview-container').style.display = 'block';
+                document.getElementById('image-upload-area').classList.add('has-image');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeImage(event) {
+            event.stopPropagation();
+            selectedImageFile = null;
+            document.getElementById('product-image-file').value = '';
+            document.getElementById('upload-placeholder').style.display = 'block';
+            document.getElementById('image-preview-container').style.display = 'none';
+            document.getElementById('image-upload-area').classList.remove('has-image');
+        }
+
+        // ==================== إضافة/تعديل منتج ====================
         function openAddProductModal() {
             document.getElementById('product-modal-title').textContent = 'إضافة منتج جديد';
             document.getElementById('product-submit-btn').textContent = 'إضافة المنتج';
             document.getElementById('product-form').reset();
             document.getElementById('product-id').value = '';
+            document.getElementById('product-old-image').value = '';
+            document.getElementById('product-status').value = 'active';
+            selectedImageFile = null;
+            // إعادة تعيين منطقة الصورة
+            document.getElementById('upload-placeholder').style.display = 'block';
+            document.getElementById('image-preview-container').style.display = 'none';
+            document.getElementById('image-upload-area').classList.remove('has-image');
             document.getElementById('product-modal').classList.add('active');
         }
 
-        // تعديل منتج
         function editProduct(productId) {
             const product = allProducts.find(p => p.id === productId);
             if (!product) return;
@@ -927,38 +1153,62 @@
             document.getElementById('product-modal-title').textContent = 'تعديل المنتج';
             document.getElementById('product-submit-btn').textContent = 'حفظ التعديلات';
             document.getElementById('product-id').value = product.id;
+            document.getElementById('product-old-image').value = product.image || '';
             document.getElementById('product-name').value = product.name;
             document.getElementById('product-description').value = product.description;
             document.getElementById('product-price').value = product.price;
             document.getElementById('product-category').value = product.category;
             document.getElementById('product-stock').value = product.stock;
-            document.getElementById('product-image').value = product.image || '';
+            document.getElementById('product-status').value = product.status || 'active';
+
+            selectedImageFile = null;
+
+            // عرض الصورة الحالية إن وجدت
+            if (product.image) {
+                document.getElementById('image-preview').src = product.image;
+                document.getElementById('upload-placeholder').style.display = 'none';
+                document.getElementById('image-preview-container').style.display = 'block';
+                document.getElementById('image-upload-area').classList.add('has-image');
+            } else {
+                document.getElementById('upload-placeholder').style.display = 'block';
+                document.getElementById('image-preview-container').style.display = 'none';
+                document.getElementById('image-upload-area').classList.remove('has-image');
+            }
+
             document.getElementById('product-modal').classList.add('active');
         }
 
-        // حفظ المنتج
         async function saveProduct(e) {
             e.preventDefault();
             showLoading();
 
             const productId = document.getElementById('product-id').value;
-            const productData = {
-                name: document.getElementById('product-name').value,
-                description: document.getElementById('product-description').value,
-                price: document.getElementById('product-price').value,
-                category: document.getElementById('product-category').value,
-                stock: document.getElementById('product-stock').value,
-                image: document.getElementById('product-image').value
-            };
+
+            // استخدام FormData لدعم رفع الملفات
+            const formData = new FormData();
+            formData.append('name', document.getElementById('product-name').value);
+            formData.append('description', document.getElementById('product-description').value);
+            formData.append('price', document.getElementById('product-price').value);
+            formData.append('category', document.getElementById('product-category').value);
+            formData.append('stock', document.getElementById('product-stock').value);
+            formData.append('status', document.getElementById('product-status').value);
+
+            if (productId) {
+                formData.append('id', productId);
+                formData.append('old_image', document.getElementById('product-old-image').value);
+            }
+
+            // إضافة الصورة إن وجدت
+            if (selectedImageFile) {
+                formData.append('image', selectedImageFile);
+            }
 
             try {
                 const url = productId ? '/api/update-product.php' : '/api/add-product.php';
-                if (productId) productData.id = productId;
 
                 const response = await fetch(url, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(productData)
+                    body: formData  // لا نضيف Content-Type لأن المتصفح يضيفه تلقائياً مع boundary
                 });
 
                 const data = await response.json();
@@ -979,7 +1229,6 @@
             }
         }
 
-        // حذف منتج
         async function deleteProduct(productId, productName) {
             if (!confirm(`هل أنت متأكد من حذف المنتج "${productName}"؟\n\nهذا الإجراء لا يمكن التراجع عنه!`)) {
                 return;
@@ -1010,7 +1259,7 @@
             }
         }
 
-        // جلب المستخدمين
+        // ==================== المستخدمين ====================
         async function loadUsers() {
             try {
                 const response = await fetch('/api/get-users.php');
@@ -1035,10 +1284,9 @@
             }
         }
 
-        // عرض المستخدمين
         function displayUsers(users) {
             const tbody = document.getElementById('users-tbody');
-            
+
             if (users.length === 0) {
                 tbody.innerHTML = `
                     <tr>
@@ -1052,11 +1300,11 @@
             }
 
             tbody.innerHTML = users.map(user => {
-                const statusBadge = user.status === 'active' ? 'badge-success' : 
+                const statusBadge = user.status === 'active' ? 'badge-success' :
                                    user.status === 'inactive' ? 'badge-warning' : 'badge-danger';
-                const statusText = user.status === 'active' ? 'نشط' : 
+                const statusText = user.status === 'active' ? 'نشط' :
                                   user.status === 'inactive' ? 'معلق' : 'محظور';
-                
+
                 return `
                     <tr>
                         <td>${user.fullname}</td>
@@ -1067,21 +1315,20 @@
                         <td>${user.created_at}</td>
                         <td class="actions">
                             <button class="btn btn-primary btn-sm" onclick="viewUser(${user.id})">عرض</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id}, '${user.fullname}')">حذف</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id}, '${user.fullname.replace(/'/g, "\\'")}')">حذف</button>
                         </td>
                     </tr>
                 `;
             }).join('');
         }
 
-        // البحث عن المستخدمين
         function searchUsers() {
             const searchTerm = document.getElementById('user-search').value.toLowerCase();
             if (searchTerm === '') {
                 displayUsers(allUsers);
                 return;
             }
-            const filtered = allUsers.filter(u => 
+            const filtered = allUsers.filter(u =>
                 u.fullname.toLowerCase().includes(searchTerm) ||
                 u.username.toLowerCase().includes(searchTerm) ||
                 u.email.toLowerCase().includes(searchTerm) ||
@@ -1090,15 +1337,60 @@
             displayUsers(filtered);
         }
 
-        // عرض تفاصيل مستخدم
         function viewUser(userId) {
             const user = allUsers.find(u => u.id === userId);
-            if (user) {
-                alert(`📊 تفاصيل المستخدم\n\n👤 الاسم: ${user.fullname}\n🔑 اسم المستخدم: ${user.username}\n📧 البريد: ${user.email}\n📱 الهاتف: ${user.phone}\n👥 الجنس: ${user.gender}\n🌍 الدولة: ${user.country}\n📅 تاريخ التسجيل: ${user.created_at}\n🕐 آخر تسجيل دخول: ${user.last_login}`);
-            }
+            if (!user) return;
+
+            const genderText = user.gender === 'male' ? 'ذكر' : user.gender === 'female' ? 'أنثى' : user.gender || '-';
+            const statusBadge = user.status === 'active' ? 'badge-success' :
+                               user.status === 'inactive' ? 'badge-warning' : 'badge-danger';
+            const statusText = user.status === 'active' ? 'نشط' :
+                              user.status === 'inactive' ? 'معلق' : 'محظور';
+
+            document.getElementById('user-details-content').innerHTML = `
+                <div class="order-summary">
+                    <div class="order-summary-item">
+                        <span>👤 الاسم الكامل:</span>
+                        <strong>${user.fullname}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>🔑 اسم المستخدم:</span>
+                        <strong>${user.username}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>📧 البريد الإلكتروني:</span>
+                        <strong>${user.email}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>📱 رقم الهاتف:</span>
+                        <strong>${user.phone}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>👥 الجنس:</span>
+                        <strong>${genderText}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>🌍 الدولة:</span>
+                        <strong>${user.country || '-'}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>📊 الحالة:</span>
+                        <span class="badge ${statusBadge}">${statusText}</span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>📅 تاريخ التسجيل:</span>
+                        <strong>${user.created_at}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>🕐 آخر تسجيل دخول:</span>
+                        <strong>${user.last_login || 'لم يسجل بعد'}</strong>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('user-modal').classList.add('active');
         }
 
-        // حذف مستخدم
         async function deleteUser(userId, userName) {
             if (!confirm(`هل أنت متأكد من حذف المستخدم "${userName}"؟\n\nهذا الإجراء لا يمكن التراجع عنه!`)) {
                 return;
@@ -1129,7 +1421,202 @@
             }
         }
 
-        // تحديث معلومات المستخدم الحالي
+        // ==================== الطلبات ====================
+        async function loadOrders() {
+            try {
+                const response = await fetch('/api/get-all-orders.php');
+                const data = await response.json();
+                if (data.success) {
+                    allOrders = data.orders;
+                    displayOrders(allOrders);
+                    document.getElementById('orders-count').textContent = data.total;
+                } else {
+                    throw new Error(data.message);
+                }
+            } catch (error) {
+                console.error('خطأ في جلب الطلبات:', error);
+                document.getElementById('orders-tbody').innerHTML = `
+                    <tr>
+                        <td colspan="7" class="empty-state">
+                            <div class="empty-state-icon">❌</div>
+                            <p>فشل في تحميل الطلبات</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function displayOrders(orders) {
+            const tbody = document.getElementById('orders-tbody');
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="empty-state">
+                            <div class="empty-state-icon">📦</div>
+                            <p>لا توجد طلبات حتى الآن</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = orders.map(order => {
+                let statusBadge, statusText;
+                switch(order.status) {
+                    case 'pending':
+                        statusBadge = 'badge-warning';
+                        statusText = 'قيد الانتظار';
+                        break;
+                    case 'processing':
+                        statusBadge = 'badge-info';
+                        statusText = 'قيد التنفيذ';
+                        break;
+                    case 'completed':
+                        statusBadge = 'badge-success';
+                        statusText = 'مكتمل';
+                        break;
+                    case 'cancelled':
+                        statusBadge = 'badge-danger';
+                        statusText = 'ملغي';
+                        break;
+                    default:
+                        statusBadge = 'badge-info';
+                        statusText = order.status;
+                }
+
+                return `
+                    <tr>
+                        <td>#${order.id}</td>
+                        <td>${order.customer_name || '-'}</td>
+                        <td>${order.created_at}</td>
+                        <td>${order.items_count} منتج</td>
+                        <td>${parseFloat(order.total_amount).toFixed(2)} د.أ</td>
+                        <td><span class="badge ${statusBadge}">${statusText}</span></td>
+                        <td class="actions">
+                            <button class="btn btn-primary btn-sm" onclick="viewOrder(${order.id})">التفاصيل</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function searchOrders() {
+            const searchTerm = document.getElementById('order-search').value.toLowerCase();
+            if (searchTerm === '') {
+                displayOrders(allOrders);
+                return;
+            }
+            const filtered = allOrders.filter(o =>
+                o.id.toString().includes(searchTerm) ||
+                (o.customer_name && o.customer_name.toLowerCase().includes(searchTerm))
+            );
+            displayOrders(filtered);
+        }
+
+        function viewOrder(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (!order) return;
+
+            let statusBadge, statusText;
+            switch(order.status) {
+                case 'pending': statusBadge = 'badge-warning'; statusText = 'قيد الانتظار'; break;
+                case 'processing': statusBadge = 'badge-info'; statusText = 'قيد التنفيذ'; break;
+                case 'completed': statusBadge = 'badge-success'; statusText = 'مكتمل'; break;
+                case 'cancelled': statusBadge = 'badge-danger'; statusText = 'ملغي'; break;
+                default: statusBadge = 'badge-info'; statusText = order.status;
+            }
+
+            let itemsHtml = '';
+            if (order.items && order.items.length > 0) {
+                itemsHtml = `
+                    <div class="order-items-list">
+                        <h4 style="color: #c77400; margin-bottom: 10px;">المنتجات:</h4>
+                        ${order.items.map(item => `
+                            <div class="order-item-row">
+                                <span>${item.product_name || 'منتج محذوف'} × ${item.quantity}</span>
+                                <strong>${parseFloat(item.price).toFixed(2)} د.أ</strong>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            document.getElementById('order-details-content').innerHTML = `
+                <div class="order-summary">
+                    <div class="order-summary-item">
+                        <span>رقم الطلب:</span>
+                        <strong>#${order.id}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>العميل:</span>
+                        <strong>${order.customer_name || '-'}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>التاريخ:</span>
+                        <strong>${order.created_at}</strong>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>الحالة:</span>
+                        <span class="badge ${statusBadge}">${statusText}</span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>عدد المنتجات:</span>
+                        <strong>${order.items_count}</strong>
+                    </div>
+                    <div class="order-summary-item total">
+                        <span>المبلغ الإجمالي:</span>
+                        <strong>${parseFloat(order.total_amount).toFixed(2)} د.أ</strong>
+                    </div>
+                </div>
+                ${itemsHtml}
+                ${order.notes ? `
+                    <div style="padding: 15px; background: #fffbf7; border-radius: 10px; margin-top: 15px;">
+                        <strong style="color: #c77400;">ملاحظات:</strong>
+                        <p style="margin-top: 8px; color: #757575;">${order.notes}</p>
+                    </div>
+                ` : ''}
+                <div style="margin-top: 20px;">
+                    <label style="font-weight: 600; color: #f39200; margin-bottom: 8px; display: block;">تغيير حالة الطلب:</label>
+                    <select class="order-status-select" onchange="updateOrderStatus(${order.id}, this.value)">
+                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>قيد الانتظار</option>
+                        <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>قيد التنفيذ</option>
+                        <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>مكتمل</option>
+                        <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+                    </select>
+                </div>
+            `;
+
+            document.getElementById('order-modal').classList.add('active');
+        }
+
+        async function updateOrderStatus(orderId, newStatus) {
+            showLoading();
+            try {
+                const response = await fetch('/api/update-order-status.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ order_id: orderId, status: newStatus })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('✅ تم تحديث حالة الطلب');
+                    await loadOrders();
+                    await loadStats();
+                } else {
+                    alert('❌ ' + data.message);
+                }
+            } catch (error) {
+                console.error('خطأ:', error);
+                alert('❌ حدث خطأ في تحديث الحالة');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // ==================== المستخدم الحالي ====================
         function updateCurrentUser() {
             const userName = 'المدير';
             const userInitial = userName.charAt(0);
@@ -1137,7 +1624,7 @@
             document.getElementById('user-avatar').textContent = userInitial;
         }
 
-        // تسجيل الخروج
+        // ==================== تسجيل الخروج ====================
         async function logout() {
             if (!confirm('هل تريد تسجيل الخروج؟')) return;
             showLoading();
@@ -1160,37 +1647,63 @@
             }
         }
 
-        // التبديل بين التبويبات
+        // ==================== التبويبات والنوافذ ====================
         function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             document.getElementById(tabName + '-tab').classList.add('active');
             event.target.classList.add('active');
         }
 
-        // إغلاق النافذة المنبثقة
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // إغلاق عند النقر خارج النافذة
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.classList.remove('active');
             }
         }
 
-        // إظهار/إخفاء التحميل
         function showLoading() {
             document.getElementById('loading-overlay').classList.remove('hidden');
         }
 
         function hideLoading() {
             document.getElementById('loading-overlay').classList.add('hidden');
+        }
+
+        // دعم السحب والإفلات للصور
+        const uploadArea = document.getElementById('image-upload-area');
+        if (uploadArea) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, () => {
+                    uploadArea.style.borderColor = '#f39200';
+                    uploadArea.style.background = '#fff8f0';
+                });
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, () => {
+                    uploadArea.style.borderColor = '#ffe0b3';
+                    uploadArea.style.background = '#fffbf7';
+                });
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    document.getElementById('product-image-file').files = files;
+                    handleImageUpload({ target: { files: [files[0]], value: files[0].name } });
+                }
+            });
         }
     </script>
 </body>
