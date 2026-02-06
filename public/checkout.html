@@ -27,6 +27,7 @@
             --text-light: #6b7280;
             --bg-light: #fffbf7;
             --white: #ffffff;
+            --error-color: #ef4444;
         }
 
         body {
@@ -264,7 +265,6 @@
             color: var(--primary-color);
         }
 
-        /* CliQ Payment Details */
         .cliq-details {
             display: none;
             margin-top: 20px;
@@ -403,7 +403,6 @@
             margin-top: 10px;
         }
 
-        /* Order Summary */
         .order-item {
             display: flex;
             gap: 15px;
@@ -506,6 +505,12 @@
             border: 2px solid #f59e0b;
         }
 
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid var(--error-color);
+        }
+
         .contact-info {
             background: var(--light-orange);
             padding: 15px;
@@ -544,11 +549,16 @@
             display: none;
             align-items: center;
             gap: 10px;
+            max-width: 400px;
         }
 
         .notification.show {
             display: flex;
             animation: slideIn 0.3s ease;
+        }
+
+        .notification.error {
+            background: var(--error-color);
         }
 
         @keyframes slideIn {
@@ -562,7 +572,6 @@
             }
         }
 
-        /* Success Modal */
         .success-modal {
             display: none;
             position: fixed;
@@ -742,23 +751,23 @@
                         </h2>
 
                         <div class="payment-methods">
-                            <!-- CliQ Payment -->
-                            <label class="payment-method" onclick="selectPayment('cliq')">
-                                <input type="radio" name="payment" value="cliq" id="payment-cliq" checked>
-                                <div class="payment-icon">💳</div>
-                                <div class="payment-method-info">
-                                    <div class="payment-method-title">الدفع عبر كليك CliQ</div>
-                                    <div class="payment-method-desc">تحويل فوري وآمن عبر جميع البنوك الأردنية</div>
-                                </div>
-                            </label>
-
                             <!-- Cash on Delivery -->
                             <label class="payment-method" onclick="selectPayment('cod')">
-                                <input type="radio" name="payment" value="cod" id="payment-cod">
+                                <input type="radio" name="payment" value="cod" id="payment-cod" checked>
                                 <div class="payment-icon">💵</div>
                                 <div class="payment-method-info">
                                     <div class="payment-method-title">الدفع عند الاستلام</div>
                                     <div class="payment-method-desc">ادفع نقداً عند استلام الطلب</div>
+                                </div>
+                            </label>
+
+                            <!-- CliQ Payment -->
+                            <label class="payment-method" onclick="selectPayment('cliq')">
+                                <input type="radio" name="payment" value="cliq" id="payment-cliq">
+                                <div class="payment-icon">💳</div>
+                                <div class="payment-method-info">
+                                    <div class="payment-method-title">الدفع عبر كليك CliQ</div>
+                                    <div class="payment-method-desc">تحويل فوري وآمن عبر جميع البنوك الأردنية</div>
                                 </div>
                             </label>
                         </div>
@@ -866,8 +875,7 @@
                         <div style="text-align: center; margin-top: 15px;">
                             <a href="cart.html" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">
                                 <i class="fas fa-arrow-right"></i> العودة للسلة
-                            </a>
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -891,19 +899,17 @@
     <script>
         // ==================== متغيرات عامة ====================
         let cart = JSON.parse(localStorage.getItem('eco_cart') || '[]');
-        let selectedPayment = 'cliq';
+        let selectedPayment = 'cod';
 
         // ==================== تحميل الصفحة ====================
         window.addEventListener('DOMContentLoaded', function() {
-            // التحقق من وجود منتجات
             if (cart.length === 0) {
                 window.location.href = 'cart.html';
                 return;
             }
-
             loadOrderSummary();
             loadSavedInfo();
-            selectPayment('cliq');
+            selectPayment('cod');
         });
 
         // ==================== تحميل ملخص الطلب ====================
@@ -927,7 +933,6 @@
 
             orderItemsContainer.innerHTML = html;
 
-            // حساب الإجمالي
             const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
             const shipping = subtotal >= 50 ? 0 : 3;
             const total = subtotal + shipping;
@@ -942,23 +947,28 @@
         function loadSavedInfo() {
             document.getElementById('name').value = localStorage.getItem('eco_user_name') || '';
             document.getElementById('phone').value = localStorage.getItem('eco_user_phone') || '';
-            document.getElementById('address').value = localStorage.getItem('eco_user_address') || '';
+            const savedAddress = localStorage.getItem('eco_user_address') || '';
+            if (savedAddress) {
+                const parts = savedAddress.split(' - ');
+                if (parts.length >= 2) {
+                    document.getElementById('city').value = parts[0];
+                    document.getElementById('address').value = parts.slice(1).join(' - ');
+                } else {
+                    document.getElementById('address').value = savedAddress;
+                }
+            }
         }
 
         // ==================== اختيار طريقة الدفع ====================
         function selectPayment(method) {
             selectedPayment = method;
-            
-            // تحديث الراديو بتن
             document.getElementById('payment-' + method).checked = true;
             
-            // تحديث الكلاسات
             document.querySelectorAll('.payment-method').forEach(el => {
                 el.classList.remove('selected');
             });
             document.getElementById('payment-' + method).closest('.payment-method').classList.add('selected');
             
-            // إظهار/إخفاء تفاصيل كليك
             const cliqDetails = document.getElementById('cliqDetails');
             if (method === 'cliq') {
                 cliqDetails.classList.add('active');
@@ -971,9 +981,9 @@
         function copyAlias() {
             const alias = document.getElementById('cliqAlias').textContent;
             navigator.clipboard.writeText(alias).then(() => {
-                showNotification('✅ تم نسخ الاسم المستعار: ' + alias);
+                showNotification('✅ تم نسخ الاسم المستعار: ' + alias, 'success');
             }).catch(() => {
-                showNotification('❌ فشل النسخ، يرجى النسخ يدوياً');
+                showNotification('❌ فشل النسخ، يرجى النسخ يدوياً', 'error');
             });
         }
 
@@ -993,120 +1003,118 @@
                 reader.readAsDataURL(file);
             }
         }
-// ==================== إرسال الطلب ====================
-async function submitOrder(e) {
-    e.preventDefault();
 
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const city = document.getElementById('city').value.trim();
-    const address = document.getElementById('address').value.trim();
-    const notes = document.getElementById('notes').value.trim();
-    const screenshot = document.getElementById('screenshot').files[0];
+        // ==================== إرسال الطلب ====================
+        async function submitOrder(e) {
+            e.preventDefault();
 
-    // التحقق من رفع الصورة للدفع بكليك
-    if (selectedPayment === 'cliq' && !screenshot) {
-        showNotification('⚠️ يرجى رفع لقطة شاشة التحويل');
-        return;
-    }
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const notes = document.getElementById('notes').value.trim();
+            const screenshot = document.getElementById('screenshot').files[0];
 
-    // التحقق من السلة
-    if (cart.length === 0) {
-        showNotification('❌ السلة فارغة!');
-        return;
-    }
+            // التحقق من رفع الصورة للدفع بكليك
+            if (selectedPayment === 'cliq' && !screenshot) {
+                showNotification('⚠️ يرجى رفع لقطة شاشة التحويل', 'error');
+                return;
+            }
 
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إرسال الطلب...';
+            // التحقق من السلة
+            if (cart.length === 0) {
+                showNotification('❌ السلة فارغة!', 'error');
+                return;
+            }
 
-    try {
-        // حساب الإجمالي
-        const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
-        const shipping = subtotal >= 50 ? 0 : 3;
-        const total = subtotal + shipping;
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إرسال الطلب...';
 
-        // بناء بيانات الطلب
-        const fullAddress = `${city} - ${address}`;
-        
-        const orderData = {
-            user_id: 0, // أو معرف المستخدم إذا كان مسجلاً
-            customer_name: name,
-            customer_phone: phone,
-            customer_address: fullAddress,
-            shipping_address: fullAddress, // إضافة عنوان الشحن
-            notes: notes || '',
-            payment_method: selectedPayment,
-            status: 'pending',
-            items: cart.map(item => ({
-                product_id: parseInt(item.id),
-                quantity: parseInt(item.qty),
-                price: parseFloat(item.price)
-            })),
-            total_amount: parseFloat(total.toFixed(2))
-        };
+            try {
+                // حساب الإجمالي
+                const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
+                const shipping = subtotal >= 50 ? 0 : 3;
+                const total = subtotal + shipping;
 
-        console.log('بيانات الطلب المرسلة:', orderData);
+                // بناء بيانات الطلب
+                const fullAddress = `${city} - ${address}`;
+                
+                const orderData = {
+                    user_id: 0,
+                    customer_name: name,
+                    customer_phone: phone,
+                    customer_address: fullAddress,
+                    shipping_address: fullAddress,
+                    notes: notes || '',
+                    payment_method: selectedPayment,
+                    status: 'pending',
+                    items: cart.map(item => ({
+                        product_id: parseInt(item.id),
+                        quantity: parseInt(item.qty),
+                        price: parseFloat(item.price)
+                    })),
+                    total_amount: parseFloat(total.toFixed(2))
+                };
 
-        // إرسال الطلب
-        const response = await fetch('api/place-order.php', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(orderData)
-        });
+                console.log('📤 إرسال البيانات:', orderData);
 
-        console.log('حالة الاستجابة:', response.status);
+                // إرسال الطلب
+                const response = await fetch('api/place-order.php', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                });
 
-        // قراءة النص أولاً للتحقق
-        const responseText = await response.text();
-        console.log('نص الاستجابة:', responseText);
+                console.log('📥 حالة الاستجابة:', response.status);
 
-        // محاولة تحويل النص إلى JSON
-        let data;
-        try {
-            data = JSON.parse(responseText);
-        } catch (jsonError) {
-            console.error('خطأ في تحويل JSON:', jsonError);
-            throw new Error('استجابة غير صحيحة من الخادم: ' + responseText);
+                // قراءة النص أولاً
+                const responseText = await response.text();
+                console.log('📄 نص الاستجابة:', responseText);
+
+                // محاولة تحويل النص إلى JSON
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (jsonError) {
+                    console.error('❌ خطأ في تحويل JSON:', jsonError);
+                    throw new Error('استجابة غير صحيحة من الخادم');
+                }
+
+                console.log('✅ بيانات الاستجابة:', data);
+
+                // التحقق من النجاح
+                if (data.success) {
+                    // حفظ المعلومات في localStorage
+                    localStorage.setItem('eco_user_name', name);
+                    localStorage.setItem('eco_user_phone', phone);
+                    localStorage.setItem('eco_user_address', fullAddress);
+
+                    // عرض رسالة النجاح
+                    showSuccessModal(name, data.order_id || data.order_number, selectedPayment);
+                    
+                    // تفريغ السلة
+                    localStorage.removeItem('eco_cart');
+                    cart = [];
+                } else {
+                    throw new Error(data.message || 'فشل في حفظ الطلب');
+                }
+
+            } catch (error) {
+                console.error('❌ خطأ في إرسال الطلب:', error);
+                showNotification('❌ حدث خطأ: ' + error.message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد الطلب';
+            }
         }
 
-        console.log('بيانات الاستجابة:', data);
-
-        // التحقق من النجاح
-        if (data.success) {
-            // حفظ المعلومات في localStorage
-            localStorage.setItem('eco_user_name', name);
-            localStorage.setItem('eco_user_phone', phone);
-            localStorage.setItem('eco_user_address', fullAddress);
-
-            // عرض رسالة النجاح
-            showSuccessModal(name, data.order_id || data.order_number, selectedPayment);
-            
-            // تفريغ السلة
-            localStorage.removeItem('eco_cart');
-            cart = [];
-        } else {
-            // في حالة الفشل
-            throw new Error(data.message || 'فشل في حفظ الطلب');
-        }
-
-    } catch (error) {
-        console.error('خطأ في إرسال الطلب:', error);
-        showNotification('❌ حدث خطأ: ' + error.message);
-        
-        // عرض تفاصيل الخطأ للمطور
-        alert('خطأ: ' + error.message + '\n\nيرجى التحقق من Console للتفاصيل');
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد الطلب';
-    }
-}
         // ==================== عرض رسالة النجاح ====================
         function showSuccessModal(customerName, orderId, paymentMethod) {
-            document.getElementById('orderIdDisplay').textContent = '#' + orderId;
+            document.getElementById('orderIdDisplay').textContent = '#' + String(orderId).padStart(5, '0');
             
             let message = `شكراً لك <strong>${customerName}</strong>!<br><br>`;
             
@@ -1122,9 +1130,6 @@ async function submitOrder(e) {
 
             document.getElementById('successMessage').innerHTML = message;
             document.getElementById('successModal').classList.add('active');
-
-            // تفريغ السلة
-            localStorage.removeItem('eco_cart');
         }
 
         function closeSuccess() {
@@ -1133,11 +1138,14 @@ async function submitOrder(e) {
         }
 
         // ==================== الإشعارات ====================
-        function showNotification(text) {
+        function showNotification(text, type = 'success') {
             const el = document.getElementById('notification');
-            document.getElementById('notificationText').textContent = text;
-            el.classList.add('show');
-            setTimeout(() => el.classList.remove('show'), 3000);
+            const icon = type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-circle"></i>';
+            
+            el.className = 'notification show' + (type === 'error' ? ' error' : '');
+            el.innerHTML = icon + '<span id="notificationText">' + text + '</span>';
+            
+            setTimeout(() => el.classList.remove('show'), 4000);
         }
     </script>
 </body>
