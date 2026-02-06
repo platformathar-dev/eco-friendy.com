@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجل تسجيلات الدخول - Eco Friendly Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #fff3e6 0%, #ffe0b3 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(243, 146, 0, 0.15);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #f39200;
+        }
+
+        .header h1 {
+            color: #c77400;
+            font-size: 28px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f39200 0%, #e68500 100%);
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .stat-card.success {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+        }
+
+        .stat-card.failed {
+            background: linear-gradient(135deg, #f44336 0%, #e53935 100%);
+        }
+
+        .stat-card.blocked {
+            background: linear-gradient(135deg, #ff9800 0%, #fb8c00 100%);
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+            color: #757575;
+            font-weight: 600;
+        }
+
+        .filter-group select {
+            padding: 10px 15px;
+            border: 2px solid #ffe0b3;
+            border-radius: 10px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            background: #fffbf7;
+            cursor: pointer;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 15px;
+            border: 2px solid #ffe0b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #f39200 0%, #e68500 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ffe0b3;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #fffbf7;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-badge.failed {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-badge.blocked {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .device-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            border: 2px solid #f39200;
+            background: white;
+            color: #f39200;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #f39200;
+            color: white;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .pagination span {
+            color: #757575;
+            font-size: 14px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #757575;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #757575;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 سجل تسجيلات الدخول</h1>
+            <button onclick="window.history.back()" style="padding: 10px 20px; background: #f39200; color: white; border: none; border-radius: 10px; cursor: pointer; font-family: 'Tajawal', sans-serif; font-weight: 600;">
+                ← العودة
+            </button>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-container" id="statsContainer">
+            <div class="stat-card">
+                <h3>إجمالي المحاولات</h3>
+                <div class="number" id="totalLogins">0</div>
+            </div>
+            <div class="stat-card success">
+                <h3>تسجيلات ناجحة</h3>
+                <div class="number" id="successfulLogins">0</div>
+            </div>
+            <div class="stat-card failed">
+                <h3>محاولات فاشلة</h3>
+                <div class="number" id="failedLogins">0</div>
+            </div>
+            <div class="stat-card blocked">
+                <h3>محاولات محظورة</h3>
+                <div class="number" id="blockedLogins">0</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>الحالة:</label>
+                <select id="statusFilter" onchange="loadLoginHistory()">
+                    <option value="">الكل</option>
+                    <option value="success">ناجح</option>
+                    <option value="failed">فاشل</option>
+                    <option value="blocked">محظور</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>عدد السجلات:</label>
+                <select id="limitFilter" onchange="loadLoginHistory()">
+                    <option value="25">25</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>المستخدم</th>
+                        <th>البريد/اسم المستخدم</th>
+                        <th>الحالة</th>
+                        <th>الجهاز</th>
+                        <th>المتصفح</th>
+                        <th>نظام التشغيل</th>
+                        <th>عنوان IP</th>
+                        <th>التاريخ</th>
+                        <th>وقت الخروج</th>
+                    </tr>
+                </thead>
+                <tbody id="loginHistoryBody">
+                    <tr>
+                        <td colspan="10" class="loading">جارِ التحميل...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <button id="prevBtn" onclick="previousPage()" disabled>السابق</button>
+            <span id="pageInfo">صفحة 1</span>
+            <button id="nextBtn" onclick="nextPage()">التالي</button>
+        </div>
+    </div>
+
+    <script>
+        let currentOffset = 0;
+        let currentLimit = 50;
+        let hasMore = false;
+
+        // تحميل سجل تسجيلات الدخول
+        async function loadLoginHistory() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const limitFilter = parseInt(document.getElementById('limitFilter').value);
+            currentLimit = limitFilter;
+
+            try {
+                let url = `/api/get_login_history.php?limit=${currentLimit}&offset=${currentOffset}`;
+                if (statusFilter) {
+                    url += `&status=${statusFilter}`;
+                }
+
+                const response = await fetch(url);
+                const result = await response.json();
+
+                if (result.success) {
+                    displayLoginHistory(result.data);
+                    updateStatistics(result.statistics);
+                    updatePagination(result.pagination);
+                } else {
+                    document.getElementById('loginHistoryBody').innerHTML = 
+                        `<tr><td colspan="10" class="no-data">${result.message}</td></tr>`;
+                }
+            } catch (error) {
+                console.error('خطأ:', error);
+                document.getElementById('loginHistoryBody').innerHTML = 
+                    `<tr><td colspan="10" class="no-data">حدث خطأ في تحميل البيانات</td></tr>`;
+            }
+        }
+
+        // عرض البيانات في الجدول
+        function displayLoginHistory(data) {
+            const tbody = document.getElementById('loginHistoryBody');
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" class="no-data">لا توجد بيانات</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map((item, index) => {
+                const statusClass = item.status === 'success' ? 'success' : 
+                                  item.status === 'failed' ? 'failed' : 'blocked';
+                const statusText = item.status === 'success' ? 'ناجح' : 
+                                 item.status === 'failed' ? 'فاشل' : 'محظور';
+
+                const loginDate = new Date(item.created_at).toLocaleString('ar-JO');
+                const logoutDate = item.logout_at ? new Date(item.logout_at).toLocaleString('ar-JO') : '-';
+
+                const userName = item.fullname || item.username || '-';
+
+                return `
+                    <tr>
+                        <td>${currentOffset + index + 1}</td>
+                        <td>${userName}</td>
+                        <td>${item.identifier}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td><span class="device-icon">${item.device_type || '-'}</span></td>
+                        <td>${item.browser || '-'}</td>
+                        <td>${item.operating_system || '-'}</td>
+                        <td>${item.ip_address || '-'}</td>
+                        <td>${loginDate}</td>
+                        <td>${logoutDate}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // تحديث الإحصائيات
+        function updateStatistics(stats) {
+            document.getElementById('totalLogins').textContent = stats.total_logins;
+            document.getElementById('successfulLogins').textContent = stats.successful_logins;
+            document.getElementById('failedLogins').textContent = stats.failed_logins;
+            document.getElementById('blockedLogins').textContent = stats.blocked_logins;
+        }
+
+        // تحديث أزرار الصفحات
+        function updatePagination(pagination) {
+            hasMore = pagination.has_more;
+            const currentPage = Math.floor(currentOffset / currentLimit) + 1;
+            
+            document.getElementById('pageInfo').textContent = `صفحة ${currentPage}`;
+            document.getElementById('prevBtn').disabled = currentOffset === 0;
+            document.getElementById('nextBtn').disabled = !hasMore;
+        }
+
+        // الصفحة السابقة
+        function previousPage() {
+            if (currentOffset > 0) {
+                currentOffset -= currentLimit;
+                loadLoginHistory();
+            }
+        }
+
+        // الصفحة التالية
+        function nextPage() {
+            if (hasMore) {
+                currentOffset += currentLimit;
+                loadLoginHistory();
+            }
+        }
+
+        // تحميل البيانات عند فتح الصفحة
+        window.onload = function() {
+            loadLoginHistory();
+        };
+    </script>
+</body>
+</html>
