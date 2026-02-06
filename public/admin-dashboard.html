@@ -1655,7 +1655,7 @@
             if (order.items && order.items.length > 0) {
                 itemsHtml = `
                     <div class="order-items-list">
-                        <h4 style="color: #c77400; margin-bottom: 10px;">المنتجات:</h4>
+                        <h4 style="color: #c77400; margin-bottom: 10px;">📦 المنتجات:</h4>
                         ${order.items.map(item => `
                             <div class="order-item-row">
                                 <span>${item.product_name || 'منتج محذوف'} × ${item.quantity}</span>
@@ -1666,15 +1666,53 @@
                 `;
             }
 
+            // معلومات العميل
+            let customerInfoHtml = '';
+            if (order.customer_name || order.customer_phone || order.customer_address) {
+                customerInfoHtml = `
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-top: 15px; margin-bottom: 15px;">
+                        <h4 style="color: #2e7d32; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-user" style="font-size: 18px;"></i> معلومات العميل
+                        </h4>
+                        ${order.customer_name ? `
+                            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-user-circle" style="color: #388e3c; width: 20px;"></i>
+                                <span style="color: #1b5e20; font-weight: 600;">الاسم:</span>
+                                <span style="color: #2e7d32;">${order.customer_name}</span>
+                            </div>
+                        ` : ''}
+                        ${order.customer_phone ? `
+                            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-phone" style="color: #388e3c; width: 20px;"></i>
+                                <span style="color: #1b5e20; font-weight: 600;">الهاتف:</span>
+                                <a href="tel:${order.customer_phone}" style="color: #2e7d32; text-decoration: none; direction: ltr; display: inline-block;">${order.customer_phone}</a>
+                            </div>
+                        ` : ''}
+                        ${order.customer_email ? `
+                            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-envelope" style="color: #388e3c; width: 20px;"></i>
+                                <span style="color: #1b5e20; font-weight: 600;">البريد:</span>
+                                <a href="mailto:${order.customer_email}" style="color: #2e7d32; text-decoration: none;">${order.customer_email}</a>
+                            </div>
+                        ` : ''}
+                        ${order.customer_address ? `
+                            <div style="margin-bottom: 0; display: flex; align-items: start; gap: 8px;">
+                                <i class="fas fa-map-marker-alt" style="color: #388e3c; width: 20px; margin-top: 3px;"></i>
+                                <div>
+                                    <span style="color: #1b5e20; font-weight: 600;">العنوان:</span>
+                                    <p style="color: #2e7d32; margin-top: 4px; line-height: 1.6;">${order.customer_address}</p>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+
             document.getElementById('order-details-content').innerHTML = `
                 <div class="order-summary">
                     <div class="order-summary-item">
                         <span>رقم الطلب:</span>
                         <strong>#${order.id}</strong>
-                    </div>
-                    <div class="order-summary-item">
-                        <span>العميل:</span>
-                        <strong>${order.customer_name || '-'}</strong>
                     </div>
                     <div class="order-summary-item">
                         <span>التاريخ:</span>
@@ -1693,20 +1731,25 @@
                         <strong>${parseFloat(order.total_amount).toFixed(2)} د.أ</strong>
                     </div>
                 </div>
+                ${customerInfoHtml}
                 ${itemsHtml}
                 ${order.notes ? `
-                    <div style="padding: 15px; background: #fffbf7; border-radius: 10px; margin-top: 15px;">
-                        <strong style="color: #c77400;">ملاحظات:</strong>
-                        <p style="margin-top: 8px; color: #757575;">${order.notes}</p>
+                    <div style="padding: 15px; background: #fff3e6; border-radius: 10px; margin-top: 15px; border-right: 4px solid #f39200;">
+                        <strong style="color: #c77400; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-sticky-note"></i> ملاحظات الطلب:
+                        </strong>
+                        <p style="margin-top: 8px; color: #757575; line-height: 1.6;">${order.notes}</p>
                     </div>
                 ` : ''}
                 <div style="margin-top: 20px;">
-                    <label style="font-weight: 600; color: #f39200; margin-bottom: 8px; display: block;">تغيير حالة الطلب:</label>
+                    <label style="font-weight: 600; color: #f39200; margin-bottom: 8px; display: block;">
+                        <i class="fas fa-edit"></i> تغيير حالة الطلب:
+                    </label>
                     <select class="order-status-select" onchange="updateOrderStatus(${order.id}, this.value)">
-                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>قيد الانتظار</option>
-                        <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>قيد التنفيذ</option>
-                        <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>مكتمل</option>
-                        <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>⏳ قيد الانتظار</option>
+                        <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>🔄 قيد التنفيذ</option>
+                        <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>✅ مكتمل</option>
+                        <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>❌ ملغي</option>
                     </select>
                 </div>
             `;
@@ -1762,6 +1805,9 @@
                 return {
                     'رقم الطلب': order.id,
                     'اسم العميل': order.customer_name || '-',
+                    'رقم الهاتف': order.customer_phone || '-',
+                    'البريد الإلكتروني': order.customer_email || '-',
+                    'العنوان': order.customer_address || '-',
                     'التاريخ': order.created_at,
                     'عدد المنتجات': order.items_count,
                     'المبلغ الإجمالي (د.أ)': parseFloat(order.total_amount).toFixed(2),
@@ -1775,13 +1821,16 @@
             
             // تنسيق العرض
             const columnWidths = [
-                { wch: 12 }, // رقم الطلب
-                { wch: 25 }, // اسم العميل
-                { wch: 20 }, // التاريخ
-                { wch: 15 }, // عدد المنتجات
-                { wch: 20 }, // المبلغ
-                { wch: 15 }, // الحالة
-                { wch: 30 }  // الملاحظات
+                { wch: 12 },  // رقم الطلب
+                { wch: 25 },  // اسم العميل
+                { wch: 15 },  // رقم الهاتف
+                { wch: 30 },  // البريد الإلكتروني
+                { wch: 40 },  // العنوان
+                { wch: 20 },  // التاريخ
+                { wch: 15 },  // عدد المنتجات
+                { wch: 20 },  // المبلغ
+                { wch: 15 },  // الحالة
+                { wch: 35 }   // الملاحظات
             ];
             worksheet['!cols'] = columnWidths;
 
@@ -1791,7 +1840,7 @@
 
             // تنزيل الملف
             const today = new Date().toISOString().split('T')[0];
-            const filename = `طلبات-${today}.xlsx`;
+            const filename = `طلبات-المتجر-${today}.xlsx`;
             XLSX.writeFile(workbook, filename);
 
             alert('✅ تم تنزيل ملف Excel بنجاح');
