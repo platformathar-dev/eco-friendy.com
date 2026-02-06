@@ -134,27 +134,6 @@ try {
         throw new Exception('يجب إضافة منتج واحد على الأقل');
     }
     
-    // تسجيل نشاط الطلب
-    $activitySql = "INSERT INTO order_activity_log (
-                        order_id, 
-                        user_id, 
-                        action, 
-                        details
-                    ) VALUES (?, ?, ?, ?)";
-    
-    $activityStmt = $pdo->prepare($activitySql);
-    $activityStmt->execute([
-        $orderId,
-        (int)$data['user_id'],
-        'order_created',
-        json_encode([
-            'payment_method' => $data['payment_method'],
-            'total_amount' => $data['total_amount'],
-            'items_count' => count($data['items']),
-            'created_by' => $_SESSION['user_fullname'] ?? 'مستخدم'
-        ])
-    ]);
-    
     // تأكيد المعاملة
     $pdo->commit();
     
