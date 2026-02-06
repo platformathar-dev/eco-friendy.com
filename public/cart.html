@@ -832,7 +832,7 @@
                         <span>الإجمالي:</span>
                         <span>${total.toFixed(2)} د.أ</span>
                     </div>
-                    <button class="checkout-btn" onclick="openCheckout()">
+                    <button class="checkout-btn" onclick="goToCheckout()">
                         <i class="fas fa-credit-card"></i>
                         إتمام الطلب
                     </button>
@@ -895,6 +895,11 @@
         }
 
         // ==================== فتح نافذة الدفع ====================
+        function goToCheckout() {
+            // التوجيه إلى صفحة الدفع
+            window.location.href = 'checkout.html';
+        }
+
         function openCheckout() {
             const subtotal = getCartTotal();
             const shipping = subtotal >= 50 ? 0 : 3;
