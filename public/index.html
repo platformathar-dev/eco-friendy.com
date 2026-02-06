@@ -838,7 +838,8 @@
             <li><a href="wishlist.html"><i class="fas fa-heart"></i> المفضلة</a></li>
             <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
             <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-            <!-- سيتم إضافة عناصر تسجيل الدخول/حسابي ديناميكياً عبر auth-manager.js -->
+            <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
+            <li><a href="register.html"><i class="fas fa-user-plus"></i> إنشاء حساب</a></li>
         </ul>
     </div>
 
@@ -862,7 +863,6 @@
                     <i class="fas fa-heart"></i>
                     <span class="header-badge" id="wishlist-count">0</span>
                 </a>
-                <!-- أيقونة المستخدم ستُضاف هنا ديناميكياً -->
                 <button class="mobile-menu-btn" onclick="openMobileMenu()"><i class="fas fa-bars"></i></button>
             </div>
         </div>
@@ -1040,9 +1040,6 @@
         </div>
     </footer>
 
-    <!-- Auth Manager Script -->
-    <script src="auth-manager.js"></script>
-
     <script>
         // ==================== متغيرات ====================
         let allProductsData = [];
@@ -1058,118 +1055,22 @@
 
         async function loadProducts() {
             try {
-                // محاولة تحميل من API أولاً
                 const response = await fetch('/api/get-products.php');
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    if (data.success && data.products) {
-                        allProductsData = data.products.filter(p => p.status === 'active');
-                        displayLatestProducts();
-                        displayAllProducts();
-                        return;
-                    }
+                const data = await response.json();
+
+                if (data.success) {
+                    allProductsData = data.products.filter(p => p.status === 'active');
+                    displayLatestProducts();
+                    displayAllProducts();
+                } else {
+                    showError('latestProducts');
+                    showError('allProducts');
                 }
-                
-                // في حال فشل الـ API، استخدم بيانات تجريبية
-                console.log('تحميل بيانات تجريبية...');
-                loadDemoProducts();
-                
             } catch (error) {
-                console.error('خطأ في التحميل:', error);
-                // استخدم بيانات تجريبية عند حدوث خطأ
-                loadDemoProducts();
+                console.error('خطأ:', error);
+                showError('latestProducts');
+                showError('allProducts');
             }
-        }
-
-        // بيانات تجريبية للمنتجات (في حال عدم توفر API)
-        function loadDemoProducts() {
-            allProductsData = [
-                {
-                    id: 1,
-                    name: 'طعام كلاب بريميوم - 5 كجم',
-                    category: 'كلاب - طعام',
-                    price: 25.99,
-                    stock: 15,
-                    status: 'active',
-                    image: 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=400',
-                    description: 'طعام كامل ومتوازن للكلاب البالغة من جميع الأحجام'
-                },
-                {
-                    id: 2,
-                    name: 'طعام قطط - دجاج وأرز 3 كجم',
-                    category: 'قطط - طعام',
-                    price: 18.50,
-                    stock: 20,
-                    status: 'active',
-                    image: 'https://images.unsplash.com/photo-1573865526739-10c1e7d9b75c?w=400',
-                    description: 'طعام متكامل للقطط البالغة بنكهة الدجاج والأرز'
-                },
-                {
-                    id: 3,
-                    name: 'طوق كلاب جلد طبيعي',
-                    category: 'كلاب - إكسسوارات',
-                    price: 12.00,
-                    stock: 30,
-                    status: 'active',
-                    image: 'https://images.unsplash.com/photo-1535294435445-d7249524ef2e?w=400',
-                    description: 'طوق من الجلد الطبيعي عالي الجودة، قابل للتعديل'
-                },
-                {
-                    id: 4,
-                    name: 'شامبو قطط عضوي 500مل',
-                    category: 'قطط - رعاية',
-                    price: 8.75,
-                    stock: 25,
-                    status: 'active',
-                    image: 'https://images.unsplash.com/photo-1548681528-6a5c45b66b42?w=400',
-                    description: 'شامبو طبيعي وآمن للقطط، برائحة منعشة'
-                },
-                {
-                    id: 5,
-                    name: 'لعبة كلاب تفاعلية',
-                    category: 'كلاب - إكسسوارات',
-                    price: 15.99,
-                    stock: 18,
-                    status: 'active',
-                    image: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400',
-                    description: 'لعبة تفاعلية ذكية لتسلية الكلاب وتنمية ذكائها'
-                },
-                {
-                    id: 6,
-                    name: 'رمل قطط معطر 10 كجم',
-                    category: 'قطط - رعاية',
-                    price: 14.25,
-                    stock: 12,
-                    status: 'active',
-                    image: 'https://images.unsplash.com/photo-1575859431774-2e57ed632664?w=400',
-                    description: 'رمل قطط متكتل ومعطر، سهل التنظيف'
-                },
-                {
-                    id: 7,
-                    name: 'حامل طعام مزدوج للكلاب',
-                    category: 'كلاب - إكسسوارات',
-                    price: 22.50,
-                    stock: 10,
-                    status: 'active',
-                    image: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400',
-                    description: 'حامل طعام وماء مزدوج من الستانلس ستيل'
-                },
-                {
-                    id: 8,
-                    name: 'فيتامينات قطط متعددة',
-                    category: 'قطط - رعاية',
-                    price: 11.99,
-                    stock: 0,
-                    status: 'active',
-                    image: 'https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=400',
-                    description: 'مكمل غذائي متكامل لصحة القطط'
-                }
-            ];
-
-            displayLatestProducts();
-            displayAllProducts();
         }
 
         function showError(containerId) {
@@ -1431,17 +1332,13 @@
 
                 if (data.success) {
                     closeCheckout();
-                    showSuccessModal(name, data.order_id || Math.floor(Math.random() * 10000));
+                    showSuccessModal(name, data.order_id);
                 } else {
-                    // في حال فشل الـ API، نظهر رسالة نجاح وهمية
-                    closeCheckout();
-                    showSuccessModal(name, Math.floor(Math.random() * 10000));
+                    showNotification('❌ ' + (data.message || 'حدث خطأ'));
                 }
             } catch (error) {
                 console.error('خطأ:', error);
-                // في حال حدوث خطأ، نظهر رسالة نجاح وهمية
-                closeCheckout();
-                showSuccessModal(name, Math.floor(Math.random() * 10000));
+                showNotification('❌ حدث خطأ في إرسال الطلب');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد الطلب';
