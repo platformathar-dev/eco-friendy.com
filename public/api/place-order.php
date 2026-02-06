@@ -1,14 +1,23 @@
 <?php
-// api/place-order.php - إصدار محدث يدعم المستخدمين المسجلين والزوار
+// ملف API لإضافة طلب جديد
+// api/place-order.php
+
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// معالجة طلبات OPTIONS
+// معالجة طلبات OPTIONS (لـ CORS)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
+}
+
+require_once '../config.php';
+
+// بدء الجلسة
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
 // التأكد من أن الطلب POST
@@ -21,23 +30,37 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-require_once '../config.php';
-
 try {
+    // التحقق من تسجيل الدخول
+    if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+        http_response_code(401);
+        echo json_encode([
+            'success' => false,
+            'message' => 'يجب تسجيل الدخول أولاً'
+        ], JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+    
     // قراءة البيانات من الطلب
     $input = file_get_contents('php://input');
     $data = json_decode($input, true);
     
+    // التحقق من وجود البيانات
     if (!$data) {
         throw new Exception('لم يتم استلام بيانات صحيحة');
     }
     
     // التحقق من الحقول المطلوبة
-    $requiredFields = ['customer_name', 'customer_phone', 'customer_address', 'payment_method', 'items', 'total_amount'];
+    $requiredFields = ['user_id', 'customer_name', 'customer_phone', 'customer_address', 'payment_method', 'items', 'total_amount'];
     foreach ($requiredFields as $field) {
         if (!isset($data[$field]) || empty($data[$field])) {
-            throw new Exception("الحقل المطلوب مفقود: {$field}");
+            throw new Exception("الحقل المطلوب مفقود: $field");
         }
+    }
+    
+    // التحقق من أن المستخدم يطلب لنفسه
+    if ((int)$data['user_id'] !== (int)$_SESSION['user_id']) {
+        throw new Exception('غير مصرح لك بإنشاء طلب لمستخدم آخر');
     }
     
     // الاتصال بقاعدة البيانات
@@ -49,83 +72,100 @@ try {
     // بدء المعاملة
     $pdo->beginTransaction();
     
-    // معالجة user_id - دعم كلاً من المستخدمين المسجلين والزوار
-    $userId = null;
-    if (isset($data['user_id']) && $data['user_id'] > 0) {
-        // مستخدم مسجل - التحقق من وجوده
-        $checkUser = $pdo->prepare("SELECT id FROM users WHERE id = ?");
-        $checkUser->execute([$data['user_id']]);
-        if ($checkUser->fetch()) {
-            $userId = $data['user_id'];
-        }
-    }
-    // إذا لم يكن هناك user_id صالح، سيبقى NULL للزوار
-    
     // إنشاء رقم طلب فريد
-    $orderNumber = 'ORD-' . date('Ymd') . '-' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+    $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6));
     
-    // إدخال الطلب في قاعدة البيانات
+    // إدراج الطلب الرئيسي
     $sql = "INSERT INTO orders (
-        order_number,
-        user_id,
-        customer_name,
-        customer_phone,
-        customer_address,
-        shipping_address,
-        notes,
-        payment_method,
-        status,
-        total_amount,
-        created_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+                user_id, 
+                order_number, 
+                customer_name, 
+                customer_phone, 
+                customer_email,
+                customer_address, 
+                shipping_address,
+                notes,
+                payment_method, 
+                status, 
+                total_amount,
+                created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
     
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
+        (int)$data['user_id'],
         $orderNumber,
-        $userId, // سيكون NULL للزوار
         $data['customer_name'],
         $data['customer_phone'],
+        $_SESSION['user_email'] ?? '', // البريد من الجلسة
         $data['customer_address'],
         $data['shipping_address'] ?? $data['customer_address'],
         $data['notes'] ?? '',
         $data['payment_method'],
         $data['status'] ?? 'pending',
-        $data['total_amount']
+        (float)$data['total_amount']
     ]);
     
-    // الحصول على معرف الطلب
     $orderId = $pdo->lastInsertId();
     
-    // إدخال عناصر الطلب
-    if (!isset($data['items']) || !is_array($data['items']) || count($data['items']) === 0) {
-        throw new Exception('لا توجد عناصر في الطلب');
-    }
-    
-    $itemSql = "INSERT INTO order_items (
-        order_id,
-        product_id,
-        quantity,
-        price,
-        subtotal
-    ) VALUES (?, ?, ?, ?, ?)";
-    
-    $itemStmt = $pdo->prepare($itemSql);
-    
-    foreach ($data['items'] as $item) {
-        if (!isset($item['product_id']) || !isset($item['quantity']) || !isset($item['price'])) {
-            throw new Exception('بيانات العنصر غير كاملة');
+    // إدراج منتجات الطلب
+    if (!empty($data['items']) && is_array($data['items'])) {
+        $itemSql = "INSERT INTO order_items (
+                        order_id, 
+                        product_id, 
+                        product_name,
+                        quantity, 
+                        price, 
+                        total
+                    ) VALUES (?, ?, ?, ?, ?, ?)";
+        
+        $itemStmt = $pdo->prepare($itemSql);
+        
+        foreach ($data['items'] as $item) {
+            // جلب اسم المنتج من قاعدة البيانات
+            $productSql = "SELECT name FROM products WHERE id = ?";
+            $productStmt = $pdo->prepare($productSql);
+            $productStmt->execute([(int)$item['product_id']]);
+            $product = $productStmt->fetch();
+            
+            $productName = $product ? $product['name'] : 'منتج غير معروف';
+            $quantity = (int)$item['quantity'];
+            $price = (float)$item['price'];
+            $total = $quantity * $price;
+            
+            $itemStmt->execute([
+                $orderId,
+                (int)$item['product_id'],
+                $productName,
+                $quantity,
+                $price,
+                $total
+            ]);
         }
-        
-        $subtotal = $item['quantity'] * $item['price'];
-        
-        $itemStmt->execute([
-            $orderId,
-            $item['product_id'],
-            $item['quantity'],
-            $item['price'],
-            $subtotal
-        ]);
+    } else {
+        throw new Exception('يجب إضافة منتج واحد على الأقل');
     }
+    
+    // تسجيل نشاط الطلب
+    $activitySql = "INSERT INTO order_activity_log (
+                        order_id, 
+                        user_id, 
+                        action, 
+                        details
+                    ) VALUES (?, ?, ?, ?)";
+    
+    $activityStmt = $pdo->prepare($activitySql);
+    $activityStmt->execute([
+        $orderId,
+        (int)$data['user_id'],
+        'order_created',
+        json_encode([
+            'payment_method' => $data['payment_method'],
+            'total_amount' => $data['total_amount'],
+            'items_count' => count($data['items']),
+            'created_by' => $_SESSION['user_fullname'] ?? 'مستخدم'
+        ])
+    ]);
     
     // تأكيد المعاملة
     $pdo->commit();
@@ -137,7 +177,8 @@ try {
         'message' => 'تم إنشاء الطلب بنجاح',
         'order_id' => $orderId,
         'order_number' => $orderNumber,
-        'user_type' => $userId ? 'registered' : 'guest'
+        'payment_method' => $data['payment_method'],
+        'total_amount' => $data['total_amount']
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
@@ -149,8 +190,7 @@ try {
     http_response_code(400);
     echo json_encode([
         'success' => false,
-        'message' => $e->getMessage(),
-        'error_details' => $e->getTrace()
+        'message' => $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
 }
 ?>
