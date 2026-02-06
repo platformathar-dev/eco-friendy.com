@@ -444,40 +444,29 @@
             font-size: 12px;
         }
 
-        .upload-section {
-            background: white;
+        .contact-info {
+            background: var(--light-orange);
             padding: 15px;
             border-radius: 10px;
             margin-top: 15px;
-            border: 2px dashed var(--info-color);
         }
 
-        .upload-label {
-            display: block;
-            text-align: center;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
         }
 
-        .upload-label:hover {
-            background: #f0f9ff;
+        .contact-item i {
+            color: var(--primary-color);
+            width: 25px;
         }
 
-        .upload-icon {
-            font-size: 48px;
-            color: var(--info-color);
-            margin-bottom: 10px;
-        }
-
-        #screenshot {
-            display: none;
-        }
-
-        .preview-image {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-top: 10px;
+        .contact-item a {
+            color: var(--dark-orange);
+            text-decoration: none;
+            font-weight: 600;
         }
 
         .checkout-grid {
@@ -598,31 +587,6 @@
             background: #fee2e2;
             color: #991b1b;
             border: 2px solid var(--error-color);
-        }
-
-        .contact-info {
-            background: var(--light-orange);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-        }
-
-        .contact-item i {
-            color: var(--primary-color);
-            width: 25px;
-        }
-
-        .contact-item a {
-            color: var(--dark-orange);
-            text-decoration: none;
-            font-weight: 600;
         }
 
         .notification {
@@ -896,7 +860,7 @@
                             <div class="cliq-details" id="cliqDetails">
                                 <div class="alert alert-info">
                                     <i class="fas fa-info-circle"></i>
-                                    <span>يرجى إتمام التحويل قبل تأكيد الطلب</span>
+                                    <span>يرجى إتمام التحويل ثم تأكيد الطلب</span>
                                 </div>
 
                                 <div class="cliq-bank-info">
@@ -925,19 +889,8 @@
                                         <li>اختر خدمة كليك CliQ</li>
                                         <li>أدخل الاسم المستعار: <strong>ABDSULEMAN</strong></li>
                                         <li>أدخل المبلغ المطلوب: <strong id="cliqAmount">0.00 د.أ</strong></li>
-                                        <li>أكد العملية</li>
-                                        <li>التقط لقطة شاشة للتحويل</li>
+                                        <li>أكد العملية وأرسل لقطة شاشة التحويل عبر الواتساب</li>
                                     </ol>
-                                </div>
-
-                                <div class="upload-section">
-                                    <label for="screenshot" class="upload-label">
-                                        <div class="upload-icon">📸</div>
-                                        <div style="font-weight: 700; margin-bottom: 5px;">رفع لقطة شاشة التحويل</div>
-                                        <div style="font-size: 13px; color: var(--text-light);">انقر لاختيار الصورة</div>
-                                    </label>
-                                    <input type="file" id="screenshot" accept="image/*" onchange="previewScreenshot(event)">
-                                    <div id="screenshotPreview"></div>
                                 </div>
 
                                 <div class="alert alert-warning">
@@ -947,7 +900,7 @@
 
                                 <div class="contact-info">
                                     <div style="font-weight: 700; margin-bottom: 10px; color: var(--dark-orange);">
-                                        📝 للاستفسار أو إرسال إثبات الدفع:
+                                        📝 لإرسال إثبات الدفع:
                                     </div>
                                     <div class="contact-item">
                                         <i class="fab fa-whatsapp"></i>
@@ -1154,23 +1107,6 @@
             });
         }
 
-        // ==================== معاينة لقطة الشاشة ====================
-        function previewScreenshot(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('screenshotPreview').innerHTML = `
-                        <img src="${e.target.result}" class="preview-image" alt="Screenshot">
-                        <div style="text-align: center; margin-top: 10px; color: var(--success-color);">
-                            <i class="fas fa-check-circle"></i> تم رفع الصورة بنجاح
-                        </div>
-                    `;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
         // ==================== إرسال الطلب ====================
         async function submitOrder(e) {
             e.preventDefault();
@@ -1184,13 +1120,6 @@
             const city = document.getElementById('city').value.trim();
             const address = document.getElementById('address').value.trim();
             const notes = document.getElementById('notes').value.trim();
-            const screenshot = document.getElementById('screenshot').files[0];
-
-            // التحقق من رفع الصورة للدفع بكليك
-            if (selectedPayment === 'cliq' && !screenshot) {
-                showNotification('⚠️ يرجى رفع لقطة شاشة التحويل', 'error');
-                return;
-            }
 
             // التحقق من السلة
             if (cart.length === 0) {
@@ -1212,7 +1141,7 @@
                 const fullAddress = `${city} - ${address}`;
                 
                 const orderData = {
-                    user_id: currentUser.id, // استخدام معرف المستخدم المسجل
+                    user_id: currentUser.id,
                     customer_name: currentUser.fullname,
                     customer_phone: phone,
                     customer_address: fullAddress,
