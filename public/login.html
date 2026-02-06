@@ -374,9 +374,9 @@
                         if (data.redirect) {
                             window.location.href = data.redirect;
                         } else if (data.user.role === 'admin') {
-                            window.location.href = '/dashboard.html';
+                            window.location.href = '/admin-dashboard.html';
                         } else {
-                            window.location.href = '/index.html';
+                            window.location.href = '/user-dashboard.html';
                         }
                     } else {
                         alert('❌ ' + (data.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة'));
