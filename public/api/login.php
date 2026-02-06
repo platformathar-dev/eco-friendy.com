@@ -103,7 +103,7 @@ try {
     if ($user['role'] === 'admin') {
         $redirectUrl = '/admin-dashboard.html';
     } else {
-        $redirectUrl = '/dashboard.html';
+        $redirectUrl = '/user-dashboard.html';
     }
     
     // إرجاع استجابة نجاح مع صفحة التوجيه
