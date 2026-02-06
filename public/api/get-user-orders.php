@@ -33,7 +33,7 @@ try {
     }
     
     $userId = $_SESSION['user_id'];
-    $userRole = $_SESSION['user_role'];
+    $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'user';
     
     // المعاملات من الطلب
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 50;
@@ -52,7 +52,6 @@ try {
                 o.shipping_address,
                 o.notes,
                 o.payment_method,
-                o.payment_status,
                 o.status,
                 o.total_amount,
                 o.created_at,
@@ -97,10 +96,9 @@ try {
         $itemsSql = "SELECT 
                         oi.id,
                         oi.product_id,
-                        oi.product_name,
                         oi.quantity,
                         oi.price,
-                        oi.total,
+                        p.name as product_name,
                         p.image,
                         p.description
                      FROM order_items oi
@@ -110,6 +108,10 @@ try {
         $itemsStmt = $pdo->prepare($itemsSql);
         $itemsStmt->execute([$order['id']]);
         $order['items'] = $itemsStmt->fetchAll();
+        $order['items_count'] = count($order['items']);
+        
+        // تنسيق التاريخ
+        $order['created_at'] = date('Y-m-d H:i', strtotime($order['created_at']));
     }
     
     // حساب إجمالي الطلبات
@@ -130,45 +132,12 @@ try {
     $countStmt->execute($countParams);
     $totalRecords = $countStmt->fetch()['total'];
     
-    // إحصائيات
-    $statsSql = "SELECT 
-                    COUNT(*) as total_orders,
-                    SUM(total_amount) as total_revenue,
-                    SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_orders,
-                    SUM(CASE WHEN status = 'confirmed' THEN 1 ELSE 0 END) as confirmed_orders,
-                    SUM(CASE WHEN status = 'delivered' THEN 1 ELSE 0 END) as delivered_orders,
-                    SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_orders
-                 FROM orders WHERE 1=1";
-    
-    $statsParams = [];
-    if ($userRole !== 'admin') {
-        $statsSql .= " AND user_id = ?";
-        $statsParams[] = $userId;
-    }
-    
-    $statsStmt = $pdo->prepare($statsSql);
-    $statsStmt->execute($statsParams);
-    $stats = $statsStmt->fetch();
-    
-    // إرجاع النتائج
+    // إرجاع النتائج بتنسيق متوافق مع dashboard.html
     http_response_code(200);
     echo json_encode([
         'success' => true,
-        'data' => $orders,
-        'pagination' => [
-            'total' => (int)$totalRecords,
-            'limit' => $limit,
-            'offset' => $offset,
-            'has_more' => ($offset + $limit) < $totalRecords
-        ],
-        'statistics' => [
-            'total_orders' => (int)$stats['total_orders'],
-            'total_revenue' => (float)$stats['total_revenue'],
-            'pending_orders' => (int)$stats['pending_orders'],
-            'confirmed_orders' => (int)$stats['confirmed_orders'],
-            'delivered_orders' => (int)$stats['delivered_orders'],
-            'cancelled_orders' => (int)$stats['cancelled_orders']
-        ]
+        'orders' => $orders,
+        'total' => (int)$totalRecords
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
