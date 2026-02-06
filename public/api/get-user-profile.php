@@ -1,10 +1,12 @@
 <?php
-header('Content-Type: application/json');
+// api/get-user-profile.php
+// جلب معلومات المستخدم
+
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// التعامل مع طلبات OPTIONS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
@@ -14,21 +16,27 @@ session_start();
 
 // التحقق من تسجيل الدخول
 if (!isset($_SESSION['user_id'])) {
+    http_response_code(401);
     echo json_encode([
         'success' => false,
         'message' => 'يجب تسجيل الدخول أولاً'
-    ]);
+    ], JSON_UNESCAPED_UNICODE);
     exit();
 }
 
+require_once '../config.php';
+
 try {
-    // الاتصال بقاعدة البيانات
-    require_once 'config.php';
-    
+    $pdo = getDBConnection();
+
+    if (!$pdo) {
+        throw new Exception('فشل الاتصال بقاعدة البيانات');
+    }
+
     $userId = $_SESSION['user_id'];
-    
+
     // جلب معلومات المستخدم
-    $stmt = $conn->prepare("
+    $stmt = $pdo->prepare("
         SELECT 
             id,
             fullname,
@@ -43,48 +51,39 @@ try {
         FROM users 
         WHERE id = ?
     ");
-    
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows === 0) {
+
+    $stmt->execute([$userId]);
+    $user = $stmt->fetch();
+
+    if (!$user) {
+        http_response_code(404);
         echo json_encode([
             'success' => false,
             'message' => 'المستخدم غير موجود'
-        ]);
+        ], JSON_UNESCAPED_UNICODE);
         exit();
     }
-    
-    $user = $result->fetch_assoc();
-    
+
     // تحديث آخر تسجيل دخول
-    $updateStmt = $conn->prepare("UPDATE users SET last_login = NOW() WHERE id = ?");
-    $updateStmt->bind_param("i", $userId);
-    $updateStmt->execute();
-    $updateStmt->close();
-    
+    $updateStmt = $pdo->prepare("UPDATE users SET last_login = NOW() WHERE id = ?");
+    $updateStmt->execute([$userId]);
+
     // تنسيق التواريخ
     $user['created_at'] = date('Y-m-d H:i', strtotime($user['created_at']));
     if ($user['last_login']) {
         $user['last_login'] = date('Y-m-d H:i', strtotime($user['last_login']));
     }
-    
-    // إخفاء معلومات حساسة
-    unset($user['password']);
-    
+
     echo json_encode([
         'success' => true,
         'user' => $user
-    ]);
-    
-    $stmt->close();
-    $conn->close();
-    
+    ], JSON_UNESCAPED_UNICODE);
+
 } catch (Exception $e) {
+    http_response_code(500);
     echo json_encode([
         'success' => false,
         'message' => 'حدث خطأ: ' . $e->getMessage()
-    ]);
+    ], JSON_UNESCAPED_UNICODE);
 }
 ?>
