@@ -102,7 +102,7 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .user-info {
@@ -141,6 +141,25 @@
         .user-role {
             font-size: 12px;
             color: #757575;
+        }
+
+        .store-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);
+            font-size: 15px;
+        }
+
+        .store-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
         }
 
         .logout-btn {
@@ -644,6 +663,11 @@
                 gap: 15px;
             }
 
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
             .welcome-section {
                 flex-direction: column;
                 text-align: center;
@@ -700,6 +724,9 @@
                     <div class="user-role">مستخدم</div>
                 </div>
             </div>
+            <a href="index.html" style="text-decoration: none;">
+                <button class="store-btn">🏪 إلى المتجر</button>
+            </a>
             <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
         </div>
     </div>
@@ -1011,10 +1038,12 @@
                                     <div class="product-stock">${stockStatus}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" 
-                                    ${product.stock === 0 ? 'disabled' : ''}>
-                                ${product.stock > 0 ? '🛒 إضافة للسلة' : 'غير متوفر'}
-                            </button>
+                            <a href="index.html#product-${product.id}" style="text-decoration: none;">
+                                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" 
+                                        ${product.stock === 0 ? 'disabled' : ''}>
+                                    ${product.stock > 0 ? '🛒 إضافة للسلة' : 'غير متوفر'}
+                                </button>
+                            </a>
                         </div>
                     </div>
                 `;
