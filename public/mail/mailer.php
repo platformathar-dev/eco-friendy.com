@@ -1,33 +1,32 @@
 <?php
-// استدعاء مكتبات PHPMailer
+// استخدام PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// مسارات ملفات PHPMailer
-require __DIR__ . '/PHPMailer/Exception.php';
-require __DIR__ . '/PHPMailer/PHPMailer.php';
-require __DIR__ . '/PHPMailer/SMTP.php';
-
+// تضمين ملفات PHPMailer من نفس المجلد
+require __DIR__ . '/PHPMailer.php';
+require __DIR__ . '/SMTP.php';
+require __DIR__ . '/Exception.php';
 
 /**
- * دالة إرسال إيميل
+ * دالة إرسال البريد الإلكتروني
  * @param string $to      البريد المستلم
- * @param string $subject عنوان الإيميل
- * @param string $message محتوى الإيميل (HTML)
- * @return bool
+ * @param string $subject عنوان الرسالة
+ * @param string $message محتوى الرسالة بصيغة HTML
+ * @return bool           true إذا تم الإرسال، false إذا فشل
  */
 function sendMail($to, $subject, $message)
 {
     $mail = new PHPMailer(true);
 
     try {
-        // إعداد SMTP
+        // إعدادات SMTP
         $mail->isSMTP();
         $mail->Host       = 'smtp.hostinger.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'info@eco-friendy.com';      // إيميلك
-        $mail->Password   = 'Abdullah@#$%27887';   // 🔴 كلمة السر (غيّرها)
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL
+        $mail->Username   = 'info@eco-friendy.com';  // بريدك
+        $mail->Password   = 'Abdullah@#$%27887';     // كلمة المرور
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
         $mail->CharSet    = 'UTF-8';
 
@@ -37,18 +36,18 @@ function sendMail($to, $subject, $message)
         // المستلم
         $mail->addAddress($to);
 
-        // محتوى الإيميل
+        // محتوى البريد
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body    = $message;
 
-        // إرسال
+        // إرسال البريد
         $mail->send();
         return true;
 
     } catch (Exception $e) {
-        // في حال الخطأ
-        // error_log($mail->ErrorInfo); // يمكنك تفعيله للتشخيص
+        // يمكنك تفعيل السطر التالي أثناء التطوير لمعرفة الخطأ
+        // error_log($mail->ErrorInfo);
         return false;
     }
 }
