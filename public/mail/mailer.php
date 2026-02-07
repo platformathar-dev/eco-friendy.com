@@ -24,12 +24,15 @@ function sendMail($to, $subject, $message)
         $mail->isSMTP();
         $mail->Host       = 'smtp.hostinger.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'info@eco-friendy.com';  // بريدك
-        $mail->Password   = 'Abdullah@#$%27887';     // كلمة المرور
+        $mail->Username   = 'info@eco-friendy.com';
+        $mail->Password   = 'Abdullah@#$%27887';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
         $mail->CharSet    = 'UTF-8';
-
+        
+        // ⭐ تفعيل Debug للتطوير (يمكنك تعطيله لاحقاً)
+        // $mail->SMTPDebug = 2; // 0 = off, 1 = client, 2 = client and server
+        
         // المرسل
         $mail->setFrom('info@eco-friendy.com', 'Eco Friendy');
 
@@ -43,11 +46,17 @@ function sendMail($to, $subject, $message)
 
         // إرسال البريد
         $mail->send();
+        
+        // ⭐ تسجيل النجاح
+        error_log("✅ Email sent successfully to: $to - Subject: $subject");
         return true;
 
     } catch (Exception $e) {
-        // يمكنك تفعيل السطر التالي أثناء التطوير لمعرفة الخطأ
-        // error_log($mail->ErrorInfo);
+        // ⭐⭐⭐ تفعيل تسجيل الأخطاء (مهم جداً!)
+        error_log("❌ Email sending failed to: $to");
+        error_log("Error: " . $mail->ErrorInfo);
+        error_log("Exception: " . $e->getMessage());
         return false;
     }
 }
+?>
