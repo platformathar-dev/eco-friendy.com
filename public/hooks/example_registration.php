@@ -4,7 +4,7 @@
  * Example: User Registration with Auto Email
  */
 
-require_once __DIR__ . '/db_config.php';
+require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/hooks/user_registration_hook.php';
 
 // محاكاة بيانات التسجيل (في الواقع ستأتي من POST)
