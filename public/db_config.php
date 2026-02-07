@@ -1,30 +1,39 @@
 <?php
-/**
- * إعدادات الاتصال بقاعدة البيانات
- * Database Configuration
- * 
- * ⚠️ تأكد من تحديث البيانات بمعلوماتك الفعلية
- */
+// ملف إعدادات الاتصال بقاعدة البيانات
+// config.php
 
-// معلومات الاتصال بقاعدة البيانات
+// إعدادات قاعدة البيانات
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'u407057164_ecofriendy');
 define('DB_USER', 'u407057164_ecofriendy');
 define('DB_PASS', 'Abazid@#$%27887');
 define('DB_CHARSET', 'utf8mb4');
 
-
-// إنشاء الاتصال
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-// التحقق من الاتصال
-if ($conn->connect_error) {
-    error_log("❌ فشل الاتصال بقاعدة البيانات: " . $conn->connect_error);
-    die("Connection failed: " . $conn->connect_error);
+// إنشاء اتصال بقاعدة البيانات
+function getDBConnection() {
+    try {
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+        
+        $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+        return $pdo;
+    } catch (PDOException $e) {
+        // في حالة فشل الاتصال
+        error_log("Database Connection Error: " . $e->getMessage());
+        return null;
+    }
 }
 
-// تعيين ترميز UTF-8
-$conn->set_charset("utf8mb4");
-
-// إرجاع الاتصال
-return $conn;
+// دالة للتحقق من الاتصال
+function testDBConnection() {
+    $pdo = getDBConnection();
+    if ($pdo) {
+        return true;
+    }
+    return false;
+}
+?>
