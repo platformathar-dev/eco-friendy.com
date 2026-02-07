@@ -181,6 +181,7 @@
             background: #bdbdbd;
             cursor: not-allowed;
             box-shadow: none;
+            transform: none;
         }
 
         .login-link {
@@ -211,14 +212,6 @@
                 flex-direction: column;
                 gap: 0;
             }
-
-            .logo h1 {
-                font-size: 22px;
-            }
-
-            .form-title h2 {
-                font-size: 20px;
-            }
         }
     </style>
 </head>
@@ -237,33 +230,33 @@
         </div>
 
         <!-- نموذج التسجيل -->
-        <form id="registerForm">
+        <form id="registerForm" onsubmit="handleSubmit(event)">
             <!-- الاسم الكامل -->
             <div class="form-group">
                 <label for="fullname">الاسم الكامل <span class="required">*</span></label>
                 <input type="text" id="fullname" name="fullname" placeholder="أدخل اسمك الكامل" required>
-                <span class="error-message" id="fullname-error">الرجاء إدخال اسمك الكامل</span>
+                <span class="error-message" id="fullname-error"></span>
             </div>
 
             <!-- اسم المستخدم -->
             <div class="form-group">
                 <label for="username">اسم المستخدم <span class="required">*</span></label>
                 <input type="text" id="username" name="username" placeholder="اختر اسم مستخدم فريد" required>
-                <span class="error-message" id="username-error">اسم المستخدم يجب أن يكون 3 أحرف على الأقل</span>
+                <span class="error-message" id="username-error"></span>
             </div>
 
             <!-- البريد الإلكتروني -->
             <div class="form-group">
                 <label for="email">البريد الإلكتروني <span class="required">*</span></label>
                 <input type="email" id="email" name="email" placeholder="example@email.com" required>
-                <span class="error-message" id="email-error">الرجاء إدخال بريد إلكتروني صحيح</span>
+                <span class="error-message" id="email-error"></span>
             </div>
 
             <!-- رقم الهاتف -->
             <div class="form-group">
                 <label for="phone">رقم الهاتف <span class="required">*</span></label>
                 <input type="tel" id="phone" name="phone" placeholder="07XXXXXXXX" required>
-                <span class="error-message" id="phone-error">الرجاء إدخال رقم هاتف صحيح (10 أرقام)</span>
+                <span class="error-message" id="phone-error"></span>
             </div>
 
             <!-- تاريخ الميلاد والجنس -->
@@ -271,7 +264,7 @@
                 <div class="form-group">
                     <label for="birthdate">تاريخ الميلاد <span class="required">*</span></label>
                     <input type="date" id="birthdate" name="birthdate" required>
-                    <span class="error-message" id="birthdate-error">الرجاء اختيار تاريخ الميلاد</span>
+                    <span class="error-message" id="birthdate-error"></span>
                 </div>
 
                 <div class="form-group">
@@ -281,7 +274,7 @@
                         <option value="male">ذكر</option>
                         <option value="female">أنثى</option>
                     </select>
-                    <span class="error-message" id="gender-error">الرجاء اختيار الجنس</span>
+                    <span class="error-message" id="gender-error"></span>
                 </div>
             </div>
 
@@ -310,21 +303,21 @@
                     <option value="SD">السودان</option>
                     <option value="other">أخرى</option>
                 </select>
-                <span class="error-message" id="country-error">الرجاء اختيار الدولة</span>
+                <span class="error-message" id="country-error"></span>
             </div>
 
             <!-- كلمة المرور -->
             <div class="form-group">
                 <label for="password">كلمة المرور <span class="required">*</span></label>
                 <input type="password" id="password" name="password" placeholder="أدخل كلمة مرور قوية (8 أحرف على الأقل)" required>
-                <span class="error-message" id="password-error">كلمة المرور يجب أن تكون 8 أحرف على الأقل</span>
+                <span class="error-message" id="password-error"></span>
             </div>
 
             <!-- تأكيد كلمة المرور -->
             <div class="form-group">
                 <label for="confirm-password">تأكيد كلمة المرور <span class="required">*</span></label>
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="أعد إدخال كلمة المرور" required>
-                <span class="error-message" id="confirm-password-error">كلمة المرور غير متطابقة</span>
+                <span class="error-message" id="confirm-password-error"></span>
             </div>
 
             <!-- الموافقة على الشروط -->
@@ -336,7 +329,7 @@
             </div>
 
             <!-- زر التسجيل -->
-            <button type="submit" class="submit-btn">إنشاء حساب</button>
+            <button type="submit" class="submit-btn" id="submitBtn">إنشاء حساب</button>
         </form>
 
         <!-- رابط تسجيل الدخول -->
@@ -346,223 +339,79 @@
     </div>
 
     <script>
-        const form = document.getElementById('registerForm');
-        
-        // التحقق من صحة البريد الإلكتروني
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        // التحقق من رقم الهاتف (10 أرقام)
-        function validatePhone(phone) {
-            const re = /^07\d{8}$/;
-            return re.test(phone);
-        }
-
-        // عرض رسالة خطأ
-        function showError(inputId, errorId, message) {
-            const input = document.getElementById(inputId);
-            const error = document.getElementById(errorId);
-            input.classList.add('error');
-            error.textContent = message;
-            error.classList.add('show');
-        }
-
-        // إخفاء رسالة الخطأ
-        function hideError(inputId, errorId) {
-            const input = document.getElementById(inputId);
-            const error = document.getElementById(errorId);
-            input.classList.remove('error');
-            error.classList.remove('show');
-        }
-
-        // التحقق من الحقول عند الكتابة
-        document.getElementById('fullname').addEventListener('input', function() {
-            if (this.value.trim().length >= 3) {
-                hideError('fullname', 'fullname-error');
-            }
-        });
-
-        document.getElementById('username').addEventListener('input', function() {
-            if (this.value.trim().length >= 3) {
-                hideError('username', 'username-error');
-            }
-        });
-
-        document.getElementById('email').addEventListener('input', function() {
-            if (validateEmail(this.value)) {
-                hideError('email', 'email-error');
-            }
-        });
-
-        document.getElementById('phone').addEventListener('input', function() {
-            // تنسيق تلقائي للرقم
-            let value = this.value.replace(/\D/g, '');
-            if (value.length > 10) {
-                value = value.substring(0, 10);
-            }
-            this.value = value;
-
-            if (validatePhone(value)) {
-                hideError('phone', 'phone-error');
-            }
-        });
-
-        document.getElementById('password').addEventListener('input', function() {
-            if (this.value.length >= 8) {
-                hideError('password', 'password-error');
-            }
-        });
-
-        document.getElementById('confirm-password').addEventListener('input', function() {
-            const password = document.getElementById('password').value;
-            if (this.value === password) {
-                hideError('confirm-password', 'confirm-password-error');
-            }
-        });
+        console.log('✅ Script loaded');
 
         // معالجة إرسال النموذج
-        form.addEventListener('submit', async function(e) {
+        async function handleSubmit(e) {
             e.preventDefault();
-            
-            let isValid = true;
+            console.log('🔄 Form submitted');
 
-            // التحقق من الاسم الكامل
-            const fullname = document.getElementById('fullname').value.trim();
-            if (fullname.length < 3) {
-                showError('fullname', 'fullname-error', 'الرجاء إدخال اسمك الكامل (3 أحرف على الأقل)');
-                isValid = false;
-            } else {
-                hideError('fullname', 'fullname-error');
-            }
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.textContent = 'جاري إنشاء الحساب...';
+            submitBtn.disabled = true;
 
-            // التحقق من اسم المستخدم
-            const username = document.getElementById('username').value.trim();
-            if (username.length < 3) {
-                showError('username', 'username-error', 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
-                isValid = false;
-            } else {
-                hideError('username', 'username-error');
-            }
+            // جمع البيانات
+            const formData = {
+                fullname: document.getElementById('fullname').value.trim(),
+                username: document.getElementById('username').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                birthdate: document.getElementById('birthdate').value,
+                gender: document.getElementById('gender').value,
+                country: document.getElementById('country').value,
+                password: document.getElementById('password').value
+            };
 
-            // التحقق من البريد الإلكتروني
-            const email = document.getElementById('email').value;
-            if (!validateEmail(email)) {
-                showError('email', 'email-error', 'الرجاء إدخال بريد إلكتروني صحيح');
-                isValid = false;
-            } else {
-                hideError('email', 'email-error');
-            }
+            console.log('📤 Sending data:', formData);
 
-            // التحقق من رقم الهاتف
-            const phone = document.getElementById('phone').value;
-            if (!validatePhone(phone)) {
-                showError('phone', 'phone-error', 'الرجاء إدخال رقم هاتف صحيح (يبدأ بـ 07 ويتكون من 10 أرقام)');
-                isValid = false;
-            } else {
-                hideError('phone', 'phone-error');
-            }
+            try {
+                const response = await fetch('api/register.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
 
-            // التحقق من تاريخ الميلاد
-            const birthdate = document.getElementById('birthdate').value;
-            if (!birthdate) {
-                showError('birthdate', 'birthdate-error', 'الرجاء اختيار تاريخ الميلاد');
-                isValid = false;
-            } else {
-                hideError('birthdate', 'birthdate-error');
-            }
+                console.log('📥 Response status:', response.status);
 
-            // التحقق من الجنس
-            const gender = document.getElementById('gender').value;
-            if (!gender) {
-                showError('gender', 'gender-error', 'الرجاء اختيار الجنس');
-                isValid = false;
-            } else {
-                hideError('gender', 'gender-error');
-            }
+                const data = await response.json();
+                console.log('📄 Response data:', data);
 
-            // التحقق من الدولة
-            const country = document.getElementById('country').value;
-            if (!country) {
-                showError('country', 'country-error', 'الرجاء اختيار الدولة');
-                isValid = false;
-            } else {
-                hideError('country', 'country-error');
-            }
-
-            // التحقق من كلمة المرور
-            const password = document.getElementById('password').value;
-            if (password.length < 8) {
-                showError('password', 'password-error', 'كلمة المرور يجب أن تكون 8 أحرف على الأقل');
-                isValid = false;
-            } else {
-                hideError('password', 'password-error');
-            }
-
-            // التحقق من تطابق كلمة المرور
-            const confirmPassword = document.getElementById('confirm-password').value;
-            if (password !== confirmPassword) {
-                showError('confirm-password', 'confirm-password-error', 'كلمة المرور غير متطابقة');
-                isValid = false;
-            } else {
-                hideError('confirm-password', 'confirm-password-error');
-            }
-
-            // التحقق من الموافقة على الشروط
-            const terms = document.getElementById('terms').checked;
-            if (!terms) {
-                alert('يجب الموافقة على الشروط والأحكام');
-                isValid = false;
-            }
-
-            // إذا كانت كل البيانات صحيحة
-            if (isValid) {
-                const submitBtn = document.querySelector('.submit-btn');
-                submitBtn.textContent = 'جارِ إنشاء الحساب...';
-                submitBtn.disabled = true;
-
-                const formData = {
-                    fullname,
-                    username,
-                    email,
-                    phone,
-                    birthdate,
-                    gender,
-                    country,
-                    password
-                };
-
-                try {
-                    const response = await fetch('api/register.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-
-                    const data = await response.json();
-
-                    if (data.success) {
-                        // حفظ البريد الإلكتروني
-                        localStorage.setItem('pending_verification_email', data.user.email);
-                        
-                        // رسالة نجاح
-                        alert('✅ ' + data.message + '\n\n📧 تم إرسال كود التفعيل إلى بريدك الإلكتروني');
-                        
-                        // التوجيه لصفحة التفعيل
-                        window.location.href = 'verify-email.html?email=' + encodeURIComponent(data.user.email);
-                    } else {
-                        alert('❌ خطأ: ' + (data.message || 'حاول مرة أخرى'));
-                        submitBtn.textContent = 'إنشاء حساب';
-                        submitBtn.disabled = false;
-                    }
-                } catch (error) {
-                    console.error('خطأ:', error);
-                    alert('❌ حدث خطأ في الاتصال. حاول مرة أخرى!');
+                if (data.success) {
+                    // حفظ البريد الإلكتروني
+                    localStorage.setItem('pending_verification_email', data.user.email);
+                    
+                    // رسالة نجاح
+                    alert('✅ تم إنشاء حسابك بنجاح!\n\n📧 تم إرسال كود التفعيل إلى:\n' + data.user.email);
+                    
+                    // التوجيه لصفحة التفعيل
+                    window.location.href = 'verify-email.html?email=' + encodeURIComponent(data.user.email);
+                } else {
+                    alert('❌ خطأ: ' + (data.message || 'حاول مرة أخرى'));
                     submitBtn.textContent = 'إنشاء حساب';
                     submitBtn.disabled = false;
                 }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                alert('❌ حدث خطأ في الاتصال. حاول مرة أخرى!\n\nالخطأ: ' + error.message);
+                submitBtn.textContent = 'إنشاء حساب';
+                submitBtn.disabled = false;
             }
+        }
+
+        // اختبار عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ Page loaded');
+            const form = document.getElementById('registerForm');
+            const btn = document.getElementById('submitBtn');
+            console.log('Form element:', form);
+            console.log('Button element:', btn);
+            
+            // اختبار الزر
+            btn.addEventListener('click', function() {
+                console.log('🖱️ Button clicked!');
+            });
         });
     </script>
 </body>
