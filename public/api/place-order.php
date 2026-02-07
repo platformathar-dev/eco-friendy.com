@@ -1,11 +1,11 @@
 <?php
 /**
- * ملف API لإضافة طلب جديد مع نظام الإيميلات المدمج
+ * ملف API لإضافة طلب جديد مع نظام الإيميلات المحسّن
  * api/place-order.php
  * 
- * ✅ نظام الإيميلات مدمج بالكامل
- * ✅ معالجة أخطاء محسّنة
- * ✅ يعمل مع Hostinger SMTP
+ * ✅ إرسال إيميل للعميل
+ * ✅ إرسال إيميل للإدارة
+ * ✅ البيانات تُؤخذ من جدول orders
  */
 
 // منع أي إخراج قبل الهيدر
@@ -89,7 +89,7 @@ try {
     $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6));
     $customerEmail = $_SESSION['user_email'] ?? '';
     
-    // إدراج الطلب
+    // إدراج الطلب في جدول orders
     $sql = "INSERT INTO orders (
                 user_id, order_number, customer_name, customer_phone, customer_email,
                 customer_address, shipping_address, notes, payment_method, 
@@ -113,7 +113,7 @@ try {
     
     $orderId = $pdo->lastInsertId();
     
-    // إدراج المنتجات
+    // إدراج المنتجات في جدول order_items
     $orderItems = [];
     if (!empty($data['items']) && is_array($data['items'])) {
         $itemSql = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
@@ -154,17 +154,26 @@ try {
     // تأكيد المعاملة
     $pdo->commit();
     
+    // ========== الآن نجلب البيانات من جدول orders ==========
+    $orderQuery = $pdo->prepare("SELECT * FROM orders WHERE id = ?");
+    $orderQuery->execute([$orderId]);
+    $orderData = $orderQuery->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$orderData) {
+        throw new Exception('فشل في جلب بيانات الطلب');
+    }
+    
     // ========== إرسال الإيميلات ==========
     $emailSent = false;
     $adminNotified = false;
     $emailError = null;
     
-    if (!empty($customerEmail)) {
+    if (!empty($orderData['customer_email'])) {
         try {
             // التحقق من وجود ملف mailer.php
             $mailerPath = __DIR__ . '/../mail/mailer.php';
             if (!file_exists($mailerPath)) {
-                throw new Exception('ملف mailer.php غير موجود');
+                throw new Exception('ملف mailer.php غير موجود في المسار: ' . $mailerPath);
             }
             
             // تحميل PHPMailer
@@ -172,32 +181,32 @@ try {
             
             // التحقق من وجود دالة sendMail
             if (!function_exists('sendMail')) {
-                throw new Exception('دالة sendMail غير متوفرة');
+                throw new Exception('دالة sendMail غير موجودة');
             }
             
-            // إنشاء محتوى HTML للعميل
+            // ========== إعداد إيميل العميل ==========
             $itemsHtml = "";
             foreach ($orderItems as $item) {
                 $itemTotal = $item['quantity'] * $item['price'];
-                $itemsHtml .= "<tr>
-                    <td style='padding:12px;border-bottom:1px solid #eee'>" . htmlspecialchars($item['product_name']) . "</td>
-                    <td style='padding:12px;border-bottom:1px solid #eee;text-align:center'>{$item['quantity']}</td>
-                    <td style='padding:12px;border-bottom:1px solid #eee;text-align:center'>" . number_format($item['price'], 2) . " د.أ</td>
-                    <td style='padding:12px;border-bottom:1px solid #eee;text-align:center;font-weight:bold'>" . number_format($itemTotal, 2) . " د.أ</td>
+                $itemsHtml .= "<tr style='border-bottom:1px solid #eee'>
+                    <td style='padding:15px;text-align:right'>" . htmlspecialchars($item['product_name']) . "</td>
+                    <td style='padding:15px;text-align:center'>" . $item['quantity'] . "</td>
+                    <td style='padding:15px;text-align:center'>" . number_format($item['price'], 2) . " د.أ</td>
+                    <td style='padding:15px;text-align:center;font-weight:bold'>" . number_format($itemTotal, 2) . " د.أ</td>
                 </tr>";
             }
             
-            $subject = "تأكيد طلبك #$orderNumber - Eco Friendy 📦";
+            $subject = "✅ تأكيد طلبك #" . $orderData['order_number'];
             $message = "<!DOCTYPE html><html dir='rtl'><head><meta charset='UTF-8'><style>
-                body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f5f5f5;margin:0;padding:0}
-                .container{max-width:650px;margin:30px auto;background:#fff;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,.1);overflow:hidden}
-                .header{background:linear-gradient(135deg,#4CAF50 0%,#2e7d32 100%);color:#fff;padding:40px 30px;text-align:center}
-                .header h1{margin:0 0 10px 0;font-size:32px}
-                .header p{margin:0;font-size:16px;opacity:0.9}
+                body{font-family:Arial,sans-serif;background:#f4f4f4;padding:20px;margin:0}
+                .container{max-width:650px;margin:0 auto;background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 5px 25px rgba(0,0,0,.15)}
+                .header{background:linear-gradient(135deg,#4CAF50,#2e7d32);color:#fff;padding:40px 30px;text-align:center}
+                .header h1{margin:0 0 10px;font-size:32px;font-weight:900}
+                .header p{margin:0;font-size:16px;opacity:0.95}
                 .content{padding:40px 30px}
-                .order-box{background:#f0f8f0;border-right:5px solid #4CAF50;padding:25px;margin:25px 0;border-radius:8px}
-                .order-box h2{color:#4CAF50;margin:0 0 15px 0;font-size:22px}
-                .order-box p{margin:8px 0;font-size:15px}
+                .order-box{background:#f9f9f9;border-right:5px solid #4CAF50;padding:25px;border-radius:10px;margin:25px 0}
+                .order-box h2{color:#2e7d32;margin:0 0 20px;font-size:24px}
+                .order-box p{margin:12px 0;font-size:15px;color:#333;line-height:1.8}
                 .items-table{width:100%;border-collapse:collapse;margin:25px 0}
                 .items-table th{background:#f5f5f5;padding:15px;text-align:right;font-weight:600;border-bottom:2px solid #ddd}
                 .items-table td{font-size:14px;color:#555}
@@ -214,12 +223,12 @@ try {
                     <div class='content'>
                         <div class='order-box'>
                             <h2>📋 تفاصيل الطلب</h2>
-                            <p><strong>رقم الطلب:</strong> <span style='color:#4CAF50;font-size:18px'>#" . htmlspecialchars($orderNumber) . "</span></p>
-                            <p><strong>اسم العميل:</strong> " . htmlspecialchars($data['customer_name']) . "</p>
-                            <p><strong>رقم الهاتف:</strong> " . htmlspecialchars($data['customer_phone']) . "</p>
-                            <p><strong>العنوان:</strong> " . htmlspecialchars($data['customer_address']) . "</p>
-                            <p><strong>طريقة الدفع:</strong> " . ($data['payment_method'] === 'cod' ? 'الدفع عند الاستلام 💵' : 'تحويل بنكي CliQ 🏦') . "</p>
-                            <p><strong>التاريخ:</strong> " . date('Y-m-d H:i') . "</p>
+                            <p><strong>رقم الطلب:</strong> <span style='color:#4CAF50;font-size:18px'>#" . htmlspecialchars($orderData['order_number']) . "</span></p>
+                            <p><strong>اسم العميل:</strong> " . htmlspecialchars($orderData['customer_name']) . "</p>
+                            <p><strong>رقم الهاتف:</strong> " . htmlspecialchars($orderData['customer_phone']) . "</p>
+                            <p><strong>العنوان:</strong> " . htmlspecialchars($orderData['customer_address']) . "</p>
+                            <p><strong>طريقة الدفع:</strong> " . ($orderData['payment_method'] === 'cod' ? 'الدفع عند الاستلام 💵' : 'تحويل بنكي CliQ 🏦') . "</p>
+                            <p><strong>التاريخ:</strong> " . $orderData['created_at'] . "</p>
                         </div>
                         
                         <h3 style='color:#2e7d32;font-size:20px;margin:30px 0 15px'>🛍️ المنتجات المطلوبة</h3>
@@ -237,7 +246,7 @@ try {
                         
                         <div class='total'>
                             <span>المجموع الكلي:</span>
-                            <span>" . number_format($data['total_amount'], 2) . " د.أ</span>
+                            <span>" . number_format($orderData['total_amount'], 2) . " د.أ</span>
                         </div>
                         
                         <center>
@@ -259,22 +268,31 @@ try {
                 </div>
             </body></html>";
             
-            // حفظ الإشعار في قاعدة البيانات
-            $notifStmt = $pdo->prepare("INSERT INTO notifications (user_id, order_id, email, type, subject, message, status, attempts, created_at) VALUES (?, ?, ?, 'new_order', ?, ?, 'pending', 0, NOW())");
-            $notifStmt->execute([(int)$data['user_id'], $orderId, $customerEmail, $subject, $message]);
-            $notificationId = $pdo->lastInsertId();
-            
-            // إرسال البريد للعميل
-            if (sendMail($customerEmail, $subject, $message)) {
-                $pdo->prepare("UPDATE notifications SET status='sent', sent_at=NOW() WHERE id=?")->execute([$notificationId]);
-                $emailSent = true;
-                error_log("✅ Customer email sent to: $customerEmail");
-            } else {
-                $pdo->prepare("UPDATE notifications SET status='failed', attempts=1, error_message='SMTP sending failed' WHERE id=?")->execute([$notificationId]);
-                error_log("❌ Failed to send customer email to: $customerEmail");
+            // حفظ الإشعار في قاعدة البيانات (إذا كان الجدول موجود)
+            try {
+                $notifStmt = $pdo->prepare("INSERT INTO notifications (user_id, order_id, email, type, subject, message, status, attempts, created_at) VALUES (?, ?, ?, 'new_order', ?, ?, 'pending', 0, NOW())");
+                $notifStmt->execute([(int)$orderData['user_id'], $orderId, $orderData['customer_email'], $subject, $message]);
+                $notificationId = $pdo->lastInsertId();
+            } catch (Exception $e) {
+                error_log("⚠️ جدول notifications غير موجود أو حدث خطأ: " . $e->getMessage());
+                $notificationId = null;
             }
             
-            // إرسال إشعار للإدارة
+            // إرسال البريد للعميل
+            if (sendMail($orderData['customer_email'], $subject, $message)) {
+                if ($notificationId) {
+                    $pdo->prepare("UPDATE notifications SET status='sent', sent_at=NOW() WHERE id=?")->execute([$notificationId]);
+                }
+                $emailSent = true;
+                error_log("✅ تم إرسال إيميل العميل إلى: " . $orderData['customer_email']);
+            } else {
+                if ($notificationId) {
+                    $pdo->prepare("UPDATE notifications SET status='failed', attempts=1, error_message='SMTP sending failed' WHERE id=?")->execute([$notificationId]);
+                }
+                error_log("❌ فشل إرسال إيميل العميل إلى: " . $orderData['customer_email']);
+            }
+            
+            // ========== إرسال إشعار للإدارة ==========
             try {
                 $itemsList = "";
                 foreach ($orderItems as $item) {
@@ -282,7 +300,7 @@ try {
                     $itemsList .= "<li style='margin:8px 0'>{$item['product_name']} - الكمية: {$item['quantity']} - السعر: " . number_format($itemTotal, 2) . " د.أ</li>";
                 }
                 
-                $adminSubject = "🔔 طلب جديد #$orderNumber";
+                $adminSubject = "🔔 طلب جديد #" . $orderData['order_number'];
                 $adminMessage = "<!DOCTYPE html><html dir='rtl'><head><meta charset='UTF-8'><style>
                     body{font-family:Arial,sans-serif;background:#f4f4f4;padding:20px;margin:0}
                     .container{max-width:600px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.1)}
@@ -304,14 +322,14 @@ try {
                         <div class='content'>
                             <div class='alert-box'>
                                 <h2>⚠️ تنبيه: طلب جديد</h2>
-                                <div class='info-row'><strong>رقم الطلب:</strong> #" . htmlspecialchars($orderNumber) . "</div>
-                                <div class='info-row'><strong>اسم العميل:</strong> " . htmlspecialchars($data['customer_name']) . "</div>
-                                <div class='info-row'><strong>رقم الهاتف:</strong> " . htmlspecialchars($data['customer_phone']) . "</div>
-                                <div class='info-row'><strong>البريد الإلكتروني:</strong> " . htmlspecialchars($customerEmail) . "</div>
-                                <div class='info-row'><strong>العنوان:</strong> " . htmlspecialchars($data['customer_address']) . "</div>
-                                <div class='info-row'><strong>طريقة الدفع:</strong> " . ($data['payment_method'] === 'cod' ? 'الدفع عند الاستلام' : 'تحويل بنكي CliQ') . "</div>
-                                <div class='info-row'><strong>المبلغ الإجمالي:</strong> <span class='amount'>" . number_format($data['total_amount'], 2) . " د.أ</span></div>
-                                <div class='info-row'><strong>التاريخ:</strong> " . date('Y-m-d H:i:s') . "</div>
+                                <div class='info-row'><strong>رقم الطلب:</strong> #" . htmlspecialchars($orderData['order_number']) . "</div>
+                                <div class='info-row'><strong>اسم العميل:</strong> " . htmlspecialchars($orderData['customer_name']) . "</div>
+                                <div class='info-row'><strong>رقم الهاتف:</strong> " . htmlspecialchars($orderData['customer_phone']) . "</div>
+                                <div class='info-row'><strong>البريد الإلكتروني:</strong> " . htmlspecialchars($orderData['customer_email']) . "</div>
+                                <div class='info-row'><strong>العنوان:</strong> " . htmlspecialchars($orderData['customer_address']) . "</div>
+                                <div class='info-row'><strong>طريقة الدفع:</strong> " . ($orderData['payment_method'] === 'cod' ? 'الدفع عند الاستلام' : 'تحويل بنكي CliQ') . "</div>
+                                <div class='info-row'><strong>المبلغ الإجمالي:</strong> <span class='amount'>" . number_format($orderData['total_amount'], 2) . " د.أ</span></div>
+                                <div class='info-row'><strong>التاريخ:</strong> " . $orderData['created_at'] . "</div>
                             </div>
                             
                             <div class='items-list'>
@@ -319,7 +337,7 @@ try {
                                 <ul style='margin:0;padding-right:20px'>$itemsList</ul>
                             </div>
                             
-                            " . (!empty($data['notes']) ? "<div style='background:#e3f2fd;padding:15px;border-radius:5px;margin:15px 0'><strong>ملاحظات:</strong><p style='margin:5px 0 0'>" . htmlspecialchars($data['notes']) . "</p></div>" : "") . "
+                            " . (!empty($orderData['notes']) ? "<div style='background:#e3f2fd;padding:15px;border-radius:5px;margin:15px 0'><strong>ملاحظات:</strong><p style='margin:5px 0 0'>" . htmlspecialchars($orderData['notes']) . "</p></div>" : "") . "
                         </div>
                         
                         <div class='footer'>
@@ -330,17 +348,17 @@ try {
                 
                 if (sendMail('info@eco-friendy.com', $adminSubject, $adminMessage)) {
                     $adminNotified = true;
-                    error_log("✅ Admin notification sent");
+                    error_log("✅ تم إرسال إشعار الإدارة");
                 } else {
-                    error_log("❌ Failed to send admin notification");
+                    error_log("❌ فشل إرسال إشعار الإدارة");
                 }
             } catch (Exception $e) {
-                error_log("❌ Admin email error: " . $e->getMessage());
+                error_log("❌ خطأ في إيميل الإدارة: " . $e->getMessage());
             }
             
         } catch (Exception $e) {
             $emailError = $e->getMessage();
-            error_log("❌ Email system error: " . $e->getMessage());
+            error_log("❌ خطأ في نظام الإيميل: " . $e->getMessage());
         }
     }
     
@@ -348,17 +366,21 @@ try {
     $message = 'تم إنشاء الطلب بنجاح';
     if ($emailSent) {
         $message .= ' ✅ وتم إرسال إيميل التأكيد';
-    } elseif (!empty($customerEmail) && !$emailSent) {
+    } elseif (!empty($orderData['customer_email']) && !$emailSent) {
         $message .= ' ⚠️ لكن فشل إرسال إيميل التأكيد';
+        if ($emailError) {
+            error_log("سبب الفشل: " . $emailError);
+        }
     }
     
     sendJsonResponse(true, $message, [
         'order_id' => $orderId,
-        'order_number' => $orderNumber,
-        'payment_method' => $data['payment_method'],
-        'total_amount' => $data['total_amount'],
+        'order_number' => $orderData['order_number'],
+        'payment_method' => $orderData['payment_method'],
+        'total_amount' => $orderData['total_amount'],
         'email_sent' => $emailSent,
-        'admin_notified' => $adminNotified
+        'admin_notified' => $adminNotified,
+        'customer_email' => $orderData['customer_email']
     ], 201);
     
 } catch (Exception $e) {
@@ -367,7 +389,7 @@ try {
         $pdo->rollBack();
     }
     
-    error_log("❌ Order creation failed: " . $e->getMessage());
+    error_log("❌ فشل إنشاء الطلب: " . $e->getMessage());
     sendJsonResponse(false, $e->getMessage(), [], 400);
 }
 ?>
