@@ -131,6 +131,7 @@
             margin-bottom: 20px;
             display: none;
             animation: slideIn 0.3s ease-out;
+            white-space: pre-wrap;
         }
 
         .alert.success {
@@ -217,6 +218,23 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .debug-info {
+            background: #263238;
+            color: #aed581;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: monospace;
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .debug-info.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -282,8 +300,6 @@
 
 إذا وصلتك هذه الرسالة، فهذا يعني أن نظام البريد الإلكتروني يعمل بشكل صحيح! 🎉
 
-التاريخ: ${new Date().toLocaleString('ar-SA')}
-
 مع تحياتي،
 فريق Eco Friendy</textarea>
             </div>
@@ -296,6 +312,8 @@
                 💡 <strong>نصيحة:</strong> تحقق من صندوق البريد المزعج (Spam) إذا لم تجد الرسالة في صندوق الوارد.
             </div>
         </form>
+
+        <div id="debugInfo" class="debug-info"></div>
     </div>
 
     <script>
@@ -349,18 +367,21 @@
         // اختيار القالب
         document.querySelectorAll('.template-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                // إزالة التحديد من الجميع
                 document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
-                
-                // تحديد الزر الحالي
                 this.classList.add('active');
                 
-                // تعبئة النموذج
                 const template = templates[this.dataset.template];
                 document.getElementById('subject').value = template.subject;
                 document.getElementById('message').value = template.message;
             });
         });
+
+        // دالة لعرض معلومات التصحيح
+        function showDebug(message) {
+            const debugBox = document.getElementById('debugInfo');
+            debugBox.textContent += new Date().toLocaleTimeString() + ': ' + message + '\n';
+            debugBox.classList.add('show');
+        }
 
         // معالجة إرسال النموذج
         document.getElementById('emailForm').addEventListener('submit', async function(e) {
@@ -372,30 +393,57 @@
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
 
-            // تعطيل الزر وإظهار التحميل
+            // إخفاء الرسائل السابقة
+            alertBox.classList.remove('show');
+            document.getElementById('debugInfo').textContent = '';
+            document.getElementById('debugInfo').classList.remove('show');
+
+            // تعطيل الزر
             submitBtn.disabled = true;
             submitBtn.innerHTML = '⏳ جاري الإرسال <span class="spinner"></span>';
 
+            showDebug('بدء إرسال البريد...');
+            showDebug('البريد: ' + email);
+
             try {
+                const requestData = {
+                    email: email,
+                    subject: subject,
+                    message: message
+                };
+
+                showDebug('البيانات: ' + JSON.stringify(requestData));
+
                 const response = await fetch('send-test-email.php', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     },
-                    body: JSON.stringify({
-                        email: email,
-                        subject: subject,
-                        message: message
-                    })
+                    body: JSON.stringify(requestData)
                 });
 
-                const data = await response.json();
+                showDebug('حالة الاستجابة: ' + response.status + ' ' + response.statusText);
+
+                // قراءة النص أولاً
+                const responseText = await response.text();
+                showDebug('نص الاستجابة: ' + responseText.substring(0, 200));
+
+                // محاولة تحويله لـ JSON
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (jsonError) {
+                    showDebug('خطأ JSON: ' + jsonError.message);
+                    throw new Error('الاستجابة ليست JSON صحيح. تحقق من ملف send-test-email.php');
+                }
+
+                showDebug('البيانات المحولة: ' + JSON.stringify(data));
 
                 if (data.success) {
                     alertBox.className = 'alert success show';
                     alertBox.innerHTML = '✅ ' + data.message;
                     
-                    // إعادة تعيين النموذج بعد 2 ثانية
                     setTimeout(() => {
                         document.getElementById('emailForm').reset();
                         document.getElementById('email').value = 'info@eco-friendy.com';
@@ -407,24 +455,17 @@
                 }
 
             } catch (error) {
+                showDebug('خطأ: ' + error.message);
                 alertBox.className = 'alert error show';
-                alertBox.innerHTML = '❌ حدث خطأ: ' + error.message;
+                alertBox.innerHTML = '❌ حدث خطأ: ' + error.message + '\n\nانظر إلى معلومات التصحيح أدناه.';
             } finally {
-                // إعادة تفعيل الزر
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '✉️ إرسال البريد';
 
-                // إخفاء الرسالة بعد 5 ثواني
                 setTimeout(() => {
                     alertBox.classList.remove('show');
-                }, 5000);
+                }, 10000);
             }
-        });
-
-        // تحديث التاريخ في القوالب
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentDate = new Date().toLocaleString('ar-SA');
-            templates.test.message = templates.test.message.replace('${new Date().toLocaleString(\'ar-SA\')}', currentDate);
         });
     </script>
 </body>
