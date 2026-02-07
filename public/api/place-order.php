@@ -3,9 +3,9 @@
  * ملف API لإضافة طلب جديد مع نظام الإيميلات المحسّن
  * api/place-order.php
  * 
+ * ✅ إصلاح مشكلة customer_email = NULL
  * ✅ إرسال إيميل للعميل
  * ✅ إرسال إيميل للإدارة
- * ✅ البيانات تُؤخذ من جدول orders
  */
 
 // منع أي إخراج قبل الهيدر
@@ -63,6 +63,10 @@ try {
         sendJsonResponse(false, 'لم يتم استلام بيانات صحيحة');
     }
     
+    // سجل معلومات الـ Session للتتبع
+    error_log("📋 Session Data: " . print_r($_SESSION, true));
+    error_log("📋 Input Data: " . print_r($data, true));
+    
     // التحقق من الحقول المطلوبة
     $requiredFields = ['user_id', 'customer_name', 'customer_phone', 'customer_address', 'payment_method', 'items', 'total_amount'];
     foreach ($requiredFields as $field) {
@@ -87,7 +91,29 @@ try {
     
     // إنشاء رقم طلب فريد
     $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6));
-    $customerEmail = $_SESSION['user_email'] ?? '';
+    
+    // ✅ الحصول على البريد الإلكتروني من عدة مصادر محتملة
+    $customerEmail = '';
+    
+    // 1. من الـ Session
+    if (isset($_SESSION['user_email']) && !empty($_SESSION['user_email'])) {
+        $customerEmail = $_SESSION['user_email'];
+    }
+    // 2. من البيانات المرسلة (إذا كان موجوداً)
+    elseif (isset($data['customer_email']) && !empty($data['customer_email'])) {
+        $customerEmail = $data['customer_email'];
+    }
+    // 3. من قاعدة البيانات مباشرة
+    else {
+        $userStmt = $pdo->prepare("SELECT email FROM users WHERE id = ?");
+        $userStmt->execute([(int)$data['user_id']]);
+        $userRow = $userStmt->fetch(PDO::FETCH_ASSOC);
+        if ($userRow && !empty($userRow['email'])) {
+            $customerEmail = $userRow['email'];
+        }
+    }
+    
+    error_log("📧 Customer Email: " . ($customerEmail ?: 'NOT FOUND'));
     
     // إدراج الطلب في جدول orders
     $sql = "INSERT INTO orders (
@@ -102,7 +128,7 @@ try {
         $orderNumber,
         $data['customer_name'],
         $data['customer_phone'],
-        $customerEmail,
+        $customerEmail, // ✅ الآن البريد الإلكتروني لن يكون NULL
         $data['customer_address'],
         $data['shipping_address'] ?? $data['customer_address'],
         $data['notes'] ?? '',
@@ -163,11 +189,14 @@ try {
         throw new Exception('فشل في جلب بيانات الطلب');
     }
     
+    error_log("✅ Order created with ID: $orderId, Email: " . ($orderData['customer_email'] ?: 'NULL'));
+    
     // ========== إرسال الإيميلات ==========
     $emailSent = false;
     $adminNotified = false;
     $emailError = null;
     
+    // ✅ التحقق من وجود البريد الإلكتروني
     if (!empty($orderData['customer_email'])) {
         try {
             // التحقق من وجود ملف mailer.php
@@ -226,6 +255,7 @@ try {
                             <p><strong>رقم الطلب:</strong> <span style='color:#4CAF50;font-size:18px'>#" . htmlspecialchars($orderData['order_number']) . "</span></p>
                             <p><strong>اسم العميل:</strong> " . htmlspecialchars($orderData['customer_name']) . "</p>
                             <p><strong>رقم الهاتف:</strong> " . htmlspecialchars($orderData['customer_phone']) . "</p>
+                            <p><strong>البريد الإلكتروني:</strong> " . htmlspecialchars($orderData['customer_email']) . "</p>
                             <p><strong>العنوان:</strong> " . htmlspecialchars($orderData['customer_address']) . "</p>
                             <p><strong>طريقة الدفع:</strong> " . ($orderData['payment_method'] === 'cod' ? 'الدفع عند الاستلام 💵' : 'تحويل بنكي CliQ 🏦') . "</p>
                             <p><strong>التاريخ:</strong> " . $orderData['created_at'] . "</p>
@@ -271,20 +301,28 @@ try {
             // حفظ الإشعار في قاعدة البيانات (إذا كان الجدول موجود)
             try {
                 $notifStmt = $pdo->prepare("INSERT INTO notifications (user_id, order_id, email, type, subject, message, status, attempts, created_at) VALUES (?, ?, ?, 'new_order', ?, ?, 'pending', 0, NOW())");
-                $notifStmt->execute([(int)$orderData['user_id'], $orderId, $orderData['customer_email'], $subject, $message]);
+                $notifStmt->execute([
+                    (int)$orderData['user_id'], 
+                    $orderId, 
+                    $orderData['customer_email'], 
+                    $subject, 
+                    $message
+                ]);
                 $notificationId = $pdo->lastInsertId();
+                error_log("✅ Notification record created with ID: $notificationId");
             } catch (Exception $e) {
                 error_log("⚠️ جدول notifications غير موجود أو حدث خطأ: " . $e->getMessage());
                 $notificationId = null;
             }
             
             // إرسال البريد للعميل
+            error_log("📧 محاولة إرسال الإيميل إلى: " . $orderData['customer_email']);
             if (sendMail($orderData['customer_email'], $subject, $message)) {
                 if ($notificationId) {
                     $pdo->prepare("UPDATE notifications SET status='sent', sent_at=NOW() WHERE id=?")->execute([$notificationId]);
                 }
                 $emailSent = true;
-                error_log("✅ تم إرسال إيميل العميل إلى: " . $orderData['customer_email']);
+                error_log("✅ تم إرسال إيميل العميل بنجاح إلى: " . $orderData['customer_email']);
             } else {
                 if ($notificationId) {
                     $pdo->prepare("UPDATE notifications SET status='failed', attempts=1, error_message='SMTP sending failed' WHERE id=?")->execute([$notificationId]);
@@ -346,9 +384,10 @@ try {
                     </div>
                 </body></html>";
                 
+                error_log("📧 محاولة إرسال إيميل الإدارة");
                 if (sendMail('info@eco-friendy.com', $adminSubject, $adminMessage)) {
                     $adminNotified = true;
-                    error_log("✅ تم إرسال إشعار الإدارة");
+                    error_log("✅ تم إرسال إشعار الإدارة بنجاح");
                 } else {
                     error_log("❌ فشل إرسال إشعار الإدارة");
                 }
@@ -360,6 +399,9 @@ try {
             $emailError = $e->getMessage();
             error_log("❌ خطأ في نظام الإيميل: " . $e->getMessage());
         }
+    } else {
+        error_log("⚠️ لا يوجد بريد إلكتروني للعميل - تم تخطي إرسال الإيميلات");
+        $emailError = "البريد الإلكتروني للعميل غير موجود";
     }
     
     // الاستجابة النهائية
@@ -371,6 +413,8 @@ try {
         if ($emailError) {
             error_log("سبب الفشل: " . $emailError);
         }
+    } else {
+        $message .= ' ⚠️ (لم يتم إرسال الإيميل - البريد الإلكتروني غير موجود)';
     }
     
     sendJsonResponse(true, $message, [
@@ -378,9 +422,10 @@ try {
         'order_number' => $orderData['order_number'],
         'payment_method' => $orderData['payment_method'],
         'total_amount' => $orderData['total_amount'],
+        'customer_email' => $orderData['customer_email'],
         'email_sent' => $emailSent,
         'admin_notified' => $adminNotified,
-        'customer_email' => $orderData['customer_email']
+        'email_error' => $emailError
     ], 201);
     
 } catch (Exception $e) {
@@ -390,6 +435,7 @@ try {
     }
     
     error_log("❌ فشل إنشاء الطلب: " . $e->getMessage());
-    sendJsonResponse(false, $e->getMessage(), [], 400);
+    error_log("Stack trace: " . $e->getTraceAsString());
+    sendJsonResponse(false, $e->getMessage(), ['error_details' => $e->getTraceAsString()], 400);
 }
 ?>
