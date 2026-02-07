@@ -897,8 +897,6 @@
                 <div class="social-links">
                     <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
@@ -972,7 +970,6 @@
                             <div class="user-dropdown-email">${currentUser.email}</div>
                         </div>
                         <a href="${currentUser.role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html'}"><i class="fas fa-user"></i> حسابي</a>
-                        <a href="orders.html"><i class="fas fa-shopping-bag"></i> طلباتي</a>
                         ${currentUser.role === 'admin' ? '<a href="admin-dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a>' : ''}
                         <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
                     </div>
