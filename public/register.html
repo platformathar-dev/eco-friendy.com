@@ -543,8 +543,11 @@
                     const data = await response.json();
 
                     if (data.success) {
-                        alert('🎉 تم إنشاء حسابك بنجاح!\n\nمرحباً بك ' + data.user.fullname);
-                        window.location.href = '/';
+                        alert('✅ ' + data.message + '\n\nيرجى التحقق من بريدك الإلكتروني لتفعيل حسابك');
+                        // حفظ البريد الإلكتروني للتحقق
+                        localStorage.setItem('pending_verification_email', data.user.email);
+                        // التوجيه لصفحة التفعيل
+                        window.location.href = '/verify-email.html?email=' + encodeURIComponent(data.user.email);
                     } else {
                         alert('❌ حدث خطأ: ' + (data.message || 'حاول مرة أخرى'));
                         submitBtn.textContent = 'إنشاء حساب';
