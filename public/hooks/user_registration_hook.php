@@ -5,7 +5,7 @@
  */
 
 require_once __DIR__ . '/EmailNotificationSystem.php';
-require_once __DIR__ . '/config.php'; // تأكد من وجود ملف إعدادات قاعدة البيانات
+require_once '../config.php'; تأكد من وجود ملف إعدادات قاعدة البيانات
 
 /**
  * استخدم هذه الدالة بعد نجاح تسجيل المستخدم
