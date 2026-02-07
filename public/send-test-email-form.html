@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إرسال بريد تجريبي - Eco Friendy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.6s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            border-right: 4px solid #2196F3;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #1565c0;
+        }
+
+        .templates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .template-btn {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .template-btn:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+            transform: translateY(-2px);
+        }
+
+        .template-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .templates {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">📧</div>
+            <h1>إرسال بريد تجريبي</h1>
+            <p>اختبر نظام البريد الإلكتروني</p>
+        </div>
+
+        <div id="alertBox" class="alert"></div>
+
+        <form id="emailForm">
+            <div class="form-group">
+                <label>📮 اختر قالب جاهز (اختياري)</label>
+                <div class="templates">
+                    <div class="template-btn" data-template="welcome">
+                        👋 ترحيب
+                    </div>
+                    <div class="template-btn" data-template="order">
+                        📦 تأكيد طلب
+                    </div>
+                    <div class="template-btn" data-template="test">
+                        🧪 اختبار بسيط
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">📧 البريد الإلكتروني</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="example@domain.com"
+                    required
+                    value="info@eco-friendy.com"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="subject">📝 الموضوع</label>
+                <input 
+                    type="text" 
+                    id="subject" 
+                    name="subject" 
+                    placeholder="موضوع الرسالة"
+                    required
+                    value="بريد تجريبي من Eco Friendy"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="message">💬 الرسالة</label>
+                <textarea 
+                    id="message" 
+                    name="message" 
+                    placeholder="اكتب رسالتك هنا..."
+                    required
+                >مرحباً!
+
+هذا بريد تجريبي من نظام Eco Friendy.
+
+إذا وصلتك هذه الرسالة، فهذا يعني أن نظام البريد الإلكتروني يعمل بشكل صحيح! 🎉
+
+التاريخ: ${new Date().toLocaleString('ar-SA')}
+
+مع تحياتي،
+فريق Eco Friendy</textarea>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">
+                ✉️ إرسال البريد
+            </button>
+
+            <div class="info-box">
+                💡 <strong>نصيحة:</strong> تحقق من صندوق البريد المزعج (Spam) إذا لم تجد الرسالة في صندوق الوارد.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // القوالب الجاهزة
+        const templates = {
+            welcome: {
+                subject: '🎉 مرحباً بك في Eco Friendy',
+                message: `مرحباً بك! 👋
+
+نحن سعداء بانضمامك إلى عائلة Eco Friendy.
+
+نحن نقدم منتجات صديقة للبيئة عالية الجودة.
+
+ابدأ التسوق الآن واستمتع بخصم 10% على طلبك الأول! 🎁
+
+استخدم كود: WELCOME10
+
+مع تحياتنا،
+فريق Eco Friendy 🌱`
+            },
+            order: {
+                subject: '✅ تم تأكيد طلبك #12345',
+                message: `عزيزي العميل،
+
+تم استلام طلبك بنجاح! 📦
+
+رقم الطلب: #12345
+التاريخ: ${new Date().toLocaleDateString('ar-SA')}
+المبلغ الإجمالي: 45.00 د.أ
+
+سيتم توصيل طلبك خلال 2-3 أيام عمل.
+
+لتتبع طلبك: https://eco-friendy.com/track/12345
+
+شكراً لثقتك بنا! 💚
+
+فريق Eco Friendy`
+            },
+            test: {
+                subject: '🧪 اختبار النظام',
+                message: `هذا بريد اختبار.
+
+التاريخ: ${new Date().toLocaleString('ar-SA')}
+الحالة: نشط ✅
+النظام: يعمل بشكل صحيح 🎯
+
+تم الإرسال من: Eco Friendy Email System`
+            }
+        };
+
+        // اختيار القالب
+        document.querySelectorAll('.template-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // إزالة التحديد من الجميع
+                document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
+                
+                // تحديد الزر الحالي
+                this.classList.add('active');
+                
+                // تعبئة النموذج
+                const template = templates[this.dataset.template];
+                document.getElementById('subject').value = template.subject;
+                document.getElementById('message').value = template.message;
+            });
+        });
+
+        // معالجة إرسال النموذج
+        document.getElementById('emailForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const alertBox = document.getElementById('alertBox');
+            const submitBtn = document.getElementById('submitBtn');
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // تعطيل الزر وإظهار التحميل
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ جاري الإرسال <span class="spinner"></span>';
+
+            try {
+                const response = await fetch('send-test-email.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        subject: subject,
+                        message: message
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alertBox.className = 'alert success show';
+                    alertBox.innerHTML = '✅ ' + data.message;
+                    
+                    // إعادة تعيين النموذج بعد 2 ثانية
+                    setTimeout(() => {
+                        document.getElementById('emailForm').reset();
+                        document.getElementById('email').value = 'info@eco-friendy.com';
+                        document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
+                    }, 2000);
+                } else {
+                    alertBox.className = 'alert error show';
+                    alertBox.innerHTML = '❌ ' + data.message;
+                }
+
+            } catch (error) {
+                alertBox.className = 'alert error show';
+                alertBox.innerHTML = '❌ حدث خطأ: ' + error.message;
+            } finally {
+                // إعادة تفعيل الزر
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '✉️ إرسال البريد';
+
+                // إخفاء الرسالة بعد 5 ثواني
+                setTimeout(() => {
+                    alertBox.classList.remove('show');
+                }, 5000);
+            }
+        });
+
+        // تحديث التاريخ في القوالب
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentDate = new Date().toLocaleString('ar-SA');
+            templates.test.message = templates.test.message.replace('${new Date().toLocaleString(\'ar-SA\')}', currentDate);
+        });
+    </script>
+</body>
+</html>
