@@ -753,7 +753,7 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <a href="tel:+962790083039" class="top-bar-item"><i class="fas fa-phone"></i> +962790083039</a>
-        <a href="mailto:info@eco-friendy.com" class="top-bar-item"><i class="fas fa-envelope"></i> info@eco-friendy.com</a>
+        <a href="/cdn-cgi/l/email-protection#41282f272e0124222e6c273328242f25386f222e2c" class="top-bar-item"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="2b42454d446b4e4844064d59424e454f5205484446">[email&#160;protected]</span></a>
         <a href="#" class="top-bar-item"><i class="fas fa-map-marker-alt"></i> الأردن - عمان</a>
     </div>
 
@@ -889,7 +889,7 @@
             <div class="footer-section">
                 <h3>تواصل معنا</h3>
                 <a href="tel:+962790083039"><i class="fas fa-phone"></i> +962790083039</a>
-                <a href="mailto:info@eco-friendy.com"><i class="fas fa-envelope"></i> info@eco-friendy.com</a>
+                <a href="/cdn-cgi/l/email-protection#264f484049664345490b40544f4348425f0845494b"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="8ce5e2eae3cce9efe3a1eafee5e9e2e8f5a2efe3e1">[email&#160;protected]</span></a>
                 <a href="#"><i class="fas fa-map-marker-alt"></i> الأردن - عمان</a>
             </div>
             <div class="footer-section">
@@ -907,7 +907,7 @@
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ==================== متغيرات ====================
         let allProductsData = [];
         let allCategories = [];
@@ -971,9 +971,9 @@
                             <div class="user-dropdown-name">${currentUser.fullname}</div>
                             <div class="user-dropdown-email">${currentUser.email}</div>
                         </div>
-                        <a href="profile.html"><i class="fas fa-user"></i> حسابي</a>
+                        <a href="${currentUser.role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html'}"><i class="fas fa-user"></i> حسابي</a>
                         <a href="orders.html"><i class="fas fa-shopping-bag"></i> طلباتي</a>
-                        ${currentUser.role === 'admin' ? '<a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a>' : ''}
+                        ${currentUser.role === 'admin' ? '<a href="admin-dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a>' : ''}
                         <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
                     </div>
                 </div>
@@ -984,9 +984,9 @@
             // تحديث القائمة الجانبية
             const mobileMenu = document.getElementById('mobileMenuList');
             mobileMenu.innerHTML += `
-                <li><a href="profile.html"><i class="fas fa-user-circle"></i> حسابي (${currentUser.fullname})</a></li>
+                <li><a href="${currentUser.role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html'}"><i class="fas fa-user-circle"></i> حسابي (${currentUser.fullname})</a></li>
                 <li><a href="orders.html"><i class="fas fa-shopping-bag"></i> طلباتي</a></li>
-                ${currentUser.role === 'admin' ? '<li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>' : ''}
+                ${currentUser.role === 'admin' ? '<li><a href="admin-dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>' : ''}
                 <li><button onclick="logout()" style="color: #ef4444;"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button></li>
             `;
         }
@@ -1275,14 +1275,4 @@
             document.getElementById('overlay').classList.remove('active');
         }
 
-        document.getElementById('overlay').addEventListener('click', closeMobileMenu);
-
-        function showNotification(text) {
-            const el = document.getElementById('notification');
-            document.getElementById('notificationText').textContent = text;
-            el.classList.add('show');
-            setTimeout(() => el.classList.remove('show'), 3000);
-        }
-    </script>
-</body>
-</html>
+        document.getElementById
