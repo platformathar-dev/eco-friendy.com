@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 require __DIR__ . '/mail/mailer.php';
 
 if (sendMail(
-    'your@email.com',
+    'rezak.abazid@gmail.com',
     'اختبار الإرسال',
     '<h2>نجح الإرسال 🎉</h2>'
 )) {
