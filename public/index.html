@@ -114,7 +114,7 @@
             font-weight: bold;
         }
 
-        /* ============ USER ICON & DROPDOWN ============ */
+        /* ============ USER MENU ============ */
         .user-menu {
             position: relative;
         }
@@ -746,14 +746,13 @@
             <li><a href="wishlist.html"><i class="fas fa-heart"></i> المفضلة</a></li>
             <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
             <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-            <!-- سيتم إضافة عناصر تسجيل الدخول/حسابي ديناميكياً -->
         </ul>
     </div>
 
     <!-- Top Bar -->
     <div class="top-bar">
         <a href="tel:+962790083039" class="top-bar-item"><i class="fas fa-phone"></i> +962790083039</a>
-        <a href="/cdn-cgi/l/email-protection#41282f272e0124222e6c273328242f25386f222e2c" class="top-bar-item"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="2b42454d446b4e4844064d59424e454f5205484446">[email&#160;protected]</span></a>
+        <a href="mailto:info@eco-friendy.com" class="top-bar-item"><i class="fas fa-envelope"></i> info@eco-friendy.com</a>
         <a href="#" class="top-bar-item"><i class="fas fa-map-marker-alt"></i> الأردن - عمان</a>
     </div>
 
@@ -770,7 +769,6 @@
                     <i class="fas fa-heart"></i>
                     <span class="header-badge" id="wishlist-count">0</span>
                 </a>
-                <!-- سيتم إضافة قائمة المستخدم هنا ديناميكياً -->
                 <button class="mobile-menu-btn" onclick="openMobileMenu()"><i class="fas fa-bars"></i></button>
             </div>
         </div>
@@ -834,7 +832,6 @@
     <section class="section bg-white">
         <h2 class="section-title">تسوق حسب التصنيف</h2>
         <div class="categories-grid" id="categoriesGrid">
-            <!-- Skeleton Loading -->
             <div class="skeleton-category"></div>
             <div class="skeleton-category"></div>
             <div class="skeleton-category"></div>
@@ -849,7 +846,6 @@
             <a href="products.html" class="view-all">عرض الكل ←</a>
         </div>
         <div class="products-grid" id="latestProducts">
-            <!-- Skeleton Loading -->
             <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-text short"></div><div class="skeleton-text price"></div><div class="skeleton-btn"></div></div>
             <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-text short"></div><div class="skeleton-text price"></div><div class="skeleton-btn"></div></div>
             <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-text short"></div><div class="skeleton-text price"></div><div class="skeleton-btn"></div></div>
@@ -889,7 +885,7 @@
             <div class="footer-section">
                 <h3>تواصل معنا</h3>
                 <a href="tel:+962790083039"><i class="fas fa-phone"></i> +962790083039</a>
-                <a href="/cdn-cgi/l/email-protection#264f484049664345490b40544f4348425f0845494b"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="8ce5e2eae3cce9efe3a1eafee5e9e2e8f5a2efe3e1">[email&#160;protected]</span></a>
+                <a href="mailto:info@eco-friendy.com"><i class="fas fa-envelope"></i> info@eco-friendy.com</a>
                 <a href="#"><i class="fas fa-map-marker-alt"></i> الأردن - عمان</a>
             </div>
             <div class="footer-section">
@@ -897,6 +893,8 @@
                 <div class="social-links">
                     <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
@@ -905,8 +903,8 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // ==================== متغيرات ====================
+    <script>
+        // ==================== VARIABLES ====================
         let allProductsData = [];
         let allCategories = [];
         let cart = JSON.parse(localStorage.getItem('eco_cart') || '[]');
@@ -914,20 +912,13 @@
         let currentSlide = 0;
         let sliderInterval;
 
-        // ايقونات التصنيفات
         const categoryIcons = {
-            'كلاب': '🐕',
-            'قطط': '🐈',
-            'طيور': '🦜',
-            'أسماك': '🐠',
-            'طعام': '🍖',
-            'إكسسوارات': '👔',
-            'رعاية': '💊',
-            'ألعاب': '🎾',
+            'كلاب': '🐕', 'قطط': '🐈', 'طيور': '🦜', 'أسماك': '🐠',
+            'طعام': '🍖', 'إكسسوارات': '👔', 'رعاية': '💊', 'ألعاب': '🎾',
             'default': '🐾'
         };
 
-        // ==================== تحميل البيانات ====================
+        // ==================== INIT ====================
         window.addEventListener('DOMContentLoaded', async function() {
             await checkAuth();
             await loadCategories();
@@ -936,7 +927,7 @@
             startSlider();
         });
 
-        // ==================== التحقق من تسجيل الدخول ====================
+        // ==================== AUTH ====================
         async function checkAuth() {
             try {
                 const response = await fetch('api/check-session.php');
@@ -955,7 +946,6 @@
         }
 
         function updateUIForLoggedInUser() {
-            // تحديث الهيدر
             const headerIcons = document.getElementById('headerIcons');
             const menuBtn = headerIcons.querySelector('.mobile-menu-btn');
             
@@ -970,6 +960,7 @@
                             <div class="user-dropdown-email">${currentUser.email}</div>
                         </div>
                         <a href="${currentUser.role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html'}"><i class="fas fa-user"></i> حسابي</a>
+                        <a href="orders.html"><i class="fas fa-shopping-bag"></i> طلباتي</a>
                         ${currentUser.role === 'admin' ? '<a href="admin-dashboard.html"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a>' : ''}
                         <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
                     </div>
@@ -978,7 +969,6 @@
             
             menuBtn.insertAdjacentHTML('beforebegin', userMenuHTML);
 
-            // تحديث القائمة الجانبية
             const mobileMenu = document.getElementById('mobileMenuList');
             mobileMenu.innerHTML += `
                 <li><a href="${currentUser.role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html'}"><i class="fas fa-user-circle"></i> حسابي (${currentUser.fullname})</a></li>
@@ -989,7 +979,6 @@
         }
 
         function updateUIForGuest() {
-            // إضافة أزرار تسجيل الدخول
             const mobileMenu = document.getElementById('mobileMenuList');
             mobileMenu.innerHTML += `
                 <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
@@ -1001,7 +990,6 @@
             const dropdown = document.getElementById('userDropdown');
             dropdown.classList.toggle('active');
             
-            // إضافة حدث لإغلاق القائمة عند النقر خارجها
             if (dropdown.classList.contains('active')) {
                 setTimeout(() => {
                     document.addEventListener('click', closeDropdownOutside);
@@ -1036,7 +1024,7 @@
             }
         }
 
-        // ==================== تحميل التصنيفات ====================
+        // ==================== CATEGORIES ====================
         async function loadCategories() {
             try {
                 const response = await fetch('api/get-categories.php');
@@ -1092,7 +1080,7 @@
             `;
         }
 
-        // ==================== تحميل المنتجات ====================
+        // ==================== PRODUCTS ====================
         async function loadProducts() {
             try {
                 const response = await fetch('api/get-products.php');
@@ -1174,7 +1162,7 @@
             `;
         }
 
-        // ==================== السلة ====================
+        // ==================== CART ====================
         function quickAddToCart(productId) {
             const product = allProductsData.find(p => p.id == productId);
             if (!product || parseInt(product.stock) <= 0) return;
@@ -1207,7 +1195,7 @@
             document.getElementById('cart-count').textContent = count;
         }
 
-        // ==================== البحث ====================
+        // ==================== SEARCH ====================
         function handleSearch(event) {
             if (event.key === 'Enter') performSearch();
         }
@@ -1221,7 +1209,7 @@
             window.location.href = `products.html?search=${encodeURIComponent(term)}`;
         }
 
-        // ==================== السلايدر ====================
+        // ==================== SLIDER ====================
         function startSlider() {
             sliderInterval = setInterval(() => {
                 changeSlide(1);
@@ -1240,7 +1228,6 @@
             slides[currentSlide].classList.add('active');
             dots[currentSlide].classList.add('active');
             
-            // إعادة تعيين المؤقت
             clearInterval(sliderInterval);
             startSlider();
         }
@@ -1261,7 +1248,7 @@
             startSlider();
         }
 
-        // ==================== القائمة والإشعارات ====================
+        // ==================== MENU ====================
         function openMobileMenu() {
             document.getElementById('mobileNav').classList.add('active');
             document.getElementById('overlay').classList.add('active');
@@ -1272,4 +1259,14 @@
             document.getElementById('overlay').classList.remove('active');
         }
 
-        document.getElementById
+        document.getElementById('overlay').addEventListener('click', closeMobileMenu);
+
+        function showNotification(text) {
+            const el = document.getElementById('notification');
+            document.getElementById('notificationText').textContent = text;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
