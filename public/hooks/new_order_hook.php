@@ -5,7 +5,7 @@
  */
 
 require_once __DIR__ . '/../EmailNotificationSystem.php';
-require_once __DIR__ . '/../db_config.php';
+require_once __DIR__ . '/../config.php';
 
 /**
  * استخدم هذه الدالة بعد نجاح إنشاء طلب جديد
