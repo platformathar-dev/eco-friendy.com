@@ -1,5 +1,5 @@
 <?php
-// ملف API لإضافة طلب جديد
+// ملف API لإضافة طلب جديد مع نظام الإيميلات
 // api/place-order.php
 
 header('Content-Type: application/json; charset=utf-8');
@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once '../config.php';
+require_once '../hooks/new_order_hook.php'; // ⭐ إضافة نظام الإيميلات
 
 // بدء الجلسة
 if (session_status() === PHP_SESSION_NONE) {
@@ -91,13 +92,15 @@ try {
                 created_at
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
     
+    $customerEmail = $_SESSION['user_email'] ?? '';
+    
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         (int)$data['user_id'],
         $orderNumber,
         $data['customer_name'],
         $data['customer_phone'],
-        $_SESSION['user_email'] ?? '', // البريد من الجلسة
+        $customerEmail,
         $data['customer_address'],
         $data['shipping_address'] ?? $data['customer_address'],
         $data['notes'] ?? '',
@@ -109,6 +112,7 @@ try {
     $orderId = $pdo->lastInsertId();
     
     // إدراج منتجات الطلب
+    $orderItems = [];
     if (!empty($data['items']) && is_array($data['items'])) {
         $itemSql = "INSERT INTO order_items (
                         order_id, 
@@ -129,6 +133,14 @@ try {
                 $quantity,
                 $price
             ]);
+            
+            // حفظ تفاصيل المنتج للإيميل
+            $orderItems[] = [
+                'product_id' => $item['product_id'],
+                'product_name' => $item['product_name'] ?? 'منتج',
+                'quantity' => $quantity,
+                'price' => $price
+            ];
         }
     } else {
         throw new Exception('يجب إضافة منتج واحد على الأقل');
@@ -137,15 +149,48 @@ try {
     // تأكيد المعاملة
     $pdo->commit();
     
+    // ⭐⭐⭐ إرسال الإيميلات ⭐⭐⭐
+    $emailSent = false;
+    $adminEmailSent = false;
+    
+    if (!empty($customerEmail)) {
+        try {
+            // إرسال إيميل للعميل
+            $emailSent = sendNewOrderEmailToCustomer(
+                $orderId,
+                (int)$data['user_id'],
+                $customerEmail,
+                $data['customer_name'],
+                $orderNumber,
+                (float)$data['total_amount'],
+                $orderItems
+            );
+            
+            // إرسال إيميل للإدارة
+            $adminEmailSent = sendNewOrderEmailToAdmin(
+                $orderId,
+                $orderNumber,
+                $data['customer_name'],
+                (float)$data['total_amount']
+            );
+            
+        } catch (Exception $emailException) {
+            // تسجيل الخطأ لكن لا نفشل الطلب
+            error_log("Email sending failed: " . $emailException->getMessage());
+        }
+    }
+    
     // إرجاع استجابة نجاح
     http_response_code(201);
     echo json_encode([
         'success' => true,
-        'message' => 'تم إنشاء الطلب بنجاح',
+        'message' => 'تم إنشاء الطلب بنجاح' . ($emailSent ? ' وتم إرسال إيميل التأكيد' : ''),
         'order_id' => $orderId,
         'order_number' => $orderNumber,
         'payment_method' => $data['payment_method'],
-        'total_amount' => $data['total_amount']
+        'total_amount' => $data['total_amount'],
+        'email_sent' => $emailSent,
+        'admin_notified' => $adminEmailSent
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
