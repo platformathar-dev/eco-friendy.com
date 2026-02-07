@@ -1,0 +1,27 @@
+# حماية ملفات الإعدادات الحساسة
+<FilesMatch "^(mailer\.php|config\.php)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# السماح بالوصول من نفس الخادم فقط
+<FilesMatch "^(mailer\.php)$">
+    Allow from 127.0.0.1
+    Allow from ::1
+</FilesMatch>
+
+# منع عرض محتوى المجلد
+Options -Indexes
+
+# تفعيل ضغط الملفات
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+</IfModule>
+
+# تفعيل التخزين المؤقت
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+</IfModule>
