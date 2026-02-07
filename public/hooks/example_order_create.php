@@ -4,7 +4,7 @@
  * Example: Create Order with Auto Email
  */
 
-require_once __DIR__ . '/db_config.php';
+require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/hooks/new_order_hook.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
