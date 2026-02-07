@@ -14,12 +14,173 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once '../config.php';
-require_once '../hooks/new_order_hook.php'; // ⭐ إضافة نظام الإيميلات
+require_once '../mail/mailer.php';  // ⭐ نظام الإيميلات
 
 // بدء الجلسة
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// ⭐⭐⭐ دالة إرسال إيميل تأكيد للعميل ⭐⭐⭐
+function sendOrderConfirmationEmail($pdo, $orderId, $userId, $email, $customerName, $orderNumber, $totalAmount, $items) {
+    $subject = "تأكيد طلبك #$orderNumber - Eco Friendy 📦";
+    
+    // بناء قائمة المنتجات
+    $itemsHtml = "";
+    foreach ($items as $item) {
+        $itemTotal = $item['quantity'] * $item['price'];
+        $itemsHtml .= "
+        <tr>
+            <td style='padding: 12px; border-bottom: 1px solid #eee;'>" . htmlspecialchars($item['product_name']) . "</td>
+            <td style='padding: 12px; border-bottom: 1px solid #eee; text-align: center;'>" . $item['quantity'] . "</td>
+            <td style='padding: 12px; border-bottom: 1px solid #eee; text-align: center;'>" . number_format($item['price'], 2) . " JOD</td>
+            <td style='padding: 12px; border-bottom: 1px solid #eee; text-align: center; font-weight: bold;'>" . number_format($itemTotal, 2) . " JOD</td>
+        </tr>";
+    }
+    
+    $message = "
+    <!DOCTYPE html>
+    <html dir='rtl' lang='ar'>
+    <head>
+        <meta charset='UTF-8'>
+        <style>
+            body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
+            .container { max-width: 650px; margin: 30px auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+            .header { background: linear-gradient(135deg, #4CAF50 0%, #2e7d32 100%); color: white; padding: 40px 30px; text-align: center; }
+            .header h1 { margin: 0; font-size: 32px; }
+            .content { padding: 40px 30px; }
+            .order-box { background: #f0f8f0; border-right: 5px solid #4CAF50; padding: 25px; margin: 25px 0; border-radius: 8px; }
+            .items-table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+            .items-table th { background: #f5f5f5; padding: 15px; text-align: right; font-weight: 600; border-bottom: 2px solid #ddd; }
+            .total-section { background: #f9f9f9; padding: 20px; margin: 25px 0; border-radius: 8px; text-align: left; }
+            .total-row { font-size: 24px; font-weight: bold; color: #2e7d32; display: flex; justify-content: space-between; }
+            .button { display: inline-block; background: #4CAF50; color: white !important; padding: 15px 40px; text-decoration: none; border-radius: 8px; margin: 25px 0; font-weight: 600; }
+            .footer { background: #f9f9f9; padding: 30px; text-align: center; color: #666; font-size: 14px; border-top: 1px solid #eee; }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <h1>✅ تم تأكيد طلبك</h1>
+                <p>شكراً لثقتك في Eco Friendy</p>
+            </div>
+            <div class='content'>
+                <div class='order-box'>
+                    <h2 style='color: #4CAF50; margin-top: 0;'>تفاصيل الطلب</h2>
+                    <p><strong>رقم الطلب:</strong> <span style='color: #4CAF50; font-size: 18px;'>#" . htmlspecialchars($orderNumber) . "</span></p>
+                    <p><strong>اسم العميل:</strong> " . htmlspecialchars($customerName) . "</p>
+                    <p><strong>التاريخ:</strong> " . date('Y-m-d H:i') . "</p>
+                </div>
+                
+                <h3>المنتجات المطلوبة:</h3>
+                <table class='items-table'>
+                    <thead>
+                        <tr>
+                            <th>المنتج</th>
+                            <th style='text-align: center;'>الكمية</th>
+                            <th style='text-align: center;'>السعر</th>
+                            <th style='text-align: center;'>الإجمالي</th>
+                        </tr>
+                    </thead>
+                    <tbody>$itemsHtml</tbody>
+                </table>
+                
+                <div class='total-section'>
+                    <div class='total-row'>
+                        <span>المجموع الكلي:</span>
+                        <span>" . number_format($totalAmount, 2) . " JOD</span>
+                    </div>
+                </div>
+                
+                <center><a href='https://eco-friendy.com/orders' class='button'>تتبع الطلب</a></center>
+                
+                <p style='margin-top: 30px; color: #666; font-size: 14px;'>
+                    إذا كان لديك أي استفسار، لا تتردد في التواصل:<br>
+                    📧 <a href='mailto:info@eco-friendy.com' style='color: #4CAF50;'>info@eco-friendy.com</a>
+                </p>
+            </div>
+            <div class='footer'>
+                <p style='margin: 0;'>© 2026 Eco Friendy. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
+    
+    try {
+        // حفظ الإشعار في قاعدة البيانات
+        $stmt = $pdo->prepare("
+            INSERT INTO notifications (user_id, order_id, email, type, subject, message, status, attempts, created_at) 
+            VALUES (?, ?, ?, 'new_order', ?, ?, 'pending', 0, NOW())
+        ");
+        $stmt->execute([$userId, $orderId, $email, $subject, $message]);
+        $notificationId = $pdo->lastInsertId();
+        
+        // محاولة إرسال البريد
+        if (sendMail($email, $subject, $message)) {
+            // تحديث الحالة إلى "مرسل"
+            $updateStmt = $pdo->prepare("UPDATE notifications SET status = 'sent', sent_at = NOW() WHERE id = ?");
+            $updateStmt->execute([$notificationId]);
+            error_log("✅ Order email sent to: $email");
+            return true;
+        } else {
+            // تحديث الحالة إلى "فشل"
+            $updateStmt = $pdo->prepare("UPDATE notifications SET status = 'failed', attempts = 1, error_message = 'SMTP failed' WHERE id = ?");
+            $updateStmt->execute([$notificationId]);
+            error_log("❌ Failed to send order email to: $email");
+            return false;
+        }
+    } catch (Exception $e) {
+        error_log("❌ Email exception: " . $e->getMessage());
+        return false;
+    }
+}
+
+// ⭐⭐⭐ دالة إرسال إشعار للإدارة ⭐⭐⭐
+function sendAdminNotification($adminEmail, $orderNumber, $customerName, $totalAmount) {
+    $subject = "🔔 طلب جديد #$orderNumber يحتاج للمراجعة";
+    
+    $message = "
+    <!DOCTYPE html>
+    <html dir='rtl' lang='ar'>
+    <head>
+        <meta charset='UTF-8'>
+        <style>
+            body { font-family: Arial; background: #f4f4f4; margin: 0; padding: 0; }
+            .container { max-width: 600px; margin: 20px auto; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+            .header { background: #ff9800; color: white; padding: 30px; text-align: center; }
+            .content { padding: 30px; }
+            .alert-box { background: #fff3cd; border-right: 4px solid #ff9800; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <h1>🔔 طلب جديد</h1>
+            </div>
+            <div class='content'>
+                <div class='alert-box'>
+                    <h2 style='margin-top: 0; color: #ff9800;'>تنبيه: طلب يحتاج للمراجعة</h2>
+                    <p><strong>رقم الطلب:</strong> #" . htmlspecialchars($orderNumber) . "</p>
+                    <p><strong>اسم العميل:</strong> " . htmlspecialchars($customerName) . "</p>
+                    <p><strong>قيمة الطلب:</strong> <span style='color: #4CAF50; font-weight: bold;'>" . number_format($totalAmount, 2) . " JOD</span></p>
+                    <p><strong>التاريخ:</strong> " . date('Y-m-d H:i:s') . "</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>";
+    
+    try {
+        return sendMail($adminEmail, $subject, $message);
+    } catch (Exception $e) {
+        error_log("Failed to send admin notification: " . $e->getMessage());
+        return false;
+    }
+}
+
+// ============================================
+// المعالجة الرئيسية للطلب
+// ============================================
 
 // التأكد من أن الطلب POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -151,12 +312,13 @@ try {
     
     // ⭐⭐⭐ إرسال الإيميلات ⭐⭐⭐
     $emailSent = false;
-    $adminEmailSent = false;
+    $adminNotified = false;
     
     if (!empty($customerEmail)) {
         try {
             // إرسال إيميل للعميل
-            $emailSent = sendNewOrderEmailToCustomer(
+            $emailSent = sendOrderConfirmationEmail(
+                $pdo,
                 $orderId,
                 (int)$data['user_id'],
                 $customerEmail,
@@ -167,16 +329,16 @@ try {
             );
             
             // إرسال إيميل للإدارة
-            $adminEmailSent = sendNewOrderEmailToAdmin(
-                $orderId,
+            $adminNotified = sendAdminNotification(
+                'info@eco-friendy.com',
                 $orderNumber,
                 $data['customer_name'],
                 (float)$data['total_amount']
             );
             
-        } catch (Exception $emailException) {
+        } catch (Exception $emailEx) {
             // تسجيل الخطأ لكن لا نفشل الطلب
-            error_log("Email sending failed: " . $emailException->getMessage());
+            error_log("❌ Email error: " . $emailEx->getMessage());
         }
     }
     
@@ -184,13 +346,13 @@ try {
     http_response_code(201);
     echo json_encode([
         'success' => true,
-        'message' => 'تم إنشاء الطلب بنجاح' . ($emailSent ? ' وتم إرسال إيميل التأكيد' : ''),
+        'message' => 'تم إنشاء الطلب بنجاح' . ($emailSent ? ' ✅ وتم إرسال إيميل التأكيد' : ''),
         'order_id' => $orderId,
         'order_number' => $orderNumber,
         'payment_method' => $data['payment_method'],
         'total_amount' => $data['total_amount'],
         'email_sent' => $emailSent,
-        'admin_notified' => $adminEmailSent
+        'admin_notified' => $adminNotified
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
