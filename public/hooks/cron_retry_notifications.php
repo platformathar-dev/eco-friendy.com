@@ -12,7 +12,7 @@
  */
 
 require_once __DIR__ . '/EmailNotificationSystem.php';
-require_once __DIR__ . '/config.php';
+require_once '../config.php';
 
 echo "🔄 بدء عملية إعادة محاولة إرسال الإشعارات الفاشلة...\n";
 echo "الوقت: " . date('Y-m-d H:i:s') . "\n";
