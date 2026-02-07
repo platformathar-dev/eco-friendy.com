@@ -1,22 +1,64 @@
 <?php
 /**
  * PHPMailer Configuration for Hostinger
- * البريد: info@eco-friendy.com
+ * يدعم كلاً من Composer والتثبيت اليدوي
  */
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-// تحميل PHPMailer من Composer أو المسار المحلي
+// محاولة تحميل PHPMailer - يدعم طريقتين:
+// 1. عبر Composer (الطريقة الموصى بها)
+// 2. التثبيت اليدوي في مجلد PHPMailer
+
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    // ✅ تحميل عبر Composer
     require __DIR__ . '/../vendor/autoload.php';
+    
 } elseif (file_exists(__DIR__ . '/../public/PHPMailer/src/PHPMailer.php')) {
+    // ✅ تحميل يدوي من المسار الكامل
     require __DIR__ . '/../public/PHPMailer/src/PHPMailer.php';
     require __DIR__ . '/../public/PHPMailer/src/SMTP.php';
     require __DIR__ . '/../public/PHPMailer/src/Exception.php';
+    
+} elseif (file_exists(__DIR__ . '/PHPMailer/src/PHPMailer.php')) {
+    // ✅ تحميل يدوي - مسار بديل
+    require __DIR__ . '/PHPMailer/src/PHPMailer.php';
+    require __DIR__ . '/PHPMailer/src/SMTP.php';
+    require __DIR__ . '/PHPMailer/src/Exception.php';
+    
+} elseif (file_exists(dirname(__DIR__) . '/PHPMailer/src/PHPMailer.php')) {
+    // ✅ تحميل يدوي - مسار في الجذر
+    require dirname(__DIR__) . '/PHPMailer/src/PHPMailer.php';
+    require dirname(__DIR__) . '/PHPMailer/src/SMTP.php';
+    require dirname(__DIR__) . '/PHPMailer/src/Exception.php';
+    
 } else {
-    throw new Exception('PHPMailer library not found');
+    throw new Exception('
+        ❌ PHPMailer library not found!
+        
+        الرجاء تثبيت PHPMailer بإحدى الطرق التالية:
+        
+        1️⃣ عبر Composer:
+           composer require phpmailer/phpmailer
+        
+        2️⃣ تحميل يدوي:
+           - حمّل PHPMailer من: https://github.com/PHPMailer/PHPMailer/archive/master.zip
+           - استخرج المجلد واسمه "PHPMailer"
+           - ضعه في: public_html/public/PHPMailer/
+           
+        البنية المطلوبة:
+        public_html/
+        ├── mail/
+        │   └── mailer.php (هذا الملف)
+        └── public/
+            └── PHPMailer/
+                └── src/
+                    ├── PHPMailer.php
+                    ├── SMTP.php
+                    └── Exception.php
+    ');
 }
 
 /**
