@@ -4,50 +4,97 @@
  * send-test-email.php
  */
 
+// منع أي إخراج قبل الهيدر
+ob_start();
+
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
+// تسجيل الأخطاء في ملف بدلاً من عرضها
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    ob_end_clean();
     http_response_code(200);
+    exit();
+}
+
+// دالة للرد بصيغة JSON
+function sendJsonResponse($success, $message, $code = 200) {
+    ob_clean(); // تنظيف أي إخراج سابق
+    http_response_code($code);
+    echo json_encode([
+        'success' => $success,
+        'message' => $message
+    ], JSON_UNESCAPED_UNICODE);
     exit();
 }
 
 // التأكد من أن الطلب POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode([
-        'success' => false,
-        'message' => 'طريقة الطلب غير مسموحة'
-    ], JSON_UNESCAPED_UNICODE);
-    exit();
+    sendJsonResponse(false, 'طريقة الطلب غير مسموحة', 405);
 }
 
 try {
     // قراءة البيانات
     $input = file_get_contents('php://input');
+    
+    if (empty($input)) {
+        sendJsonResponse(false, 'لم يتم استلام أي بيانات');
+    }
+    
     $data = json_decode($input, true);
     
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        sendJsonResponse(false, 'خطأ في تحليل البيانات: ' . json_last_error_msg());
+    }
+    
     if (!$data) {
-        throw new Exception('لم يتم استلام بيانات صحيحة');
+        sendJsonResponse(false, 'البيانات المستلمة غير صحيحة');
     }
     
     // التحقق من الحقول المطلوبة
-    if (empty($data['email']) || empty($data['subject']) || empty($data['message'])) {
-        throw new Exception('جميع الحقول مطلوبة');
+    if (empty($data['email'])) {
+        sendJsonResponse(false, 'البريد الإلكتروني مطلوب');
+    }
+    
+    if (empty($data['subject'])) {
+        sendJsonResponse(false, 'الموضوع مطلوب');
+    }
+    
+    if (empty($data['message'])) {
+        sendJsonResponse(false, 'الرسالة مطلوبة');
     }
     
     $email = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
     if (!$email) {
-        throw new Exception('البريد الإلكتروني غير صحيح');
+        sendJsonResponse(false, 'البريد الإلكتروني غير صحيح');
     }
     
     $subject = htmlspecialchars($data['subject'], ENT_QUOTES, 'UTF-8');
     $message = $data['message'];
     
+    // التحقق من وجود ملف البريد
+    $mailerPath = __DIR__ . '/mail/mailer.php';
+    if (!file_exists($mailerPath)) {
+        // محاولة مسار بديل
+        $mailerPath = dirname(__DIR__) . '/mail/mailer.php';
+        if (!file_exists($mailerPath)) {
+            sendJsonResponse(false, 'ملف إعدادات البريد غير موجود. يرجى التأكد من رفع ملف mail/mailer.php');
+        }
+    }
+    
     // تحميل مكتبة البريد
-    require_once 'mail/mailer.php';
+    require_once $mailerPath;
+    
+    // التحقق من وجود دالة sendMail
+    if (!function_exists('sendMail')) {
+        sendJsonResponse(false, 'دالة إرسال البريد غير متوفرة. يرجى التحقق من ملف mailer.php');
+    }
     
     // إنشاء محتوى HTML للبريد
     $htmlBody = "<!DOCTYPE html>
@@ -181,19 +228,18 @@ try {
     $sent = sendMail($email, $subject, $htmlBody, strip_tags($message));
     
     if ($sent) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'تم إرسال البريد بنجاح! ✅ يرجى التحقق من صندوق الوارد أو البريد المزعج.'
-        ], JSON_UNESCAPED_UNICODE);
+        sendJsonResponse(true, 'تم إرسال البريد بنجاح! ✅ يرجى التحقق من صندوق الوارد أو البريد المزعج.');
     } else {
-        throw new Exception('فشل إرسال البريد. يرجى التحقق من إعدادات SMTP.');
+        sendJsonResponse(false, 'فشل إرسال البريد. يرجى التحقق من:\n1. إعدادات SMTP في mailer.php\n2. كلمة مرور البريد\n3. سجل الأخطاء في error_log');
     }
     
 } catch (Exception $e) {
-    http_response_code(400);
-    echo json_encode([
-        'success' => false,
-        'message' => $e->getMessage()
-    ], JSON_UNESCAPED_UNICODE);
+    sendJsonResponse(false, 'حدث خطأ: ' . $e->getMessage(), 400);
+} catch (Error $e) {
+    sendJsonResponse(false, 'خطأ في النظام: ' . $e->getMessage(), 500);
 }
+
+// في حالة وصلنا هنا بدون استجابة
+ob_end_clean();
+sendJsonResponse(false, 'حدث خطأ غير متوقع');
 ?>
