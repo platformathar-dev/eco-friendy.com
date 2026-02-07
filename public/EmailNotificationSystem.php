@@ -4,18 +4,7 @@
  * Email Notification System
  */
 
-// تحديد المسار الصحيح لملف mailer.php
-// غيّر المسار حسب موقع ملف mailer.php في مشروعك
-$mailerPath = __DIR__ . '/mail/mailer.php';
-if (!file_exists($mailerPath)) {
-    // جرب مسار آخر
-    $mailerPath = dirname(__DIR__) . '/mail/mailer.php';
-}
-if (file_exists($mailerPath)) {
-    require_once $mailerPath;
-} else {
-    die("Error: mailer.php not found. Please check the path.");
-}
+require_once __DIR__ . '/mail/mailer.php';
 
 class EmailNotificationSystem {
     
