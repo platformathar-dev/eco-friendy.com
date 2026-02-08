@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إتمام الطلب - ديجيتال أثر</title>
+    <title>إتمام الطلب - Eco Friendy</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -16,61 +16,88 @@
         }
 
         :root {
-            --primary: #3478c1;
-            --secondary: #2d5f8d;
-            --accent: #5a9bd4;
-            --light-bg: #e8f4fd;
-            --dark: #1a1a2e;
-            --success: #10b981;
+            --primary-color: #f39200;
+            --secondary-color: #e68500;
+            --dark-orange: #c77400;
+            --light-orange: #fff3e6;
+            --accent-color: #ff6b35;
+            --success-color: #10b981;
+            --info-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #fffbf7;
+            --white: #ffffff;
+            --error-color: #ef4444;
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 100%);
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             line-height: 1.6;
         }
 
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #3478c1 0%, #2d5f8d 100%);
-            padding: 0;
-            box-shadow: 0 4px 20px rgba(52,120,193,0.3);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
         .top-bar {
-            background: rgba(0,0,0,0.1);
-            padding: 10px 20px;
-            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            font-size: 14px;
-            font-weight: 600;
+            padding: 10px 15px;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        .header-main {
+        .top-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .top-bar-item:hover { opacity: 0.8; }
+
+        .main-header {
+            background: white;
+            padding: 12px 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .logo {
-            height: 50px;
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
         }
 
-        /* Page Header */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark-orange);
+            font-weight: 600;
+        }
+
         .page-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--primary-color);
             color: white;
-            padding: 40px 20px;
+            padding: 30px 15px;
             text-align: center;
         }
 
         .page-header h1 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 900;
             margin-bottom: 10px;
         }
@@ -87,33 +114,140 @@
             text-decoration: none;
         }
 
-        /* Container */
         .checkout-container {
-            padding: 40px 20px;
-            max-width: 900px;
+            padding: 20px 15px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        /* Checkout Section */
-        .checkout-section {
+        .login-required {
             background: white;
             border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 40px auto;
+        }
+
+        .login-required-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .login-required h2 {
+            font-size: 24px;
+            color: var(--dark-orange);
+            margin-bottom: 15px;
+        }
+
+        .login-required p {
+            color: var(--text-light);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .login-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(243, 146, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243, 146, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-orange);
+        }
+
+        .checkout-steps {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .step.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--light-orange);
+            color: var(--dark-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .step.active .step-number {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .checkout-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
         .section-title {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
-            color: var(--dark);
-            margin-bottom: 25px;
+            color: var(--dark-orange);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
-        /* Form */
         .form-group {
             margin-bottom: 20px;
         }
@@ -121,108 +255,145 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 700;
-            color: var(--dark);
+            font-weight: 600;
+            color: var(--dark-orange);
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 15px;
-            transition: all 0.3s;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            background: var(--bg-light);
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(52,120,193,0.1);
+            border-color: var(--primary-color);
+            background: white;
         }
 
-        /* Payment Methods */
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input:disabled,
+        .form-group textarea:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .payment-methods {
+            display: grid;
+            gap: 15px;
+        }
+
         .payment-method {
-            border: 3px solid var(--primary);
-            border-radius: 15px;
-            padding: 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 15px;
-            background: var(--light-bg);
         }
 
-        .payment-icon {
-            font-size: 40px;
+        .payment-method:hover {
+            border-color: var(--primary-color);
+            background: var(--light-orange);
         }
 
-        .payment-info {
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background: var(--light-orange);
+        }
+
+        .payment-method input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-color);
+        }
+
+        .payment-method-info {
             flex: 1;
         }
 
-        .payment-title {
-            font-size: 18px;
+        .payment-method-title {
+            font-size: 16px;
             font-weight: 700;
-            color: var(--dark);
+            color: var(--dark-orange);
             margin-bottom: 5px;
         }
 
-        .payment-desc {
-            font-size: 14px;
-            color: #666;
+        .payment-method-desc {
+            font-size: 13px;
+            color: var(--text-light);
         }
 
-        /* CliQ Details */
+        .payment-icon {
+            font-size: 32px;
+            color: var(--primary-color);
+        }
+
         .cliq-details {
-            margin-top: 25px;
-            padding: 25px;
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            border-radius: 15px;
-            border: 3px solid var(--primary);
-        }
-
-        .cliq-bank {
-            background: white;
+            display: none;
+            margin-top: 20px;
             padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
             border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: center;
+            border: 2px solid #3b82f6;
         }
 
-        .cliq-bank i {
-            font-size: 48px;
-            color: var(--primary);
-            margin-bottom: 10px;
+        .cliq-details.active {
+            display: block;
+            animation: slideDown 0.3s ease;
         }
 
-        .cliq-bank-name {
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--dark);
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cliq-bank-info {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
         }
 
         .cliq-alias {
-            background: var(--primary);
+            background: var(--dark-orange);
             color: white;
-            padding: 20px;
-            border-radius: 12px;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
-            margin-bottom: 20px;
+            margin: 15px 0;
             position: relative;
         }
 
         .cliq-alias-label {
-            font-size: 14px;
+            font-size: 12px;
             opacity: 0.9;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .cliq-alias-value {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
 
         .copy-btn {
@@ -233,78 +404,88 @@
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
-            padding: 10px 18px;
-            border-radius: 10px;
+            padding: 8px 15px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s;
+            font-size: 12px;
+            font-weight: 600;
         }
 
-        .copy-btn:hover {
+        .copy-btn:active {
             background: rgba(255,255,255,0.3);
         }
 
         .cliq-steps {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-
-        .cliq-steps-title {
-            font-weight: 900;
-            margin-bottom: 15px;
-            color: var(--dark);
-            font-size: 16px;
-        }
-
-        .cliq-steps ol {
-            list-style-position: inside;
-            line-height: 2;
+            list-style: none;
+            counter-reset: step-counter;
         }
 
         .cliq-steps li {
-            padding: 5px 0;
+            counter-increment: step-counter;
+            padding: 10px 0;
+            padding-right: 35px;
+            position: relative;
+        }
+
+        .cliq-steps li:before {
+            content: counter(step-counter);
+            position: absolute;
+            right: 0;
+            top: 8px;
+            width: 25px;
+            height: 25px;
+            background: var(--info-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
         }
 
         .contact-info {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        .contact-title {
-            font-weight: 900;
-            margin-bottom: 15px;
-            color: var(--dark);
-            font-size: 16px;
+            background: var(--light-orange);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 0;
+            gap: 10px;
+            padding: 8px 0;
         }
 
         .contact-item i {
-            color: var(--primary);
-            font-size: 20px;
-            width: 30px;
+            color: var(--primary-color);
+            width: 25px;
         }
 
         .contact-item a {
-            color: var(--dark);
+            color: var(--dark-orange);
             text-decoration: none;
             font-weight: 600;
         }
 
-        /* Order Summary */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr 400px;
+            }
+        }
+
         .order-item {
             display: flex;
             gap: 15px;
             padding: 15px 0;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .order-item:last-child {
@@ -312,11 +493,10 @@
         }
 
         .order-item-image {
-            width: 70px;
-            height: 70px;
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
             object-fit: cover;
-            background: linear-gradient(135deg, #e8f4fd, #d0e8f7);
+            border-radius: 8px;
         }
 
         .order-item-details {
@@ -325,64 +505,56 @@
 
         .order-item-name {
             font-weight: 700;
-            color: var(--dark);
+            color: var(--dark-orange);
             margin-bottom: 5px;
         }
 
         .order-item-qty {
-            font-size: 14px;
-            color: #666;
+            font-size: 13px;
+            color: var(--text-light);
         }
 
         .order-item-price {
             font-weight: 900;
-            font-size: 18px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary-color);
         }
 
-        .summary-row {
+        .order-summary-row {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
-            font-size: 16px;
+            padding: 10px 0;
         }
 
-        .summary-row.total {
-            border-top: 3px solid var(--light-bg);
-            padding-top: 20px;
-            margin-top: 15px;
-            font-size: 24px;
+        .order-summary-row.total {
+            border-top: 2px solid var(--light-orange);
+            margin-top: 10px;
+            padding-top: 15px;
+            font-size: 20px;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--dark-orange);
         }
 
-        /* Submit Button */
         .submit-btn {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, var(--success), #059669);
+            padding: 15px;
+            background: var(--success-color);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 20px;
+            border-radius: 12px;
+            font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            margin-top: 25px;
-            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
+            transition: all 0.3s;
         }
 
         .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(16,185,129,0.3);
+            background: #059669;
         }
 
         .submit-btn:disabled {
@@ -390,34 +562,69 @@
             cursor: not-allowed;
         }
 
-        /* Notification */
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 2px solid #3b82f6;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid var(--error-color);
+        }
+
         .notification {
             position: fixed;
-            top: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #10b981, #059669);
+            top: 80px;
+            right: 20px;
+            background: var(--success-color);
             color: white;
-            padding: 20px 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            z-index: 9999;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 3000;
             display: none;
             align-items: center;
-            gap: 15px;
-            font-weight: 600;
+            gap: 10px;
+            max-width: 400px;
         }
 
         .notification.show {
             display: flex;
-            animation: slideIn 0.4s ease;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.error {
+            background: var(--error-color);
         }
 
         @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
-        /* Success Modal */
         .success-modal {
             display: none;
             position: fixed;
@@ -426,7 +633,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.6);
-            z-index: 6000;
+            z-index: 5000;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -438,8 +645,8 @@
 
         .success-content {
             background: white;
-            border-radius: 25px;
-            padding: 50px 40px;
+            border-radius: 20px;
+            padding: 40px 30px;
             max-width: 500px;
             width: 100%;
             text-align: center;
@@ -453,100 +660,77 @@
 
         .success-icon {
             font-size: 80px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .success-title {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 900;
-            color: var(--success);
+            color: var(--success-color);
             margin-bottom: 15px;
         }
 
         .success-msg {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 30px;
+            color: var(--text-light);
+            font-size: 15px;
+            margin-bottom: 25px;
             line-height: 1.8;
         }
 
         .order-id {
-            background: var(--light-bg);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
+            background: var(--light-orange);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
 
         .order-id-label {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 5px;
         }
 
         .order-id-value {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--dark-orange);
         }
 
         .success-btn {
-            padding: 15px 50px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 12px 40px;
+            background: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.3s;
-        }
-
-        .success-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(52,120,193,0.3);
-        }
-
-        .alert {
-            padding: 15px 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .alert-info {
-            background: #dbeafe;
-            color: #1e40af;
-            border: 2px solid var(--primary);
-        }
-
-        @media (max-width: 768px) {
-            .checkout-container {
-                padding: 20px 15px;
-            }
+            font-family: 'Tajawal', sans-serif;
         }
     </style>
 </head>
 <body>
     <!-- Notification -->
     <div class="notification" id="notification">
-        <i class="fas fa-check-circle" style="font-size: 24px;"></i>
-        <span id="notificationText"></span>
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">تمت العملية بنجاح!</span>
     </div>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="top-bar">
-            ✨ منتجات رقمية | تفعيل فوري
-        </div>
-        <div class="header-main">
-            <a href="index.html">
-                <img src="Eco-friend.svg" alt="ديجيتال أثر" class="logo">
-            </a>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <a href="tel:+962790083039" class="top-bar-item"><i class="fas fa-phone"></i> +962790083039</a>
+        <a href="mailto:info@eco-friendy.com" class="top-bar-item"><i class="fas fa-envelope"></i> info@eco-friendy.com</a>
+        <a href="#" class="top-bar-item"><i class="fas fa-map-marker-alt"></i> الأردن - عمان</a>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">🐾 Eco Friendy</a>
+            <div class="user-info" id="userInfo" style="display: none;">
+                <i class="fas fa-user-circle"></i>
+                <span id="userName"></span>
+            </div>
         </div>
     </header>
 
@@ -564,119 +748,213 @@
 
     <!-- Checkout Container -->
     <div class="checkout-container">
-        <form id="checkoutForm" onsubmit="submitOrder(event)">
-            <!-- Customer Info -->
-            <div class="checkout-section">
-                <h2 class="section-title">
-                    <i class="fas fa-user"></i>
-                    معلومات التواصل
-                </h2>
+        <!-- Login Required Message -->
+        <div class="login-required" id="loginRequired" style="display: none;">
+            <div class="login-required-icon">🔐</div>
+            <h2>يجب تسجيل الدخول أولاً</h2>
+            <p>
+                للمتابعة في إتمام طلبك، يرجى تسجيل الدخول إلى حسابك أو إنشاء حساب جديد.<br>
+                <strong>سيتم حفظ معلوماتك وطلباتك بشكل آمن.</strong>
+            </p>
+            <div class="login-buttons">
+                <a href="login.html" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    تسجيل الدخول
+                </a>
+                <a href="register.html" class="btn btn-secondary">
+                    <i class="fas fa-user-plus"></i>
+                    إنشاء حساب جديد
+                </a>
+            </div>
+        </div>
 
-                <div class="form-group">
-                    <label>الاسم الكامل *</label>
-                    <input type="text" id="name" required placeholder="أدخل اسمك الكامل">
+        <!-- Checkout Form (Hidden until login) -->
+        <div id="checkoutContent" style="display: none;">
+            <div class="checkout-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <span>السلة</span>
                 </div>
-
-                <div class="form-group">
-                    <label>رقم الواتساب *</label>
-                    <input type="tel" id="phone" required placeholder="07XXXXXXXX">
+                <div class="step active">
+                    <div class="step-number">2</div>
+                    <span>معلومات الشحن</span>
                 </div>
-
-                <div class="form-group">
-                    <label>ملاحظات (اختياري)</label>
-                    <textarea id="notes" placeholder="أي ملاحظات خاصة بالطلب..." rows="3"></textarea>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <span>الدفع</span>
                 </div>
             </div>
 
-            <!-- Payment Method -->
-            <div class="checkout-section">
-                <h2 class="section-title">
-                    <i class="fas fa-credit-card"></i>
-                    طريقة الدفع
-                </h2>
+            <form id="checkoutForm" onsubmit="submitOrder(event)">
+                <div class="checkout-grid">
+                    <!-- Left Column: Forms -->
+                    <div>
+                        <!-- Shipping Information -->
+                        <div class="checkout-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-shipping-fast"></i>
+                                معلومات الشحن
+                            </h2>
 
-                <!-- CliQ Payment -->
-                <div class="payment-method">
-                    <div class="payment-icon">💳</div>
-                    <div class="payment-info">
-                        <div class="payment-title">الدفع عبر كليك CliQ</div>
-                        <div class="payment-desc">تحويل فوري وآمن عبر جميع البنوك الأردنية</div>
-                    </div>
-                </div>
+                            <div class="form-group">
+                                <label>الاسم الكامل *</label>
+                                <input type="text" id="name" required placeholder="سيتم تعبئته تلقائياً" disabled>
+                            </div>
 
-                <!-- CliQ Details -->
-                <div class="cliq-details">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i>
-                        <span>يرجى إتمام التحويل ثم تأكيد الطلب</span>
-                    </div>
+                            <div class="form-group">
+                                <label>البريد الإلكتروني *</label>
+                                <input type="email" id="email" required placeholder="سيتم تعبئته تلقائياً" disabled>
+                            </div>
 
-                    <div class="cliq-bank">
-                        <i class="fas fa-university"></i>
-                        <div class="cliq-bank-name">🏦 البنك التجاري الأردني</div>
-                    </div>
+                            <div class="form-group">
+                                <label>رقم الهاتف *</label>
+                                <input type="tel" id="phone" required placeholder="07XXXXXXXX">
+                            </div>
 
-                    <div class="cliq-alias">
-                        <div class="cliq-alias-label">رقم الهاتف للتحويل</div>
-                        <div class="cliq-alias-value" id="cliqAlias">0781091800</div>
-                        <button type="button" class="copy-btn" onclick="copyAlias()">
-                            <i class="fas fa-copy"></i> نسخ
-                        </button>
-                    </div>
+                            <div class="form-group">
+                                <label>المدينة *</label>
+                                <input type="text" id="city" required placeholder="عمان، إربد، الزرقاء...">
+                            </div>
 
-                    <div class="cliq-steps">
-                        <div class="cliq-steps-title">📱 خطوات الدفع:</div>
-                        <ol>
-                            <li>افتح تطبيق البنك الخاص بك</li>
-                            <li>اختر خدمة كليك CliQ</li>
-                            <li>أدخل الرقم: <strong>0781091800</strong></li>
-                            <li>أدخل المبلغ: <strong id="cliqAmount">0.00 د.أ</strong></li>
-                            <li>أكد العملية وأرسل لقطة شاشة التحويل</li>
-                        </ol>
-                    </div>
+                            <div class="form-group">
+                                <label>العنوان التفصيلي *</label>
+                                <textarea id="address" required placeholder="الشارع - رقم المبنى - أي تفاصيل إضافية"></textarea>
+                            </div>
 
-                    <div class="contact-info">
-                        <div class="contact-title">📝 لإرسال إثبات الدفع:</div>
-                        <div class="contact-item">
-                            <i class="fab fa-whatsapp"></i>
-                            <a href="https://wa.me/962781091800" target="_blank">0781091800</a>
+                            <div class="form-group">
+                                <label>ملاحظات (اختياري)</label>
+                                <textarea id="notes" placeholder="أي ملاحظات خاصة بالطلب..."></textarea>
+                            </div>
                         </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:info@digital-athar.com">info@digital-athar.com</a>
+
+                        <!-- Payment Method -->
+                        <div class="checkout-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-credit-card"></i>
+                                طريقة الدفع
+                            </h2>
+
+                            <div class="payment-methods">
+                                <!-- Cash on Delivery -->
+                                <label class="payment-method" onclick="selectPayment('cod')">
+                                    <input type="radio" name="payment" value="cod" id="payment-cod" checked>
+                                    <div class="payment-icon">💵</div>
+                                    <div class="payment-method-info">
+                                        <div class="payment-method-title">الدفع عند الاستلام</div>
+                                        <div class="payment-method-desc">ادفع نقداً عند استلام الطلب</div>
+                                    </div>
+                                </label>
+
+                                <!-- CliQ Payment -->
+                                <label class="payment-method" onclick="selectPayment('cliq')">
+                                    <input type="radio" name="payment" value="cliq" id="payment-cliq">
+                                    <div class="payment-icon">💳</div>
+                                    <div class="payment-method-info">
+                                        <div class="payment-method-title">الدفع عبر كليك CliQ</div>
+                                        <div class="payment-method-desc">تحويل فوري وآمن عبر جميع البنوك الأردنية</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- CliQ Details -->
+                            <div class="cliq-details" id="cliqDetails">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>يرجى إتمام التحويل ثم تأكيد الطلب</span>
+                                </div>
+
+                                <div class="cliq-bank-info">
+                                    <div style="text-align: center; margin-bottom: 10px;">
+                                        <i class="fas fa-university" style="font-size: 36px; color: var(--info-color);"></i>
+                                    </div>
+                                    <div style="text-align: center; font-size: 18px; font-weight: 700; color: var(--dark-orange);">
+                                        🏦 بنك الاتحاد Union Bank
+                                    </div>
+                                </div>
+
+                                <div class="cliq-alias">
+                                    <div class="cliq-alias-label">الاسم المستعار CliQ Alias</div>
+                                    <div class="cliq-alias-value" id="cliqAlias">ABDSULEMAN</div>
+                                    <button type="button" class="copy-btn" onclick="copyAlias()">
+                                        <i class="fas fa-copy"></i> نسخ
+                                    </button>
+                                </div>
+
+                                <div style="background: white; padding: 15px; border-radius: 10px;">
+                                    <div style="font-weight: 700; margin-bottom: 10px; color: var(--dark-orange);">
+                                        📱 خطوات الدفع:
+                                    </div>
+                                    <ol class="cliq-steps">
+                                        <li>افتح تطبيق البنك الخاص بك</li>
+                                        <li>اختر خدمة كليك CliQ</li>
+                                        <li>أدخل الاسم المستعار: <strong>ABDSULEMAN</strong></li>
+                                        <li>أدخل المبلغ المطلوب: <strong id="cliqAmount">0.00 د.أ</strong></li>
+                                        <li>أكد العملية وأرسل لقطة شاشة التحويل عبر الواتساب</li>
+                                    </ol>
+                                </div>
+
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span>⚡ التحويل فوري وآمن عبر جميع البنوك الأردنية</span>
+                                </div>
+
+                                <div class="contact-info">
+                                    <div style="font-weight: 700; margin-bottom: 10px; color: var(--dark-orange);">
+                                        📝 لإرسال إثبات الدفع:
+                                    </div>
+                                    <div class="contact-item">
+                                        <i class="fab fa-whatsapp"></i>
+                                        <a href="https://wa.me/962790083039" target="_blank">+962790083039</a>
+                                    </div>
+                                    <div class="contact-item">
+                                        <i class="fas fa-envelope"></i>
+                                        <a href="mailto:info@eco-friendy.com">info@eco-friendy.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Order Summary -->
+                    <div>
+                        <div class="checkout-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-receipt"></i>
+                                ملخص الطلب
+                            </h2>
+
+                            <div id="orderItems"></div>
+
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--light-orange);">
+                                <div class="order-summary-row">
+                                    <span>المجموع الفرعي:</span>
+                                    <span id="subtotal">0.00 د.أ</span>
+                                </div>
+                                <div class="order-summary-row">
+                                    <span>الشحن:</span>
+                                    <span id="shipping">0.00 د.أ</span>
+                                </div>
+                                <div class="order-summary-row total">
+                                    <span>الإجمالي:</span>
+                                    <span id="total">0.00 د.أ</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                <i class="fas fa-check-circle"></i>
+                                تأكيد الطلب
+                            </button>
+
+                            <div style="text-align: center; margin-top: 15px;">
+                                <a href="cart.html" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">
+                                    <i class="fas fa-arrow-right"></i> العودة للسلة
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Order Summary -->
-            <div class="checkout-section">
-                <h2 class="section-title">
-                    <i class="fas fa-receipt"></i>
-                    ملخص الطلب
-                </h2>
-
-                <div id="orderItems"></div>
-
-                <div style="margin-top: 25px; padding-top: 20px; border-top: 3px solid var(--light-bg);">
-                    <div class="summary-row total">
-                        <span>المجموع:</span>
-                        <span id="total">0.00 JD</span>
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <i class="fas fa-check-circle"></i>
-                    تأكيد الطلب
-                </button>
-
-                <div style="text-align: center; margin-top: 20px;">
-                    <a href="cart.html" style="color: var(--primary); text-decoration: none; font-weight: 700;">
-                        <i class="fas fa-arrow-right"></i> العودة للسلة
-                    </a>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <!-- Success Modal -->
@@ -694,56 +972,158 @@
     </div>
 
     <script>
-        let cart = JSON.parse(localStorage.getItem('digital_cart') || '[]');
+        // ==================== متغيرات عامة ====================
+        let cart = JSON.parse(localStorage.getItem('eco_cart') || '[]');
+        let selectedPayment = 'cod';
+        let currentUser = null;
 
-        window.addEventListener('DOMContentLoaded', function() {
+        // ==================== تحميل الصفحة ====================
+        window.addEventListener('DOMContentLoaded', async function() {
+            // التحقق من السلة
             if (cart.length === 0) {
                 window.location.href = 'cart.html';
                 return;
             }
-            loadOrderSummary();
+
+            // التحقق من تسجيل الدخول
+            await checkUserLogin();
         });
 
+        // ==================== التحقق من تسجيل الدخول ====================
+        async function checkUserLogin() {
+            try {
+                const response = await fetch('/api/get-user.php');
+                const data = await response.json();
+
+                if (data.success && data.user) {
+                    currentUser = data.user;
+                    showCheckoutForm();
+                    fillUserInfo();
+                } else {
+                    showLoginRequired();
+                }
+            } catch (error) {
+                console.error('خطأ في التحقق من المستخدم:', error);
+                showLoginRequired();
+            }
+        }
+
+        // ==================== عرض نموذج الطلب ====================
+        function showCheckoutForm() {
+            document.getElementById('loginRequired').style.display = 'none';
+            document.getElementById('checkoutContent').style.display = 'block';
+            
+            // عرض معلومات المستخدم في الهيدر
+            document.getElementById('userInfo').style.display = 'flex';
+            document.getElementById('userName').textContent = currentUser.fullname;
+
+            loadOrderSummary();
+            selectPayment('cod');
+        }
+
+        // ==================== عرض رسالة تسجيل الدخول ====================
+        function showLoginRequired() {
+            document.getElementById('loginRequired').style.display = 'block';
+            document.getElementById('checkoutContent').style.display = 'none';
+        }
+
+        // ==================== تعبئة معلومات المستخدم ====================
+        function fillUserInfo() {
+            document.getElementById('name').value = currentUser.fullname;
+            document.getElementById('email').value = currentUser.email;
+            
+            // تحميل معلومات إضافية من localStorage إن وجدت
+            const savedPhone = localStorage.getItem('eco_user_phone_' + currentUser.id);
+            if (savedPhone) {
+                document.getElementById('phone').value = savedPhone;
+            }
+
+            const savedAddress = localStorage.getItem('eco_user_address_' + currentUser.id);
+            if (savedAddress) {
+                const parts = savedAddress.split(' - ');
+                if (parts.length >= 2) {
+                    document.getElementById('city').value = parts[0];
+                    document.getElementById('address').value = parts.slice(1).join(' - ');
+                }
+            }
+        }
+
+        // ==================== تحميل ملخص الطلب ====================
         function loadOrderSummary() {
             const orderItemsContainer = document.getElementById('orderItems');
             let html = '';
 
             cart.forEach(item => {
+                const imageUrl = item.image || 'https://via.placeholder.com/60?text=📦';
                 html += `
                     <div class="order-item">
-                        <img src="${item.image || 'https://via.placeholder.com/70'}" alt="${item.name}" class="order-item-image">
+                        <img src="${imageUrl}" alt="${item.name}" class="order-item-image" onerror="this.src='https://via.placeholder.com/60?text=📦'">
                         <div class="order-item-details">
                             <div class="order-item-name">${item.name}</div>
                             <div class="order-item-qty">الكمية: ${item.qty}</div>
                         </div>
-                        <div class="order-item-price">JD ${(parseFloat(item.price) * item.qty).toFixed(2)}</div>
+                        <div class="order-item-price">${(parseFloat(item.price) * item.qty).toFixed(2)} د.أ</div>
                     </div>
                 `;
             });
 
             orderItemsContainer.innerHTML = html;
 
-            const total = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
-            document.getElementById('total').textContent = 'JD ' + total.toFixed(2);
+            const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
+            const shipping = subtotal >= 50 ? 0 : 3;
+            const total = subtotal + shipping;
+
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' د.أ';
+            document.getElementById('shipping').textContent = shipping === 0 ? 'مجاني 🎉' : shipping.toFixed(2) + ' د.أ';
+            document.getElementById('total').textContent = total.toFixed(2) + ' د.أ';
             document.getElementById('cliqAmount').textContent = total.toFixed(2) + ' د.أ';
         }
 
+        // ==================== اختيار طريقة الدفع ====================
+        function selectPayment(method) {
+            selectedPayment = method;
+            document.getElementById('payment-' + method).checked = true;
+            
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.getElementById('payment-' + method).closest('.payment-method').classList.add('selected');
+            
+            const cliqDetails = document.getElementById('cliqDetails');
+            if (method === 'cliq') {
+                cliqDetails.classList.add('active');
+            } else {
+                cliqDetails.classList.remove('active');
+            }
+        }
+
+        // ==================== نسخ الاسم المستعار ====================
         function copyAlias() {
             const alias = document.getElementById('cliqAlias').textContent;
             navigator.clipboard.writeText(alias).then(() => {
-                showNotification('✅ تم نسخ الرقم: ' + alias);
+                showNotification('✅ تم نسخ الاسم المستعار: ' + alias, 'success');
+            }).catch(() => {
+                showNotification('❌ فشل النسخ، يرجى النسخ يدوياً', 'error');
             });
         }
 
+        // ==================== إرسال الطلب ====================
         async function submitOrder(e) {
             e.preventDefault();
 
-            const name = document.getElementById('name').value.trim();
+            if (!currentUser) {
+                showNotification('⚠️ يجب تسجيل الدخول أولاً', 'error');
+                return;
+            }
+
             const phone = document.getElementById('phone').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const address = document.getElementById('address').value.trim();
             const notes = document.getElementById('notes').value.trim();
 
-            if (!name || !phone) {
-                showNotification('❌ يرجى ملء جميع الحقول المطلوبة');
+            // التحقق من السلة
+            if (cart.length === 0) {
+                showNotification('❌ السلة فارغة!', 'error');
                 return;
             }
 
@@ -752,53 +1132,100 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إرسال الطلب...';
 
             try {
-                const total = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
+                // حساب الإجمالي
+                const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
+                const shipping = subtotal >= 50 ? 0 : 3;
+                const total = subtotal + shipping;
 
+                // بناء بيانات الطلب
+                const fullAddress = `${city} - ${address}`;
+                
                 const orderData = {
-                    customer_name: name,
+                    user_id: currentUser.id,
+                    customer_name: currentUser.fullname,
                     customer_phone: phone,
-                    customer_address: 'منتج رقمي',
-                    notes: notes,
-                    payment_method: 'cliq',
+                    customer_address: fullAddress,
+                    shipping_address: fullAddress,
+                    notes: notes || '',
+                    payment_method: selectedPayment,
+                    status: 'pending',
                     items: cart.map(item => ({
-                        product_id: item.id,
-                        quantity: item.qty,
+                        product_id: parseInt(item.id),
+                        quantity: parseInt(item.qty),
                         price: parseFloat(item.price)
                     })),
-                    total_amount: total.toFixed(2)
+                    total_amount: parseFloat(total.toFixed(2))
                 };
 
+                console.log('📤 إرسال البيانات:', orderData);
+
+                // إرسال الطلب
                 const response = await fetch('api/place-order.php', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify(orderData)
                 });
 
-                const data = await response.json();
+                console.log('📥 حالة الاستجابة:', response.status);
 
-                if (data.success) {
-                    showSuccessModal(name, data.order_id || Math.floor(Math.random() * 10000));
-                    cart = [];
-                    localStorage.setItem('digital_cart', JSON.stringify(cart));
+                // قراءة النص أولاً
+                const responseText = await response.text();
+                console.log('📄 نص الاستجابة:', responseText);
+
+                // محاولة تحويل النص إلى JSON
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (jsonError) {
+                    console.error('❌ خطأ في تحويل JSON:', jsonError);
+                    throw new Error('استجابة غير صحيحة من الخادم');
                 }
+
+                console.log('✅ بيانات الاستجابة:', data);
+
+                // التحقق من النجاح
+                if (data.success) {
+                    // حفظ المعلومات في localStorage
+                    localStorage.setItem('eco_user_phone_' + currentUser.id, phone);
+                    localStorage.setItem('eco_user_address_' + currentUser.id, fullAddress);
+
+                    // عرض رسالة النجاح
+                    showSuccessModal(currentUser.fullname, data.order_id || data.order_number, selectedPayment);
+                    
+                    // تفريغ السلة
+                    localStorage.removeItem('eco_cart');
+                    cart = [];
+                } else {
+                    throw new Error(data.message || 'فشل في حفظ الطلب');
+                }
+
             } catch (error) {
-                console.error('خطأ:', error);
-                showSuccessModal(name, Math.floor(Math.random() * 10000));
-                cart = [];
-                localStorage.setItem('digital_cart', JSON.stringify(cart));
+                console.error('❌ خطأ في إرسال الطلب:', error);
+                showNotification('❌ حدث خطأ: ' + error.message, 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد الطلب';
             }
         }
 
-        function showSuccessModal(customerName, orderId) {
+        // ==================== عرض رسالة النجاح ====================
+        function showSuccessModal(customerName, orderId, paymentMethod) {
             document.getElementById('orderIdDisplay').textContent = '#' + String(orderId).padStart(5, '0');
             
             let message = `شكراً لك <strong>${customerName}</strong>!<br><br>`;
-            message += `تم استلام طلبك وننتظر تأكيد الدفع.<br><br>`;
-            message += `يرجى إرسال لقطة شاشة التحويل مع رقم الطلب إلى:<br>`;
-            message += `📱 واتساب: <strong>0781091800</strong>`;
+            
+            if (paymentMethod === 'cliq') {
+                message += `تم استلام طلبك وننتظر تأكيد الدفع.<br><br>`;
+                message += `يرجى إرسال لقطة شاشة التحويل مع رقم الطلب إلى:<br>`;
+                message += `📱 واتساب: <strong>+962790083039</strong><br>`;
+                message += `📧 بريد: <strong>info@eco-friendy.com</strong>`;
+            } else {
+                message += `سيتم توصيل طلبك قريباً.<br>`;
+                message += `سنتواصل معك لتأكيد موعد التوصيل.`;
+            }
 
             document.getElementById('successMessage').innerHTML = message;
             document.getElementById('successModal').classList.add('active');
@@ -809,11 +1236,15 @@
             window.location.href = 'index.html';
         }
 
-        function showNotification(text) {
+        // ==================== الإشعارات ====================
+        function showNotification(text, type = 'success') {
             const el = document.getElementById('notification');
-            document.getElementById('notificationText').textContent = text;
-            el.classList.add('show');
-            setTimeout(() => el.classList.remove('show'), 3000);
+            const icon = type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-circle"></i>';
+            
+            el.className = 'notification show' + (type === 'error' ? ' error' : '');
+            el.innerHTML = icon + '<span id="notificationText">' + text + '</span>';
+            
+            setTimeout(() => el.classList.remove('show'), 4000);
         }
     </script>
 </body>
